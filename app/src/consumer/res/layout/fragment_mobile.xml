@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:visibility="visible"
+        >
+
+        <ImageView
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_height="@dimen/dp_40"
+            android:layout_width="@dimen/dp_40"
+            android:background="@mipmap/ic_launcher" />
+
+        <com.e2b.views.CustomTextView
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_8"
+            style="@style/wrap_content"
+            android:text="@string/verify_text"
+            app:ctypeface="@string/font_regular"
+            android:textSize="@dimen/sp_16"
+            />
+
+        <LinearLayout
+            style="@style/wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_8"
+            >
+
+            <com.e2b.views.CustomTextView
+                style="@style/wrap_content"
+                android:text="+91"
+                app:ctypeface="@string/font_regular"
+                android:textSize="@dimen/sp_18"
+                />
+
+            <com.e2b.views.CustomEditText
+                android:id="@+id/et_mobile_number"
+                style="@style/wrap_content"
+                android:hint="@string/phone_number"
+                app:ctypeface="@string/font_regular"
+                android:textSize="@dimen/sp_12"
+                android:maxLength="10"
+                />
+
+            <com.e2b.views.CustomTextView
+                android:id="@+id/tv_why"
+                style="@style/wrap_content"
+                android:text="Why?"
+                app:ctypeface="@string/font_regular"
+                android:textSize="@dimen/sp_14"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

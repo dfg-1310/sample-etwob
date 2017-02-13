@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="activity_items_string">
+        <item>happy</item>
+        <item>sad</item>
+        <item>cool</item>
+        <item>irritated</item>
+        <item>annoyed</item>
+        <item>shocked</item>
+        <item>amused</item>
+        <item>speechless</item>
+        <item>rich</item>
+        <item>cheeky</item>
+        <item>angry</item>
+        <item>hungry</item>
+        <item>festive</item>
+        <item>royal</item>
+        <item>love</item>
+        <item>afraid</item>
+        <item>powerful</item>
+        <item>invisible</item>
+        <item>sweet</item>
+        <item>thirsty</item>
+        <item>clean</item>
+        <item>watching</item>
+        <item>bored</item>
+        <item>bummed</item>
+        <item>innovative</item>
+        <item>lucky</item>
+        <item>focused</item>
+        <item>surfing</item>
+    </string-array>
+
+
+    <string-array
+        name="gender_array">
+        <item>@string/male</item>
+        <item>@string/female</item>
+    </string-array>
+
+    <string-array
+        name="privacy_arr">
+        <item>@string/pref_public</item>
+        <item>@string/site_members</item>
+        <item>@string/friends</item>
+        <item>@string/only_me</item>
+    </string-array>
+
+    <string-array
+        name="privacy_group_arry">
+        <item>@string/profile</item>
+        <item>@string/groups</item>
+        <item>@string/video_priv</item>
+        <item>@string/photos_priv</item>
+        <item>@string/others</item>
+
+
+    </string-array>
+
+    <string-array name="profile_priv_array">
+        <item>@string/new_comment_on_stream_post</item>
+        <item>@string/new_replies_for_stream_post</item>
+        <item>@string/new_stream_post</item>
+        <item>@string/new_profile_likes_privacy</item>
+        <item>@string/new_stream_post_like</item>
+        <item>@string/recv_digest_email</item>
+        <item>@string/new_friend_req</item>
+        <item>@string/app_frie_req</item>
+        <item>@string/new_priv_msg</item>
+    </string-array>
+
+    <string-array name="group_priv_array">
+        <item>@string/grp_invit</item>
+        <item>@string/desc_repl</item>
+        <item>@string/new_post_on_grp_stream</item>
+        <item>@string/new_grp_desc</item>
+        <item>@string/new_stream_post_like</item>
+        <item>@string/new_grp_announc</item>
+        <item>@string/new_grp_videos</item>
+        <item>@string/new_grp_events</item>
+        <item>@string/new_grp_email_brod</item>
+        <item>@string/req_join_grp</item>
+        <item>@string/req_join_clos_grp</item>
+        <item>@string/grp_crea_rq_approv</item>
+        <item>@string/new_file_add_dis</item>
+    </string-array>
+
+
+    <string-array name="photo_priv_array">
+        <item>@string/new_comment_on_photo_albm</item>
+        <item>@string/reply_photo_comment</item>
+        <item>@string/new_photo_likes</item>
+    </string-array>
+
+
+    <string-array name="video_priv_array">
+        <item>@string/new_comm_video</item>
+        <item>@string/reply_video_comm</item>
+        <item>@string/new_video_likes</item>
+    </string-array>
+
+
+    <string-array name="other_priv_array">
+        <item>@string/system_msg</item>
+    </string-array>
+
+</resources>

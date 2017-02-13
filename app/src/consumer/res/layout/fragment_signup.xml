@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginRight="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_20"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            >
+
+            <ImageView
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_gravity="center_horizontal"
+                android:background="@mipmap/ic_launcher" />
+
+
+            <com.e2b.views.CustomEditText
+                android:id="@+id/et_signup_full_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_12"
+                android:background="@drawable/bg_rect_grey"
+                android:gravity="center"
+                android:hint="@string/enter_full_name"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:padding="@dimen/dp_8"
+                android:textColor="@color/black"
+                android:textColorHint="@color/color_B3142029"
+                android:textSize="@dimen/dp_13" />
+
+            <com.e2b.views.CustomEditText
+                android:id="@+id/et_signup_address1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_12"
+                android:background="@drawable/bg_rect_grey"
+                android:gravity="center"
+                android:hint="@string/enter_address1"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:padding="@dimen/dp_8"
+                android:textColor="@color/black"
+                android:textColorHint="@color/color_B3142029"
+                android:textSize="@dimen/dp_13" />
+
+
+            <com.e2b.views.CustomEditText
+                android:id="@+id/et_signup_address2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_12"
+                android:background="@drawable/bg_rect_grey"
+                android:gravity="center"
+                android:hint="@string/enter_address2"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:padding="@dimen/dp_8"
+                android:textColor="@color/black"
+                android:textColorHint="@color/color_B3142029"
+                android:textSize="@dimen/dp_13" />
+
+            <com.e2b.views.MaterialRippleEffect
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20">
+
+                <com.e2b.views.CustomTextView
+                    android:id="@+id/tv_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/white_btn_round_corner_bg"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:paddingRight="@dimen/dp_20"
+                    android:text="@string/tv_save"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp_17" />
+            </com.e2b.views.MaterialRippleEffect>
+        </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:visibility="visible"
+        >
+
+        <ImageView
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_height="@dimen/dp_40"
+            android:layout_width="@dimen/dp_40"
+            android:background="@mipmap/ic_launcher" />
+
+        <com.e2b.views.CustomTextView
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_8"
+            style="@style/wrap_content"
+            android:text="@string/excellent_text"
+            app:ctypeface="@string/font_regular"
+            android:textSize="@dimen/sp_18"
+            />
+
+        <com.e2b.views.CustomTextView
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_8"
+            style="@style/wrap_content"
+            android:textSize="@dimen/sp_16"
+            android:text="@string/cnfrm_code_text"
+            app:ctypeface="@string/font_regular" />
+
+            <com.e2b.views.CustomEditText
+                android:id="@+id/et_otp_code"
+                style="@style/wrap_content"
+                android:hint="@string/cnfrm_code_hint_text"
+                app:ctypeface="@string/font_regular"
+                android:textSize="@dimen/sp_14"
+                android:maxLength="6"
+                />
+
+        <com.e2b.views.MaterialRippleEffect
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_40"
+            android:layout_gravity="center"
+            >
+
+            <com.e2b.views.CustomTextView
+                android:id="@+id/tv_verify_otp"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/white_btn_round_corner_bg"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp_20"
+                android:paddingRight="@dimen/dp_20"
+                android:text="@string/vrify_text"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp_17" />
+        </com.e2b.views.MaterialRippleEffect>
+    </LinearLayout>
+
+</RelativeLayout>

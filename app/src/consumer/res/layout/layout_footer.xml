@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_50"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:weightSum="3">
+
+    <RelativeLayout
+        android:id="@+id/ll_home"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:clickable="true">
+
+        <CheckBox
+            android:id="@+id/cb_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_5"
+            android:button="@null"
+            android:clickable="false"
+            android:drawableLeft="@drawable/selector_feeds" />
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/tv_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cb_home"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_4"
+            android:maxLines="1"
+            android:text="@string/home"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_12"
+             />
+
+        <View
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/color_26929292" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_order"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:clickable="true">
+
+        <CheckBox
+            android:id="@+id/cb_orders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_5"
+            android:button="@null"
+            android:clickable="false"
+            android:drawableLeft="@drawable/selector_friends" />
+
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/tv_orders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cb_orders"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_4"
+            android:maxLines="1"
+            android:text="@string/orders"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_12"
+             />
+
+        <View
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/color_26929292" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_profile"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:clickable="true"
+        >
+
+        <CheckBox
+            android:id="@+id/cb_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_5"
+            android:button="@null"
+            android:clickable="false"
+            android:drawableLeft="@drawable/selector_groups" />
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/tv_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cb_profile"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_4"
+            android:maxLines="1"
+            android:text="@string/profile"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_12"
+             />
+
+        <View
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/color_26929292" />
+    </RelativeLayout>
+
+</LinearLayout>
