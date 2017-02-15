@@ -40,8 +40,8 @@ public class HelpActivity extends BaseActivity {
     }
 
     private void exitFromHelpScreens() {
-            launchActivityMain(AuthActivity.class);
-            finish();
+        launchActivityMain(HomeActivity.class);
+        finish();
     }
 
 

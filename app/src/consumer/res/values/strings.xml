@@ -237,10 +237,10 @@
     <string name="font_bold">OpenSans-Bold.ttf</string>
     <string name="font_light">OpenSans-Light.ttf</string>
     <string name="font_regular">OpenSans-Regular.ttf</string>
-    <string name="verify_text">We need to verify your phone\n number in order to get started</string>
+    <string name="verify_text">We need to verify your phone number in order to get started</string>
     <string name="excellent_text">EXCELLENT, THANKS!</string>
     <string name="cnfrm_code_hint_text">CONFIRMATION CODE</string>
-    <string name="cnfrm_code_text">We have received your request, we have sent\n you confirmation code. Please enter below </string>
+    <string name="cnfrm_code_text">We have received your request, we have sent you confirmation code. Please enter below </string>
     <string name="vrify_text">Verify</string>
     <string name="tv_save">Save</string>
     tv_save

@@ -23,8 +23,12 @@
             android:background="@mipmap/ic_launcher" />
 
         <com.e2b.views.CustomTextView
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_8"
             android:layout_marginBottom="@dimen/dp_8"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             style="@style/wrap_content"
             android:text="@string/verify_text"
             app:ctypeface="@string/font_regular"
@@ -50,8 +54,11 @@
                 style="@style/wrap_content"
                 android:hint="@string/phone_number"
                 app:ctypeface="@string/font_regular"
-                android:textSize="@dimen/sp_12"
+                android:textSize="@dimen/sp_14"
                 android:maxLength="10"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:inputType="phone"
                 />
 
             <com.e2b.views.CustomTextView
@@ -59,7 +66,7 @@
                 style="@style/wrap_content"
                 android:text="Why?"
                 app:ctypeface="@string/font_regular"
-                android:textSize="@dimen/sp_14"
+                android:textSize="@dimen/sp_18"
                 />
         </LinearLayout>
     </LinearLayout>

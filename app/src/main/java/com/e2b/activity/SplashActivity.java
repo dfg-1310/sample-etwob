@@ -1,13 +1,11 @@
 package com.e2b.activity;
 
-import android.os.Handler;
 import android.os.Bundle;
+import android.os.Handler;
+
 import com.e2b.R;
 
 import e2b.activity.AuthActivity;
-import e2b.activity.HelpActivity;
-import e2b.activity.HomeActivity;
-import e2b.utils.ConsumerPreferenceKeeper;
 
 /**
  * A login screen that offers login via email/password.
@@ -26,7 +24,7 @@ public class SplashActivity extends BaseActivity {
 //                if(ConsumerPreferenceKeeper.getInstance().getIsLogin()){
 //                    launchActivityMain(HomeActivity.class);
 //                }else{
-                    launchActivityMain(HelpActivity.class);
+                    launchActivityMain(AuthActivity.class);
 //                }
                 finish();
             }

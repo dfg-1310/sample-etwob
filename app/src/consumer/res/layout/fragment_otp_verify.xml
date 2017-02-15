@@ -46,6 +46,10 @@
                 app:ctypeface="@string/font_regular"
                 android:textSize="@dimen/sp_14"
                 android:maxLength="6"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:inputType="phone"
+
                 />
 
         <com.e2b.views.MaterialRippleEffect

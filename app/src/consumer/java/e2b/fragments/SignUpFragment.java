@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.e2b.R;
-import com.e2b.activity.BaseActivity;
 import com.e2b.api.ApiCallback;
 import com.e2b.api.ApiClient;
 import com.e2b.api.IApiRequest;
@@ -21,8 +20,8 @@ import com.e2b.utils.DialogUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import e2b.activity.HelpActivity;
 import e2b.activity.HomeActivity;
-import e2b.enums.EScreenType;
 import e2b.model.response.UserResponse;
 import e2b.utils.ConsumerPreferenceKeeper;
 import retrofit2.Call;
@@ -67,7 +66,7 @@ public class SignUpFragment extends BaseFragment {
         address1 = etSignUpAddress1.getText().toString().trim();
         address2 = etSignUpAddress2.getText().toString().trim();
 
-        activity.launchActivity(HomeActivity.class);
+        activity.launchActivity(HelpActivity.class);
 //        if (profileValidation()) {
 //            profileUpdateApi();
 //        }

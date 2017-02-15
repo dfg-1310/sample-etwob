@@ -1,46 +1,22 @@
 package e2b.fragments;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.e2b.R;
 import com.e2b.activity.BaseActivity;
-import com.e2b.utils.AppUtils;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
-
-import e2b.activity.HomeActivity;
-import e2b.utils.ConsumerPreferenceKeeper;
 
 /**
  * Created by gaurav on 6/2/17.
@@ -79,13 +55,13 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
     }
 
     private void currentLocation() {
-        if (mMap != null) {
-            double lat = Double.parseDouble(ConsumerPreferenceKeeper.getInstance().getLat());
-            double longitute = Double.parseDouble(ConsumerPreferenceKeeper.getInstance().getLong());
-            LatLng selectedLatLng = new LatLng(lat, longitute);
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(selectedLatLng));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedLatLng, ZOOM_LEVEL));
-        }
+//        if (mMap != null) {
+//            double lat = Double.parseDouble(ConsumerPreferenceKeeper.getInstance().getLat());
+//            double longitute = Double.parseDouble(ConsumerPreferenceKeeper.getInstance().getLong());
+//            LatLng selectedLatLng = new LatLng(lat, longitute);
+//            mMap.moveCamera(CameraUpdateFactory.newLatLng(selectedLatLng));
+//            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedLatLng, ZOOM_LEVEL));
+//        }
     }
 
     @Override
