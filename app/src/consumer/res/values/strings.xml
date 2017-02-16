@@ -243,6 +243,5 @@
     <string name="cnfrm_code_text">We have received your request, we have sent you confirmation code. Please enter below </string>
     <string name="vrify_text">Verify</string>
     <string name="tv_save">Save</string>
-    tv_save
 
 </resources>

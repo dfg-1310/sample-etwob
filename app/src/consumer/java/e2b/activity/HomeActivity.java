@@ -1,7 +1,6 @@
 package e2b.activity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -11,6 +10,7 @@ import com.e2b.activity.BaseActivity;
 import com.e2b.utils.AppConstant;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import e2b.enums.EScreenType;
 import e2b.fragments.BaseFragment;
@@ -51,39 +51,16 @@ public class HomeActivity extends BaseActivity {
 
     private BaseFragment currentFragment;
 
-    @OnClick(R.id.ll_home)
-    public void homeClick() {
-        setFooterState(AppConstant.FOOTER_INDEX.HOME);
-        setCurrentFragment(EScreenType.HOME_SCREEN.ordinal());
-    }
 
-    @OnClick(R.id.ll_order)
-    public void ordersClick() {
-        setFooterState(AppConstant.FOOTER_INDEX.ORDER);
-        setCurrentFragment(EScreenType.ORDERS_SCREEN.ordinal());
-    }
-
-    @OnClick(R.id.ll_profile)
-    public void profileClick() {
-        setFooterState(AppConstant.FOOTER_INDEX.PROFILE);
-        setCurrentFragment(EScreenType.PROFILE_SCREEN.ordinal());
-    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        ButterKnife.bind(this);
         setFooterState(AppConstant.FOOTER_INDEX.HOME);
         setCurrentFragment(EScreenType.HOME_SCREEN.ordinal());
-
-        ll_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showToast("home button click");
-            }
-        });
     }
 
    /**
@@ -146,5 +123,23 @@ public class HomeActivity extends BaseActivity {
         EScreenType eScreenType = EScreenType.values()[fragmentVal];
         this.currentFragment = FragmentFactory.getInstance().getFragment(eScreenType);
         replaceFragment(R.id.container_home, currentFragment, false);
+    }
+
+    @OnClick(R.id.ll_home)
+    public void homeClick() {
+        setFooterState(AppConstant.FOOTER_INDEX.HOME);
+        setCurrentFragment(EScreenType.HOME_SCREEN.ordinal());
+    }
+
+    @OnClick(R.id.ll_order)
+    public void ordersClick() {
+        setFooterState(AppConstant.FOOTER_INDEX.ORDER);
+        setCurrentFragment(EScreenType.ORDERS_SCREEN.ordinal());
+    }
+
+    @OnClick(R.id.ll_profile)
+    public void profileClick() {
+        setFooterState(AppConstant.FOOTER_INDEX.PROFILE);
+        setCurrentFragment(EScreenType.PROFILE_SCREEN.ordinal());
     }
 }
