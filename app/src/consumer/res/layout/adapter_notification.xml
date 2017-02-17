@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_161e252d">
+
+    <com.e2b.views.CustomTextView
+        android:id="@+id/tv_notify_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="@dimen/dp_8"
+        android:text="This is text"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_18" />
+
+    <com.e2b.views.CustomTextView
+        android:id="@+id/tv_notify_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/tv_notify_title"
+        android:layout_margin="@dimen/dp_8"
+        android:text="25 March"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_14"
+        />
+
+</RelativeLayout>
