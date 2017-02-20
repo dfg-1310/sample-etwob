@@ -17,8 +17,8 @@ import com.e2b.views.CirclePageIndicator;
 public class HelpActivity extends BaseActivity {
 
     LayoutInflater layoutInflater;
-    private int img[] = {R.drawable.screen_1, R.drawable.screen_2, R.drawable.screen_3,
-            R.drawable.screen_4, R.drawable.screen_5, R.drawable.screen_6};
+    private int img[] = {R.color.color_6e6e6e, R.color.color_080808, R.color.color_33929292,
+            R.color.color_CC42B757, R.color.color_B3142029, R.color.color_fb523f};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class HelpActivity extends BaseActivity {
                 }
             });
 
-            helpImageView.setImageResource(img[position]);
+            helpImageView.setBackgroundColor(img[position]);
 
             if(position == img.length-1){
                 view.setVisibility(View.VISIBLE);

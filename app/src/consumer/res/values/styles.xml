@@ -1,9 +1,9 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">@color/color_42B757</item>
+        <!--<item name="colorPrimaryDark">@color/color_42B757</item>
         <item name="colorPrimary">@color/color_42B757</item>
-        <item name="colorAccent">@color/color_42B757</item>
+        <item name="colorAccent">@color/color_42B757</item>-->
         <!--<item name="android:windowDrawsSystemBarBackgrounds">false</item>-->
     </style>
 

@@ -11,6 +11,8 @@ import com.e2b.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import e2b.adapter.OrderAdapter;
+import e2b.utils.DummyData;
 
 /**
  * Created by gaurav on 6/2/17.
@@ -22,6 +24,8 @@ public class OrdersFragment extends BaseFragment {
 
     @Bind(R.id.order_listview)
     ListView orderListView;
+
+    OrderAdapter orderAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,10 +43,25 @@ public class OrdersFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getOrders();
     }
 
     private void getOrders() {
         // TODO :: make api call and show on ui
+
+        orderAdapter = new OrderAdapter(getActivity(), DummyData.getOrders());
+        orderListView.setAdapter(orderAdapter);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getOrders();
+
+    }
+
 }

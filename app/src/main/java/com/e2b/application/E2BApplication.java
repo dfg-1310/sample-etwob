@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.e2b.api.ApiClient;
 import com.e2b.api.IApiRequest;
+
 import e2b.utils.ConsumerPreferenceKeeper;
 
 
@@ -20,6 +21,7 @@ public class E2BApplication extends Application {
         super.onCreate();
         context = this;
         ConsumerPreferenceKeeper.setContext(getApplicationContext());
+
         ApiClient.init(IApiRequest.class);
     }
 }

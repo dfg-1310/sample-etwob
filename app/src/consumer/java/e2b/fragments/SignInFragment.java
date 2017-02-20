@@ -2,7 +2,6 @@ package e2b.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,22 +9,11 @@ import android.widget.EditText;
 
 import com.e2b.R;
 import com.e2b.activity.BaseActivity;
-import com.e2b.api.ApiCallback;
-import com.e2b.api.ApiClient;
-import com.e2b.api.IApiRequest;
-import com.e2b.model.response.BaseResponse;
-import com.e2b.model.response.Error;
-import com.e2b.utils.AppUtils;
-
-import e2b.activity.HomeActivity;
-import e2b.model.response.UserResponse;
-import e2b.utils.ConsumerPreferenceKeeper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import e2b.enums.EScreenType;
-import retrofit2.Call;
 
 /**
  * Created by gaurav on 4/2/17.
@@ -60,38 +48,38 @@ public class SignInFragment extends BaseFragment {
 
     @OnClick(R.id.tv_sign_in)
     public void signInClick() {
-        String email = etMobileNumber.getText().toString().trim();
-        String password = etPasscode.getText().toString().trim();
-
-        if (!openDialogSignin(activity, email, password)) {
-            return;
-        }
-
-        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
-        activity.showProgressBar();
-        IApiRequest request = ApiClient.getRequest();
-
-        Call<BaseResponse<UserResponse>> call = request.signInAPI(email, password);
-        call.enqueue(new ApiCallback<UserResponse>(activity) {
-            @Override
-            public void onSucess(UserResponse userResponse) {
-//                ConsumerPreferenceKeeper.getInstance().setIsLogin(true);
-//                ConsumerPreferenceKeeper.getInstance().setAccessToken(userResponse.getUser().getAccessToken());
-//                ConsumerPreferenceKeeper.getInstance().saveUser(userResponse.getUser());
-                activity.hideProgressBar();
-                activity.launchActivity(HomeActivity.class);
-                clearData();
-            }
-
-            @Override
-            public void onError(Error error) {
-                activity.hideProgressBar();
-                activity.showToast(error.getMsg());
-                Log.d(TAG, error.getMsg());
-            }
-
-
-        });
+//        String email = etMobileNumber.getText().toString().trim();
+//        String password = etPasscode.getText().toString().trim();
+//
+//        if (!openDialogSignin(activity, email, password)) {
+//            return;
+//        }
+//
+//        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
+//        activity.showProgressBar();
+//        IApiRequest request = ApiClient.getRequest();
+//
+//        Call<BaseResponse<UserResponse>> call = request.signInAPI(email, password);
+//        call.enqueue(new ApiCallback<UserResponse>(activity) {
+//            @Override
+//            public void onSucess(UserResponse userResponse) {
+////                ConsumerPreferenceKeeper.getInstance().setIsLogin(true);
+////                ConsumerPreferenceKeeper.getInstance().setAccessToken(userResponse.getUser().getAccessToken());
+////                ConsumerPreferenceKeeper.getInstance().saveUser(userResponse.getUser());
+//                activity.hideProgressBar();
+//                activity.launchActivity(HomeActivity.class);
+//                clearData();
+//            }
+//
+//            @Override
+//            public void onError(Error error) {
+//                activity.hideProgressBar();
+//                activity.showToast(error.getMsg());
+//                Log.d(TAG, error.getMsg());
+//            }
+//
+//
+//        });
     }
     public  boolean openDialogSignin(BaseActivity activity, String email, String password) {
 //        if (TextUtils.isEmpty(email)) {

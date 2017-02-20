@@ -6,6 +6,8 @@ import android.os.Handler;
 import com.e2b.R;
 
 import e2b.activity.AuthActivity;
+import e2b.activity.HomeActivity;
+import e2b.utils.ConsumerPreferenceKeeper;
 
 /**
  * A login screen that offers login via email/password.
@@ -21,11 +23,11 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 // check user loggedin or not in app
-//                if(ConsumerPreferenceKeeper.getInstance().getIsLogin()){
-//                    launchActivityMain(HomeActivity.class);
-//                }else{
+                if(ConsumerPreferenceKeeper.getInstance().getIsLogin()){
+                    launchActivityMain(HomeActivity.class);
+                }else{
                     launchActivityMain(AuthActivity.class);
-//                }
+                }
                 finish();
             }
         }, 1500);

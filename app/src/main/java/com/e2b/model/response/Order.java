@@ -7,9 +7,18 @@ package com.e2b.model.response;
 public class Order {
 
     private String id;
-    private String title;
+    private String orderTitle;
+    private String shopName;
     private String date;
     private String status;
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
 
     public String getId() {
         return id;
@@ -19,12 +28,12 @@ public class Order {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getOrderTitle() {
+        return orderTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setOrderTitle(String orderTitle) {
+        this.orderTitle = orderTitle;
     }
 
     public String getDate() {

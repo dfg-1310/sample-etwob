@@ -18,13 +18,13 @@ import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
 import com.e2b.utils.DialogUtils;
 import com.e2b.views.CustomTextView;
+import com.google.gson.JsonObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import e2b.activity.HomeActivity;
 import e2b.enums.EScreenType;
-import e2b.model.response.UserResponse;
+import e2b.model.response.VerifiedOTPResponse;
 import e2b.utils.ConsumerPreferenceKeeper;
 import retrofit2.Call;
 
@@ -62,48 +62,52 @@ public class OTPConfirmFragment extends BaseFragment {
     @OnClick(R.id.tv_verify_otp)
     public void verifyOTP() {
        // need to api call for verify otp
-        activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.SIGN_UP_SCREEN));
-
+        verifyOtp();
     }
 
-//    @OnClick(R.id.tv_sign_in)
-//    public void signInClick() {
-//        String email = etOTPCode.getText().toString().trim();
-//
-//        if (!openDialogSignin(activity, email)) {
-//            return;
-//        }
-//
-//        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
-//        activity.showProgressBar();
-//        IApiRequest request = ApiClient.getRequest();
-//
-//        Call<BaseResponse<UserResponse>> call = request.sendOTP(email);
-//        call.enqueue(new ApiCallback<UserResponse>(activity) {
-//            @Override
-//            public void onSucess(UserResponse userResponse) {
-////                ConsumerPreferenceKeeper.getInstance().setIsLogin(true);
-////                ConsumerPreferenceKeeper.getInstance().setAccessToken(userResponse.getUser().getAccessToken());
-////                ConsumerPreferenceKeeper.getInstance().saveUser(userResponse.getUser());
-//                activity.hideProgressBar();
-//                activity.launchActivity(HomeActivity.class);
-//                clearData();
-//            }
-//
-//            @Override
-//            public void onError(Error error) {
-//                activity.hideProgressBar();
-//                activity.showToast(error.getMsg());
-//                Log.d(TAG, error.getMsg());
-//            }
-//
-//
-//        });
-//    }
+    public void verifyOtp() {
+        String otp = etOTPCode.getText().toString().trim();
 
-    public boolean openDialogSignin(BaseActivity activity, String mobile) {
-        if (TextUtils.isEmpty(mobile)) {
-            DialogUtils.showDialog(activity, activity.getString(R.string.enter_mobile_number));
+        if (!openDialogSignin(activity, otp)) {
+            return;
+        }
+
+        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
+        activity.showProgressBar();
+        IApiRequest request = ApiClient.getRequest();
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("mobile", "+91-8447628001");
+        jsonObject.addProperty("authCode", otp);
+
+
+        Call<BaseResponse<VerifiedOTPResponse>> call = request.verifyotp(jsonObject);
+        call.enqueue(new ApiCallback<VerifiedOTPResponse>(activity) {
+            @Override
+            public void onSucess(VerifiedOTPResponse userResponse) {
+//                ConsumerPreferenceKeeper.getInstance().setIsLogin(true);
+//                ConsumerPreferenceKeeper.getInstance().setAccessToken(userResponse.getUser().getAccessToken());
+//                ConsumerPreferenceKeeper.getInstance().saveUser(userResponse.getUser());
+                  activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.SIGN_UP_SCREEN));
+                activity.hideProgressBar();
+//                activity.launchActivity(HomeActivity.class);
+                clearData();
+            }
+
+            @Override
+            public void onError(Error error) {
+                activity.hideProgressBar();
+                activity.showToast(error.getMsg());
+                Log.d(TAG, error.getMsg());
+            }
+
+
+        });
+    }
+
+    public boolean openDialogSignin(BaseActivity activity, String otp) {
+        if (TextUtils.isEmpty(otp)) {
+            DialogUtils.showDialog(activity, activity.getString(R.string.enter_otp_code));
             return false;
         }
 //        if (!Validator.isValidEmail(email)) {

@@ -3,7 +3,6 @@ package com.e2b.api;
 import android.content.Context;
 import android.util.Log;
 
-
 import com.e2b.R;
 import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
@@ -28,7 +27,7 @@ public abstract class ApiCallback<T> implements Callback<BaseResponse<T>> {
     public void onResponse(Call<BaseResponse<T>> call, Response<BaseResponse<T>> response) {
         if (response.body() != null) {
             Log.i(TAG, "RES : " + "Success");
-            if (((BaseResponse) response.body()).getStatusCode() == 1) {
+            if (((BaseResponse) response.body()).getSt() == 1) {
                 onSucess(response.body().getResult());
             } else {
                 if (response.body().getError() != null) {

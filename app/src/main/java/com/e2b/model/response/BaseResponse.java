@@ -2,12 +2,9 @@ package com.e2b.model.response;
 
 public class BaseResponse<T> {
 
-    private int statusCode;
+    private int st;
     private T result;
     private Error error;
-
-
-
 
     public Error getError() {
         return error;
@@ -17,12 +14,12 @@ public class BaseResponse<T> {
         this.error = error;
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    public int getSt() {
+        return st;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public void setSt(int st) {
+        this.st = st;
     }
 
     public T getResult() {

@@ -1,10 +1,14 @@
 package com.e2b.activity;
 
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -12,8 +16,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -21,10 +23,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.e2b.R;
+import com.e2b.utils.AppConstant;
+import com.e2b.utils.AppUtils;
 
 import e2b.fragments.BaseFragment;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-
 
 public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -148,14 +151,14 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public void setStatusBarColorRuntime(int colorStatusBar) {
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(colorStatusBar);
-        }
-    }
+//    public void setStatusBarColorRuntime(int colorStatusBar) {
+//        Window window = this.getWindow();
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            window.setStatusBarColor(colorStatusBar);
+//        }
+//    }
 
     public int getColor(Context context, int color) {
         return ContextCompat.getColor(context, color);
@@ -184,6 +187,44 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .bitmapTransform(new CropCircleTransformation(this))
                 .into(imageView);
+    }
+
+
+    public Uri takePhoto() {
+        Uri mCapturedImageURI = null;
+        try {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.MediaColumns.TITLE, getPackageName());
+            mCapturedImageURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
+            startActivityForResult(cameraIntent, AppConstant.TAKE_PICTURE);
+
+        } catch (ActivityNotFoundException anfe) {
+            showToast(getString(R.string.unable_to_access_camera));
+        }
+
+        return mCapturedImageURI;
+    }
+
+    // Select picture from gallery
+
+    public Uri choosePhoto() {
+        Uri mCapturedImageURI = null;
+        if (Environment.getExternalStorageState().equals("mounted")) {
+
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.MediaColumns.TITLE, getPackageName());
+            mCapturedImageURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+            Intent pickImageIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            pickImageIntent.setType("image/*");
+            AppUtils.setCropImage(pickImageIntent, mCapturedImageURI);
+            pickImageIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+            startActivityForResult(pickImageIntent, AppConstant.CHOOSE_PICTURE);
+        }
+        return mCapturedImageURI;
     }
 
 

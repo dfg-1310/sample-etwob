@@ -5,5 +5,9 @@
 
     <ListView
         android:id="@+id/order_listview"
-        style="@style/match_parent"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/color_080808"
+        android:cacheColorHint="@android:color/transparent"
+        />
 </LinearLayout>
