@@ -23,7 +23,9 @@ import com.google.gson.JsonObject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import e2b.activity.AuthActivity;
 import e2b.enums.EScreenType;
+import e2b.model.response.UserResponse;
 import e2b.model.response.VerifiedOTPResponse;
 import e2b.utils.ConsumerPreferenceKeeper;
 import retrofit2.Call;
@@ -77,7 +79,12 @@ public class OTPConfirmFragment extends BaseFragment {
         IApiRequest request = ApiClient.getRequest();
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("mobile", "+91-8447628001");
+        if(activity != null && activity instanceof AuthActivity){
+            UserResponse userResponse = ((AuthActivity) activity).userResponse;
+            if(userResponse != null && userResponse.getUsername() != null){
+                jsonObject.addProperty("mobile", userResponse.getUsername());
+            }
+        }
         jsonObject.addProperty("authCode", otp);
 
 
@@ -85,13 +92,10 @@ public class OTPConfirmFragment extends BaseFragment {
         call.enqueue(new ApiCallback<VerifiedOTPResponse>(activity) {
             @Override
             public void onSucess(VerifiedOTPResponse userResponse) {
-//                ConsumerPreferenceKeeper.getInstance().setIsLogin(true);
-//                ConsumerPreferenceKeeper.getInstance().setAccessToken(userResponse.getUser().getAccessToken());
-//                ConsumerPreferenceKeeper.getInstance().saveUser(userResponse.getUser());
-                  activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.SIGN_UP_SCREEN));
-                activity.hideProgressBar();
-//                activity.launchActivity(HomeActivity.class);
                 clearData();
+                activity.hideProgressBar();
+                activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.SIGN_UP_SCREEN));
+                ((AuthActivity)activity).saveUserInfo();
             }
 
             @Override
@@ -100,8 +104,6 @@ public class OTPConfirmFragment extends BaseFragment {
                 activity.showToast(error.getMsg());
                 Log.d(TAG, error.getMsg());
             }
-
-
         });
     }
 
@@ -110,29 +112,8 @@ public class OTPConfirmFragment extends BaseFragment {
             DialogUtils.showDialog(activity, activity.getString(R.string.enter_otp_code));
             return false;
         }
-//        if (!Validator.isValidEmail(email)) {
-//            DialogUtils.showDialog(activity, activity.getString(R.string.enter_email_validation));
-//            return false;
-//        }
-//
-//        if (TextUtils.isEmpty(password)) {
-//            DialogUtils.showDialog(activity, activity.getString(R.string.please_enter_password));
-//            etPasscode.setText("");
-//            return false;
-//        }
-//        if (password.length() <= AppConstant.PASSWARD_LENGTH) {
-//            DialogUtils.showDialog(activity, activity.getString(R.string.passwordValidation));
-//            etPasscode.setText("");
-//            return false;
-//        }
         return true;
     }
-
-
-//    @OnClick(R.id.tv_have_no_account)
-//    public void goToSignUpScreenClick() {
-//        activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.SIGN_UP_SCREEN));
-//    }
 
 }
 

@@ -24,6 +24,7 @@ import com.google.gson.JsonObject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import e2b.activity.AuthActivity;
 import e2b.activity.HomeActivity;
 import e2b.enums.EScreenType;
 import e2b.model.response.UserResponse;
@@ -76,14 +77,12 @@ public class MobileVerificationFragment extends BaseFragment {
 
 
     public void signIn() {
+        activity.showProgressBar();
         String mobileNumber = etMobileNumber.getText().toString().trim();
-
         if (!openDialogSignin(activity, mobileNumber)) {
             return;
         }
-
         ConsumerPreferenceKeeper.getInstance().setAccessToken("");
-//        activity.showProgressBar();
         IApiRequest request = ApiClient.getRequest();
 
         mobileNumber  = "+91-"+mobileNumber;
@@ -95,8 +94,14 @@ public class MobileVerificationFragment extends BaseFragment {
             public void onSucess(UserResponse userResponse) {
                 activity.hideProgressBar();
                 if(userResponse.isNewUser()){
+                    if(activity != null && activity instanceof AuthActivity){
+                        ((AuthActivity)activity).userResponse = userResponse;
+                    }
                     activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.OTP_CONFRM));
                 }else{
+                    if(activity != null && activity instanceof AuthActivity){
+                        ((AuthActivity)activity).saveUserInfo(userResponse);
+                    }
                     activity.launchActivity(HomeActivity.class);
                     activity.finish();
                 }
@@ -110,8 +115,6 @@ public class MobileVerificationFragment extends BaseFragment {
                 activity.showToast(error.getMsg());
                 Log.d(TAG, error.getMsg());
             }
-
-
         });
     }
 
@@ -122,8 +125,6 @@ public class MobileVerificationFragment extends BaseFragment {
         }
         return true;
     }
-
-
 }
 
 

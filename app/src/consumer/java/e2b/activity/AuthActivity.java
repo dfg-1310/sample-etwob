@@ -2,13 +2,18 @@ package e2b.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.e2b.R;
 import com.e2b.activity.BaseActivity;
 
 import e2b.enums.EScreenType;
 import e2b.fragments.FragmentFactory;
+import e2b.intrface.ISaveUserInfo;
+import e2b.model.response.UserResponse;
 
-public class AuthActivity extends BaseActivity {
+public class AuthActivity extends BaseActivity implements ISaveUserInfo {
+
+    public UserResponse userResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,4 +28,16 @@ public class AuthActivity extends BaseActivity {
         FragmentFactory.getInstance().getCurrentFragment().onActivityResult(requestCode, resultCode, data);
     }
 
+
+    @Override
+    public void saveUserInfo(UserResponse userResponse) {
+        // TODO :: Save user data is prefrence for future use.
+    }
+
+    @Override
+    public void saveUserInfo() {
+        if(userResponse != null){
+            saveUserInfo(userResponse);
+        }
+    }
 }
