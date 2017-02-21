@@ -24,15 +24,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import e2b.activity.AuthActivity;
+import e2b.activity.HomeActivity;
 import e2b.enums.EScreenType;
 import e2b.model.response.UserResponse;
 import e2b.model.response.VerifiedOTPResponse;
 import e2b.utils.ConsumerPreferenceKeeper;
 import retrofit2.Call;
-
-/**
- * Created by gaurav on 11/2/17.
- */
 
 public class OTPConfirmFragment extends BaseFragment {
 
@@ -63,7 +60,7 @@ public class OTPConfirmFragment extends BaseFragment {
 
     @OnClick(R.id.tv_verify_otp)
     public void verifyOTP() {
-       // need to api call for verify otp
+        // need to api call for verify otp
         verifyOtp();
     }
 
@@ -79,14 +76,13 @@ public class OTPConfirmFragment extends BaseFragment {
         IApiRequest request = ApiClient.getRequest();
 
         JsonObject jsonObject = new JsonObject();
-        if(activity != null && activity instanceof AuthActivity){
+        if (activity != null && activity instanceof AuthActivity) {
             UserResponse userResponse = ((AuthActivity) activity).userResponse;
-            if(userResponse != null && userResponse.getUsername() != null){
+            if (userResponse != null && userResponse.getUsername() != null) {
                 jsonObject.addProperty("mobile", userResponse.getUsername());
             }
         }
         jsonObject.addProperty("authCode", otp);
-
 
         Call<BaseResponse<VerifiedOTPResponse>> call = request.verifyotp(jsonObject);
         call.enqueue(new ApiCallback<VerifiedOTPResponse>(activity) {
@@ -94,8 +90,13 @@ public class OTPConfirmFragment extends BaseFragment {
             public void onSucess(VerifiedOTPResponse userResponse) {
                 clearData();
                 activity.hideProgressBar();
-                activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.SIGN_UP_SCREEN));
-                ((AuthActivity)activity).saveUserInfo();
+                if (((AuthActivity) activity).userResponse.isNewUser()) {
+                    activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.PROFILE_SETUP_SCREEN));
+                } else {
+                    activity.launchActivity(HomeActivity.class);
+                    activity.finish();
+                }
+                ((AuthActivity) activity).saveUserInfo();
             }
 
             @Override
@@ -114,7 +115,6 @@ public class OTPConfirmFragment extends BaseFragment {
         }
         return true;
     }
-
 }
 
 

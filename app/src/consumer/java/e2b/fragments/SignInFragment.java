@@ -107,7 +107,7 @@ public class SignInFragment extends BaseFragment {
 
     @OnClick(R.id.tv_have_no_account)
     public void goToSignUpScreenClick() {
-        activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.SIGN_UP_SCREEN));
+        activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.PROFILE_SETUP_SCREEN));
     }
 
 }

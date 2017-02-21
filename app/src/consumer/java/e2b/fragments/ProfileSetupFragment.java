@@ -20,8 +20,8 @@ import e2b.activity.HelpActivity;
  * Created by gaurav on 4/2/17.
  */
 
-public class SignUpFragment extends BaseFragment {
-    private String TAG = SignUpFragment.class.getSimpleName();
+public class ProfileSetupFragment extends BaseFragment {
+    private String TAG = ProfileSetupFragment.class.getSimpleName();
     private View view;
 
     @Bind(R.id.et_signup_full_name)

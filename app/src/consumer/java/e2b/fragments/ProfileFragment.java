@@ -21,7 +21,7 @@ import butterknife.OnClick;
 
 public class ProfileFragment extends BaseFragment {
 
-    private String TAG = SignUpFragment.class.getSimpleName();
+    private String TAG = ProfileSetupFragment.class.getSimpleName();
     private View view;
 
     @Bind(R.id.et_profile_full_name)

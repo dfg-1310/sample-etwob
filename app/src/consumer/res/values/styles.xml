@@ -7,6 +7,11 @@
         <!--<item name="android:windowDrawsSystemBarBackgrounds">false</item>-->
     </style>
 
+    <declare-styleable name="MaskedEditText">
+        <attr name="mask" format="string" />
+        <attr name="placeholder" format="string" />
+    </declare-styleable>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

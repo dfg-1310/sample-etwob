@@ -13,7 +13,7 @@ public class FragmentFactory {
     //fragments to be launched on authActivity
     private BaseFragment baseFragment;
     private SignInFragment signinFragment;
-    private SignUpFragment signUpFragment;
+    private ProfileSetupFragment signUpFragment;
 
     //fragments to be launched on HomeActivity
     private GoogleMapFragment mapFragment;
@@ -59,10 +59,10 @@ public class FragmentFactory {
                 baseFragment = signinFragment;
                 break;
 
-            case SIGN_UP_SCREEN:
+            case PROFILE_SETUP_SCREEN:
                 if (signUpFragment == null) {
-                    Log.i(TAG, SignUpFragment.class.getSimpleName());
-                    signUpFragment = new SignUpFragment();
+                    Log.i(TAG, ProfileSetupFragment.class.getSimpleName());
+                    signUpFragment = new ProfileSetupFragment();
                 }
                 baseFragment = signUpFragment;
                 break;

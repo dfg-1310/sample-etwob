@@ -2,12 +2,13 @@ package e2b.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.e2b.R;
 import com.e2b.activity.BaseActivity;
@@ -18,6 +19,7 @@ import com.e2b.listener.IDialogListener;
 import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
 import com.e2b.utils.DialogUtils;
+import com.e2b.views.CustomEditText;
 import com.e2b.views.CustomTextView;
 import com.google.gson.JsonObject;
 
@@ -25,7 +27,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import e2b.activity.AuthActivity;
-import e2b.activity.HomeActivity;
 import e2b.enums.EScreenType;
 import e2b.model.response.UserResponse;
 import e2b.utils.ConsumerPreferenceKeeper;
@@ -40,11 +41,12 @@ public class MobileVerificationFragment extends BaseFragment {
     private static final String TAG = MobileVerificationFragment.class.getSimpleName();
 
     @Bind(R.id.et_mobile_number)
-    EditText etMobileNumber;
+    CustomEditText etMobileNumber;
 
     @Bind(R.id.tv_why)
     CustomTextView tv_why;
 
+    private String lastEntered;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +57,50 @@ public class MobileVerificationFragment extends BaseFragment {
 
     private void clearData() {
         etMobileNumber.setText("");
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        etMobileNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d(TAG, "onTextChanged() called with: s = [" + s + "], start = [" + start + "], before = [" + before + "], count = [" + count + "]");
+                if(etMobileNumber.getText().toString().trim().length() == 1 && !etMobileNumber.getText().subSequence(0,1).toString().equals("+")){
+                    etMobileNumber.setText("+"+etMobileNumber.getText().toString().trim());
+                    etMobileNumber.setSelection(etMobileNumber.getText().length());
+                }else if(etMobileNumber.getText().toString().trim().length() == 3 && !getLastDiff(lastEntered, new String(s.toString())).equals("-")){
+                    etMobileNumber.setText(etMobileNumber.getText().toString().trim()+"-");
+                    etMobileNumber.setSelection(etMobileNumber.getText().length());
+                }else if(etMobileNumber.getText().toString().trim().length() == 7 && !getLastDiff(lastEntered, new String(s.toString())).equals("-")){
+                    etMobileNumber.setText(etMobileNumber.getText().toString().trim()+"-");
+                    etMobileNumber.setSelection(etMobileNumber.getText().length());
+                }else if(etMobileNumber.getText().toString().trim().length() == 11 && !getLastDiff(lastEntered, new String(s.toString())).equals("-")){
+                    etMobileNumber.setText(etMobileNumber.getText().toString().trim()+"-");
+                    etMobileNumber.setSelection(etMobileNumber.getText().length());
+                }
+
+                lastEntered = etMobileNumber.getText().toString().trim();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    private String getLastDiff(String lastEntered, String newEntered) {
+        if(lastEntered.length() > newEntered.length()){
+          return lastEntered.replace(newEntered,"");
+        }else{
+            return newEntered.replace(lastEntered, "");
+        }
     }
 
     @OnClick(R.id.tv_why)
@@ -93,18 +139,11 @@ public class MobileVerificationFragment extends BaseFragment {
             @Override
             public void onSucess(UserResponse userResponse) {
                 activity.hideProgressBar();
-                if(userResponse.isNewUser()){
-                    if(activity != null && activity instanceof AuthActivity){
-                        ((AuthActivity)activity).userResponse = userResponse;
-                    }
-                    activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.OTP_CONFRM));
-                }else{
-                    if(activity != null && activity instanceof AuthActivity){
-                        ((AuthActivity)activity).saveUserInfo(userResponse);
-                    }
-                    activity.launchActivity(HomeActivity.class);
-                    activity.finish();
+
+                if(activity != null && activity instanceof AuthActivity){
+                    ((AuthActivity)activity).userResponse = userResponse;
                 }
+                    activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.OTP_CONFRM));
                 clearData();
                 Log.d(TAG, "[USER RESPONSE : ]"+userResponse.toString());
             }
