@@ -4,8 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-
 import com.e2b.utils.AppConstant;
+import com.e2b.utils.GsonUtils;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
+import e2b.model.response.UserResponse;
 
 /**
  * Class is used to save user data in preference.
@@ -45,6 +50,7 @@ public class ConsumerPreferenceKeeper {
     public void setIsLogin(boolean isLogin) {
         prefs.edit().putBoolean(AppConstant.PreferenceKeeperNames.LOGIN, isLogin).commit();
     }
+
     public String getAccessToken() {
         return prefs.getString(AppConstant.PreferenceKeeperNames.ACCESS_TOKEN, "");
     }
@@ -52,23 +58,24 @@ public class ConsumerPreferenceKeeper {
     public void setAccessToken(String accessToken) {
         prefs.edit().putString(AppConstant.PreferenceKeeperNames.ACCESS_TOKEN, accessToken).commit();
     }
-//    public void saveUser(User user) {
-//        if (user != null) {
-//            prefs.edit().putString(AppConstant.PreferenceKeeperNames.USER, GsonUtils.getJson(user)).commit();
-//        } else {
-//            prefs.edit().putString(AppConstant.PreferenceKeeperNames.USER, "{}").commit();
-//        }
-//    }
-//
-//    public User getUser() {
-//        Type type = new TypeToken<User>() {
-//        }.getType();
-//        return GsonUtils.parseJson(prefs.getString(AppConstant.PreferenceKeeperNames.USER, "{}"), type);
-//    }
+    public void saveUser(UserResponse user) {
+        if (user != null) {
+            prefs.edit().putString(AppConstant.PreferenceKeeperNames.USER, GsonUtils.getJson(user)).commit();
+        } else {
+            prefs.edit().putString(AppConstant.PreferenceKeeperNames.USER, "{}").commit();
+        }
+    }
+
+    public UserResponse getUser() {
+        Type type = new TypeToken<UserResponse>() {
+        }.getType();
+        return GsonUtils.parseJson(prefs.getString(AppConstant.PreferenceKeeperNames.USER, "{}"), type);
+    }
 
     public void setFCMToken(String token) {
         prefs.edit().putString(AppConstant.PreferenceKeeperNames.FCM_TOKEN, token).commit();
     }
+
     public String getFCMToken() {
         return prefs.getString(AppConstant.PreferenceKeeperNames.FCM_TOKEN, "");
     }
@@ -80,4 +87,13 @@ public class ConsumerPreferenceKeeper {
     public String getLong() {
         return null;
     }
+
+    public String getUserId() {
+        return prefs.getString(AppConstant.PreferenceKeeperNames.USER_ID, "");
+    }
+
+    public void setUserId(String userId) {
+        prefs.edit().putString(AppConstant.PreferenceKeeperNames.USER_ID, userId).commit();
+    }
+
 }

@@ -12,16 +12,24 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface IApiRequest {
 
     @POST("consumer")
     Call<BaseResponse<UserResponse>> consumer(@Body JsonObject mobileJsonObject);
 
+    @POST("consumer/resend/otp")
+    Call<BaseResponse<UserResponse>> resendOtp(@Body JsonObject mobileJsonObject);
+
     @POST("consumer/verify/otp")
     Call<BaseResponse<VerifiedOTPResponse>> verifyotp(@Body JsonObject jsonObject);
 
-    @FormUrlEncoded
+    @PUT("consumer/{id}")
+    Call<BaseResponse<UserResponse>> profileSetup(@Path("id") String userId, @Body String jsonObject);
+
+        @FormUrlEncoded
     @POST("user/forgotPassword")
     Call<BaseResponse<CommonApiResponse>> forgotPasswordAPI(@Field(FIELD.EMAIL) String email);
 

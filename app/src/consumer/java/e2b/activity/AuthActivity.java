@@ -10,6 +10,7 @@ import e2b.enums.EScreenType;
 import e2b.fragments.FragmentFactory;
 import e2b.intrface.ISaveUserInfo;
 import e2b.model.response.UserResponse;
+import e2b.utils.ConsumerPreferenceKeeper;
 
 public class AuthActivity extends BaseActivity implements ISaveUserInfo {
 
@@ -30,8 +31,16 @@ public class AuthActivity extends BaseActivity implements ISaveUserInfo {
 
 
     @Override
-    public void saveUserInfo(UserResponse userResponse) {
-        // TODO :: Save user data is prefrence for future use.
+    public void saveUserInfo(final UserResponse userResponse) {
+        final ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(keeper != null){
+                    keeper.saveUser(userResponse);
+                }
+            }
+        }).start();
     }
 
     @Override

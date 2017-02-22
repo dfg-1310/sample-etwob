@@ -73,6 +73,22 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/dp_17" />
         </com.e2b.views.MaterialRippleEffect>
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/tv_resend_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_25"
+            android:paddingRight="@dimen/dp_25"
+            android:text="@string/vrify_text"
+            android:isScrollContainer="false"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp_17"
+            />
+
+
     </LinearLayout>
 
 </RelativeLayout>

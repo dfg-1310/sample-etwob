@@ -22,6 +22,7 @@ public class AppConstant {
         String ACCESS_TOKEN = "access_token";
         String USER = "user";
         String FCM_TOKEN = "fcm_token";
+        String USER_ID = "user_id";
     }
 
     public interface PERMISSION_REQ_CODE {

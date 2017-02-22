@@ -3,18 +3,30 @@ package e2b.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.e2b.R;
+import com.e2b.api.ApiCallback;
+import com.e2b.api.ApiClient;
+import com.e2b.api.IApiRequest;
+import com.e2b.model.request.Coordinate;
+import com.e2b.model.response.BaseResponse;
+import com.e2b.model.response.Error;
 import com.e2b.utils.DialogUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import e2b.activity.HelpActivity;
+import e2b.activity.HomeActivity;
+import e2b.model.request.ProfileSetup;
+import e2b.model.response.UserResponse;
+import e2b.utils.ConsumerPreferenceKeeper;
+import retrofit2.Call;
 
 /**
  * Created by gaurav on 4/2/17.
@@ -52,40 +64,51 @@ public class ProfileSetupFragment extends BaseFragment {
 
     @OnClick(R.id.tv_save)
     public void signUpClick() {
-        fullName = etFullName.getText().toString().trim();
-        address1 = etSignUpAddress1.getText().toString().trim();
-        address2 = etSignUpAddress2.getText().toString().trim();
-
-        activity.launchActivity(HelpActivity.class);
+//        fullName = etFullName.getText().toString().trim();
+//        address1 = etSignUpAddress1.getText().toString().trim();
+//        address2 = etSignUpAddress2.getText().toString().trim();
+//
+//        ProfileSetup profileSetup = new ProfileSetup();
+//
+//        profileSetup.setName(fullName);
+//        profileSetup.setAddress(address1+address2);
+//        profileSetup.setCoordinate(getLocationCoordinate());
+//
 //        if (profileValidation()) {
-//            profileUpdateApi();
+//            profileUpdateApi(profileSetup);
 //        }
+
+        activity.launchActivityMain(HomeActivity.class);
+        activity.finish();
     }
 
-//    private void profileUpdateApi() {
-//        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
-//        activity.showProgressBar();
-//        IApiRequest request = ApiClient.getRequest();
-//        Call<BaseResponse<UserResponse>> call = request.profileSetup(fullName,(address1+address2));
-//        call.enqueue(new ApiCallback<UserResponse>(activity) {
-//            @Override
-//            public void onSucess(UserResponse userResponse) {
-//                activity.hideProgressBar();
-//                activity.launchActivity(HomeActivity.class);
-//                clearData();
-//            }
-//
-//            @Override
-//            public void onError(Error msg) {
-//                activity.showToast(msg.getMsg());
-//                Log.d(TAG + "signup api msg", msg.getMsg());
-//                activity.hideProgressBar();
-//
-//            }
-//
-//        });
-//
-//    }
+    private Coordinate getLocationCoordinate() {
+        return new Coordinate();
+    }
+
+    private void profileUpdateApi(ProfileSetup profileSetup) {
+        activity.showProgressBar();
+        IApiRequest request = ApiClient.getRequest();
+        ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
+        Call<BaseResponse<UserResponse>> call = request.profileSetup(keeper.getUserId(),profileSetup.toJson());
+        call.enqueue(new ApiCallback<UserResponse>(activity) {
+            @Override
+            public void onSucess(UserResponse userResponse) {
+                clearData();
+                activity.hideProgressBar();
+                activity.launchActivity(HelpActivity.class);
+                activity.finish();
+            }
+
+            @Override
+            public void onError(Error msg) {
+                activity.showToast(msg.getMsg());
+                Log.d(TAG + "signup api msg", msg.getMsg());
+                activity.hideProgressBar();
+            }
+        });
+
+    }
 
     private void clearData() {
         etSignUpAddress1.setText("");

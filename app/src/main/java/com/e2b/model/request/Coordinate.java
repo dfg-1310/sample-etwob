@@ -1,8 +1,6 @@
 package com.e2b.model.request;
 
-/**
- * Created by gaurav on 9/2/17.
- */
+
 public class Coordinate {
 
    private String lat;

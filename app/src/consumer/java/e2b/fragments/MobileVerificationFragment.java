@@ -71,21 +71,20 @@ public class MobileVerificationFragment extends BaseFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.d(TAG, "onTextChanged() called with: s = [" + s + "], start = [" + start + "], before = [" + before + "], count = [" + count + "]");
-                if(etMobileNumber.getText().toString().trim().length() == 1 && !etMobileNumber.getText().subSequence(0,1).toString().equals("+")){
-                    etMobileNumber.setText("+"+etMobileNumber.getText().toString().trim());
+                if(etMobileNumber.getText().toString().length() == 1 && !etMobileNumber.getText().subSequence(0,1).toString().equals("+")){
+                    etMobileNumber.setText("+"+etMobileNumber.getText().toString());
                     etMobileNumber.setSelection(etMobileNumber.getText().length());
-                }else if(etMobileNumber.getText().toString().trim().length() == 3 && !getLastDiff(lastEntered, new String(s.toString())).equals("-")){
-                    etMobileNumber.setText(etMobileNumber.getText().toString().trim()+"-");
+                }else if(etMobileNumber.getText().toString().length() == 3 && !getLastDiff(lastEntered, new String(s.toString())).equals(" ")){
+                    etMobileNumber.setText(etMobileNumber.getText().toString()+" ");
                     etMobileNumber.setSelection(etMobileNumber.getText().length());
-                }else if(etMobileNumber.getText().toString().trim().length() == 7 && !getLastDiff(lastEntered, new String(s.toString())).equals("-")){
-                    etMobileNumber.setText(etMobileNumber.getText().toString().trim()+"-");
+                }else if(etMobileNumber.getText().toString().length() == 7 && !getLastDiff(lastEntered, new String(s.toString())).equals(" ")){
+                    etMobileNumber.setText(etMobileNumber.getText().toString()+" ");
                     etMobileNumber.setSelection(etMobileNumber.getText().length());
-                }else if(etMobileNumber.getText().toString().trim().length() == 11 && !getLastDiff(lastEntered, new String(s.toString())).equals("-")){
-                    etMobileNumber.setText(etMobileNumber.getText().toString().trim()+"-");
+                }else if(etMobileNumber.getText().toString().length() == 11 && !getLastDiff(lastEntered, new String(s.toString())).equals(" ")){
+                    etMobileNumber.setText(etMobileNumber.getText().toString()+" ");
                     etMobileNumber.setSelection(etMobileNumber.getText().length());
                 }
-
-                lastEntered = etMobileNumber.getText().toString().trim();
+                lastEntered = etMobileNumber.getText().toString();
             }
 
             @Override
@@ -110,7 +109,6 @@ public class MobileVerificationFragment extends BaseFragment {
             public void positiveClick() {
                 // go to api call
                 signIn();
-
             }
 
             @Override
@@ -124,14 +122,13 @@ public class MobileVerificationFragment extends BaseFragment {
 
     public void signIn() {
         activity.showProgressBar();
-        String mobileNumber = etMobileNumber.getText().toString().trim();
+        String mobileNumber = etMobileNumber.getText().toString().trim().replace(" ","");
         if (!openDialogSignin(activity, mobileNumber)) {
             return;
         }
         ConsumerPreferenceKeeper.getInstance().setAccessToken("");
         IApiRequest request = ApiClient.getRequest();
 
-        mobileNumber  = "+91-"+mobileNumber;
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("mobile",mobileNumber);
         Call<BaseResponse<UserResponse>> call = request.consumer(jsonObject);

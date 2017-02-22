@@ -21,7 +21,7 @@
             android:layout_marginTop="@dimen/dp_5"
             android:button="@null"
             android:clickable="false"
-            android:drawableLeft="@drawable/selector_feeds" />
+            android:drawableLeft="@drawable/selector_home" />
 
         <com.e2b.views.CustomTextView
             android:id="@+id/tv_home"
@@ -60,7 +60,7 @@
             android:layout_marginTop="@dimen/dp_5"
             android:button="@null"
             android:clickable="false"
-            android:drawableLeft="@drawable/selector_friends" />
+            android:drawableLeft="@drawable/selector_orders" />
 
 
         <com.e2b.views.CustomTextView
@@ -101,7 +101,7 @@
             android:layout_marginTop="@dimen/dp_5"
             android:button="@null"
             android:clickable="false"
-            android:drawableLeft="@drawable/selector_groups" />
+            android:drawableLeft="@drawable/selector_profile" />
 
         <com.e2b.views.CustomTextView
             android:id="@+id/tv_profile"
