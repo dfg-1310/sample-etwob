@@ -1,5 +1,7 @@
 package e2b.model.response;
 
+import com.e2b.model.request.Coordinate;
+
 /**
  * Created by gaurav on 9/2/17.
  */
@@ -19,6 +21,10 @@ public class UserResponse {
     private String createdBy;
     private String createdOn;
     private boolean isNewUser;
+    private String name;
+    private String address;
+    private Coordinate coordinate;
+
 
     public boolean isNewUser() {
         return isNewUser;
@@ -130,6 +136,31 @@ public class UserResponse {
 
     public void setCreatedOn(String createdOn) {
         this.createdOn = createdOn;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 
     @Override

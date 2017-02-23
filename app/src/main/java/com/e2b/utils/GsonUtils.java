@@ -1,6 +1,7 @@
 package com.e2b.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 import java.lang.reflect.Type;
 
@@ -26,6 +27,10 @@ public class GsonUtils {
     public static <T> T getObject(final String jsonString, final Class<T> objectClass) {
         Gson gson = new Gson();
         return gson.fromJson(jsonString, objectClass);
+    }
+
+    public static JsonElement getJsonTree(Object profile) {
+        return new Gson().toJsonTree(profile);
     }
 
 }

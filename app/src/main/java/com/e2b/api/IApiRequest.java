@@ -27,7 +27,7 @@ public interface IApiRequest {
     Call<BaseResponse<VerifiedOTPResponse>> verifyotp(@Body JsonObject jsonObject);
 
     @PUT("consumer/{id}")
-    Call<BaseResponse<UserResponse>> profileSetup(@Path("id") String userId, @Body String jsonObject);
+    Call<BaseResponse<UserResponse>> profileSetup(@Path("id") String userId, @Body JsonObject jsonObject);
 
         @FormUrlEncoded
     @POST("user/forgotPassword")

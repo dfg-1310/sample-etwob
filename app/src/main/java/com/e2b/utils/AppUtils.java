@@ -29,6 +29,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -52,7 +53,7 @@ public class AppUtils {
                 .getActiveNetworkInfo();
         boolean isnewtwork = (activeNetworkInfo != null && activeNetworkInfo.isConnected());
         if (!isnewtwork) {
-         //show dialog
+            //show dialog
         }
         return isnewtwork;
     }
@@ -63,7 +64,8 @@ public class AppUtils {
         return Typeface.createFromAsset(assets, (initPath + File.separator)
                 + typeface);
     }
-    public static  void key(Activity activity) {
+
+    public static void key(Activity activity) {
         try {
             PackageInfo info = activity.getPackageManager().getPackageInfo(activity.getApplicationContext().getPackageName(), PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
@@ -89,7 +91,6 @@ public class AppUtils {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
     }
-
 
 
     // Captured or picked photo's image path
@@ -147,9 +148,10 @@ public class AppUtils {
 
     public static int getInPixel(Activity activity, int value) {
         Resources r = activity.getResources();
-        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,  value,  r.getDisplayMetrics());
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, r.getDisplayMetrics());
         return px;
     }
+
     public static String getES_SHA_256(String base) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -182,4 +184,31 @@ public class AppUtils {
         return true;
     }
 
+
+    public static String encodeToBase64(String text) {
+
+        // Sending side
+        byte[] data = new byte[0];
+        String base64 = null;
+        try {
+            data = text.getBytes("UTF-8");
+            base64 = Base64.encodeToString(data, Base64.DEFAULT);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return base64;
+    }
+
+
+    public static String decodeToBase64(String base64) {
+        // Receiving side
+        byte[] data = Base64.decode(base64, Base64.DEFAULT);
+        String text = null;
+        try {
+            text = new String(data, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return  text;
+    }
 }

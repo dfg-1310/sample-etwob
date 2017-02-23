@@ -4,11 +4,11 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.e2b.utils.AppConstant;
-
-import e2b.utils.ConsumerPreferenceKeeper;
+import com.e2b.utils.AppUtils;
 
 import java.io.IOException;
 
+import e2b.utils.ConsumerPreferenceKeeper;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -30,7 +30,7 @@ public class CijsiInterceptor implements Interceptor {
             return chain.proceed(originalRequest);
         }
 
-        Request newRequest = originalRequest.newBuilder().addHeader("Authorization", token).build();
+        Request newRequest = originalRequest.newBuilder().addHeader("Authorization", AppUtils.encodeToBase64("X:"+token)).build();
 
 
         Log.d("Request token ", token);

@@ -22,7 +22,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import e2b.activity.HelpActivity;
-import e2b.activity.HomeActivity;
 import e2b.model.request.ProfileSetup;
 import e2b.model.response.UserResponse;
 import e2b.utils.ConsumerPreferenceKeeper;
@@ -64,22 +63,22 @@ public class ProfileSetupFragment extends BaseFragment {
 
     @OnClick(R.id.tv_save)
     public void signUpClick() {
-//        fullName = etFullName.getText().toString().trim();
-//        address1 = etSignUpAddress1.getText().toString().trim();
-//        address2 = etSignUpAddress2.getText().toString().trim();
-//
-//        ProfileSetup profileSetup = new ProfileSetup();
-//
-//        profileSetup.setName(fullName);
-//        profileSetup.setAddress(address1+address2);
-//        profileSetup.setCoordinate(getLocationCoordinate());
-//
-//        if (profileValidation()) {
-//            profileUpdateApi(profileSetup);
-//        }
+        fullName = etFullName.getText().toString().trim();
+        address1 = etSignUpAddress1.getText().toString().trim();
+        address2 = etSignUpAddress2.getText().toString().trim();
 
-        activity.launchActivityMain(HomeActivity.class);
-        activity.finish();
+        ProfileSetup profileSetup = new ProfileSetup();
+
+        profileSetup.setName(fullName);
+        profileSetup.setAddress(address1+address2);
+        profileSetup.setCoordinate(getLocationCoordinate());
+
+        if (profileValidation()) {
+            profileUpdateApi(profileSetup);
+        }
+
+//        activity.launchActivityMain(HomeActivity.class);
+//        activity.finish();
     }
 
     private Coordinate getLocationCoordinate() {
@@ -90,7 +89,7 @@ public class ProfileSetupFragment extends BaseFragment {
         activity.showProgressBar();
         IApiRequest request = ApiClient.getRequest();
         ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
-        Call<BaseResponse<UserResponse>> call = request.profileSetup(keeper.getUserId(),profileSetup.toJson());
+        Call<BaseResponse<UserResponse>> call = request.profileSetup(keeper.getUserId(),profileSetup.toJsonObject());
         call.enqueue(new ApiCallback<UserResponse>(activity) {
             @Override
             public void onSucess(UserResponse userResponse) {
