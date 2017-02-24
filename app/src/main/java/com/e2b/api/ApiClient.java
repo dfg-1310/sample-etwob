@@ -15,7 +15,7 @@ public class ApiClient {
     public static void init(Class<IApiRequest> requestClass) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().addNetworkInterceptor(new CijsiInterceptor()).addInterceptor(interceptor).build();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().addNetworkInterceptor(new ApiInterceptor()).addInterceptor(interceptor).build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.HOST)
                 .addConverterFactory(GsonConverterFactory.create()).client(okHttpClient)

@@ -21,10 +21,10 @@ import com.e2b.utils.DialogUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import e2b.activity.AuthActivity;
 import e2b.activity.HelpActivity;
 import e2b.model.request.ProfileSetup;
 import e2b.model.response.UserResponse;
-import e2b.utils.ConsumerPreferenceKeeper;
 import retrofit2.Call;
 
 /**
@@ -88,8 +88,7 @@ public class ProfileSetupFragment extends BaseFragment {
     private void profileUpdateApi(ProfileSetup profileSetup) {
         activity.showProgressBar();
         IApiRequest request = ApiClient.getRequest();
-        ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
-        Call<BaseResponse<UserResponse>> call = request.profileSetup(keeper.getUserId(),profileSetup.toJsonObject());
+        Call<BaseResponse<UserResponse>> call = request.profileSetup(((AuthActivity)activity).userResponse.getConsumer(), profileSetup.toJsonObject());
         call.enqueue(new ApiCallback<UserResponse>(activity) {
             @Override
             public void onSucess(UserResponse userResponse) {
@@ -106,7 +105,6 @@ public class ProfileSetupFragment extends BaseFragment {
                 activity.hideProgressBar();
             }
         });
-
     }
 
     private void clearData() {

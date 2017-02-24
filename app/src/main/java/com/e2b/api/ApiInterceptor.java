@@ -16,7 +16,7 @@ import okhttp3.Response;
 /**
  * Class is used to passing user token at central level.
  */
-public class CijsiInterceptor implements Interceptor {
+public class ApiInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
@@ -30,7 +30,9 @@ public class CijsiInterceptor implements Interceptor {
             return chain.proceed(originalRequest);
         }
 
-        Request newRequest = originalRequest.newBuilder().addHeader("Authorization", AppUtils.encodeToBase64("X:"+token)).build();
+        token = AppUtils.encodeToBase64("x:"+token);
+        Request newRequest = originalRequest.newBuilder().
+                addHeader("Authorization", "Basic " +token).build();
 
 
         Log.d("Request token ", token);

@@ -186,7 +186,6 @@ public class AppUtils {
 
 
     public static String encodeToBase64(String text) {
-
         // Sending side
         byte[] data = new byte[0];
         String base64 = null;
