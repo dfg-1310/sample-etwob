@@ -29,7 +29,6 @@ import butterknife.OnClick;
 import e2b.activity.AuthActivity;
 import e2b.enums.EScreenType;
 import e2b.model.response.UserResponse;
-import e2b.utils.ConsumerPreferenceKeeper;
 import retrofit2.Call;
 
 /**
@@ -126,7 +125,7 @@ public class MobileVerificationFragment extends BaseFragment {
         if (!openDialogSignin(activity, mobileNumber)) {
             return;
         }
-        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
+//        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
         IApiRequest request = ApiClient.getRequest();
 
         JsonObject jsonObject = new JsonObject();

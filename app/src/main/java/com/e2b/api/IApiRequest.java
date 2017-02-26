@@ -29,7 +29,7 @@ public interface IApiRequest {
     @PUT("consumer/{id}")
     Call<BaseResponse<UserResponse>> profileSetup(@Path("id") String userId, @Body JsonObject jsonObject);
 
-        @FormUrlEncoded
+    @FormUrlEncoded
     @POST("user/forgotPassword")
     Call<BaseResponse<CommonApiResponse>> forgotPasswordAPI(@Field(FIELD.EMAIL) String email);
 

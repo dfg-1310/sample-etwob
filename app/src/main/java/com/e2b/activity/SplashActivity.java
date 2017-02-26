@@ -2,6 +2,7 @@ package com.e2b.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.e2b.R;
 
@@ -23,7 +24,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 // check user loggedin or not in app
-                if(ConsumerPreferenceKeeper.getInstance().getIsLogin()){
+                if(!TextUtils.isEmpty(ConsumerPreferenceKeeper.getInstance().getAccessToken())){
                     launchActivityMain(HomeActivity.class);
                 }else{
                     launchActivityMain(AuthActivity.class);

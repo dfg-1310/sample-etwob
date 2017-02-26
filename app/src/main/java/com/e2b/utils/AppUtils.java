@@ -191,7 +191,7 @@ public class AppUtils {
         String base64 = null;
         try {
             data = text.getBytes("UTF-8");
-            base64 = Base64.encodeToString(data, Base64.DEFAULT);
+            base64 = Base64.encodeToString(data, Base64.NO_WRAP | Base64.URL_SAFE);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

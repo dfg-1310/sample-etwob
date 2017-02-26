@@ -80,7 +80,7 @@ public class OTPConfirmFragment extends BaseFragment {
             return;
         }
 
-        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
+//        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
         activity.showProgressBar();
         IApiRequest request = ApiClient.getRequest();
 
@@ -98,17 +98,19 @@ public class OTPConfirmFragment extends BaseFragment {
             @Override
             public void onSucess(VerifiedOTPResponse response) {
                 clearData();
+                ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
+                keeper.setAccessToken(response.getSession());
+                keeper.setUserId(response.getConsumer());
+
                 activity.hideProgressBar();
+
                 if (((AuthActivity) activity).userResponse.isNewUser()) {
                     activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.PROFILE_SETUP_SCREEN));
                 } else {
                     activity.launchActivity(HomeActivity.class);
                     activity.finish();
-                    ((AuthActivity) activity).saveUserInfo();
-                    ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
-                    keeper.setAccessToken(response.getSession());
-                    keeper.setUserId(response.getConsumer());
                 }
+                ((AuthActivity) activity).saveUserInfo();
             }
 
             @Override
@@ -181,7 +183,7 @@ public class OTPConfirmFragment extends BaseFragment {
         if (!openDialogSignin(activity, mobileNumber)) {
             return;
         }
-        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
+//        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
         IApiRequest request = ApiClient.getRequest();
 
         JsonObject jsonObject = new JsonObject();
