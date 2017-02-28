@@ -3,17 +3,27 @@ package e2b.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.e2b.R;
+import com.e2b.api.ApiCallback;
+import com.e2b.api.ApiClient;
+import com.e2b.api.IApiRequest;
+import com.e2b.model.response.BaseResponse;
+import com.e2b.model.response.Error;
 import com.e2b.utils.DialogUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import e2b.model.request.ProfileSetup;
+import e2b.model.response.UserResponse;
+import e2b.utils.ConsumerPreferenceKeeper;
+import retrofit2.Call;
 
 /**
  * Created by gaurav on 6/2/17.
@@ -28,14 +38,13 @@ public class ProfileFragment extends BaseFragment {
     EditText etFullName;
 
     @Bind(R.id.et_profile_address1)
-    EditText etSignUpAddress1;
+    EditText etProfileAddress;
 
-    @Bind(R.id.et_profile_address2)
-    EditText etSignUpAddress2;
+    @Bind(R.id.et_profile_moileno)
+    EditText etProfileMobileNo;
 
     private String fullName;
     private String address1;
-    private String address2;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,62 +59,94 @@ public class ProfileFragment extends BaseFragment {
         return view;
     }
 
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getUserProfile();
+    }
+
+    private void getUserProfile() {
+        ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
+
+        activity.showProgressBar();
+        IApiRequest request = ApiClient.getRequest();
+        Call<BaseResponse<UserResponse>> call = request.getProfile(keeper.getUserId());
+        call.enqueue(new ApiCallback<UserResponse>(activity) {
+            @Override
+            public void onSucess(UserResponse user) {
+                activity.hideProgressBar();
+                etFullName.setText(user.getName());
+                etProfileAddress.setText(user.getAddress());
+                etProfileMobileNo.setText(user.getUsername());      }
+
+            @Override
+            public void onError(Error msg) {
+                Log.d(TAG + "signup api msg", msg.getMsg());
+                activity.hideProgressBar();
+                activity.showToast(msg.getMsg());
+            }
+        });
+    }
+
     @OnClick(R.id.tv_save)
     public void saveProfile() {
         fullName = etFullName.getText().toString().trim();
-        address1 = etSignUpAddress1.getText().toString().trim();
-        address2 = etSignUpAddress2.getText().toString().trim();
+        address1 = etProfileAddress.getText().toString().trim();
 
-        if (signUpValidation()) {
-            signUpApi();
+        ProfileSetup profileSetup = new ProfileSetup();
+
+        profileSetup.setName(fullName);
+        profileSetup.setAddress(address1);
+        profileSetup.setCoordinate(getLocationCoordinate());
+
+
+        if (updateProfileValidation()) {
+            updateProfileApi(profileSetup);
         }
 
     }
 
-    private void signUpApi() {
-//        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
-//        activity.showProgressBar();
-//        IApiRequest request = ApiClient.getRequest();
-//        Call<BaseResponse<UserResponse>> call = request.profileSetup(mobileNumber, fullName, password, address1+address2);
-//        call.enqueue(new ApiCallback<UserResponse>(activity) {
-//            @Override
-//            public void onSucess(UserResponse userResponse) {
-//                activity.hideProgressBar();
-//                activity.launchActivity(HomeActivity.class);
-//                clearData();
-//            }
-//
-//            @Override
-//            public void onError(Error msg) {
-//                activity.showToast(msg.getMsg());
-//                Log.d(TAG + "signup api msg", msg.getMsg());
-//                activity.hideProgressBar();
-//
-//            }
-//
-//        });
+    private void updateProfileApi(ProfileSetup profileSetup) {
+        ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
+
+        activity.showProgressBar();
+        IApiRequest request = ApiClient.getRequest();
+        Call<BaseResponse<UserResponse>> call = request.profileSetup(keeper.getUserId(), profileSetup.toJsonObject());
+        call.enqueue(new ApiCallback<UserResponse>(activity) {
+            @Override
+            public void onSucess(UserResponse userResponse) {
+                activity.hideProgressBar();
+                activity.showToast("Profile updated successfully.");
+                activity.saveUserInfo(userResponse);
+            }
+
+            @Override
+            public void onError(Error msg) {
+                Log.d(TAG + "signup api msg", msg.getMsg());
+                activity.hideProgressBar();
+                activity.showToast(msg.getMsg());
+            }
+        });
 
     }
 
-    private void clearData() {
-        etSignUpAddress1.setText("");
-        etFullName.setText("");
-    }
-
-    private boolean signUpValidation() {
+    private boolean updateProfileValidation() {
 
         if (TextUtils.isEmpty(fullName)) {
             DialogUtils.showDialog(activity, activity.getString(R.string.please_enter_userName));
             return false;
         }
 
-        if (TextUtils.isEmpty(address1) && TextUtils.isEmpty(address2)) {
+        if (TextUtils.isEmpty(address1)) {
             DialogUtils.showDialog(activity, activity.getString(R.string.please_enter_address));
             return false;
         }
 
         return true;
     }
+
+
 
 
 }

@@ -8,11 +8,9 @@ import com.e2b.activity.BaseActivity;
 
 import e2b.enums.EScreenType;
 import e2b.fragments.FragmentFactory;
-import e2b.intrface.ISaveUserInfo;
 import e2b.model.response.UserResponse;
-import e2b.utils.ConsumerPreferenceKeeper;
 
-public class AuthActivity extends BaseActivity implements ISaveUserInfo {
+public class AuthActivity extends BaseActivity {
 
     public UserResponse userResponse;
 
@@ -29,21 +27,6 @@ public class AuthActivity extends BaseActivity implements ISaveUserInfo {
         FragmentFactory.getInstance().getCurrentFragment().onActivityResult(requestCode, resultCode, data);
     }
 
-
-    @Override
-    public void saveUserInfo(final UserResponse userResponse) {
-        final ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if(keeper != null){
-                    keeper.saveUser(userResponse);
-                }
-            }
-        }).start();
-    }
-
-    @Override
     public void saveUserInfo() {
         if(userResponse != null){
             saveUserInfo(userResponse);

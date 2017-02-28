@@ -29,6 +29,9 @@ public interface IApiRequest {
     @PUT("consumer/{id}")
     Call<BaseResponse<UserResponse>> profileSetup(@Path("id") String userId, @Body JsonObject jsonObject);
 
+    @GET("consumer/{id}")
+    Call<BaseResponse<UserResponse>> getProfile(@Path("id") String userId);
+
     @FormUrlEncoded
     @POST("user/forgotPassword")
     Call<BaseResponse<CommonApiResponse>> forgotPasswordAPI(@Field(FIELD.EMAIL) String email);

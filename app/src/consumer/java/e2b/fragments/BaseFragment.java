@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.e2b.activity.BaseActivity;
+import com.e2b.model.request.Coordinate;
 
 
 public class BaseFragment extends Fragment implements View.OnClickListener {
@@ -40,5 +41,10 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
     public void getData(Object object) {
 
     }
+
+    Coordinate getLocationCoordinate() {
+        return new Coordinate();
+    }
+
 
 }

@@ -60,7 +60,7 @@
 
 
             <com.e2b.views.CustomEditText
-                android:id="@+id/et_profile_address2"
+                android:id="@+id/et_profile_moileno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_12"
@@ -74,7 +74,9 @@
                 android:padding="@dimen/dp_8"
                 android:textColor="@color/black"
                 android:textColorHint="@color/color_B3142029"
-                android:textSize="@dimen/dp_13" />
+                android:textSize="@dimen/dp_13"
+                android:editable="false"
+                />
 
             <com.e2b.views.MaterialRippleEffect
                 android:layout_width="wrap_content"

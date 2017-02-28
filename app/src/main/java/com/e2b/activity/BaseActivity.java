@@ -27,9 +27,12 @@ import com.e2b.utils.AppConstant;
 import com.e2b.utils.AppUtils;
 
 import e2b.fragments.BaseFragment;
+import e2b.intrface.ISaveUserInfo;
+import e2b.model.response.UserResponse;
+import e2b.utils.ConsumerPreferenceKeeper;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
+public class BaseActivity extends AppCompatActivity implements View.OnClickListener, ISaveUserInfo {
 
     public static final String TAG = BaseActivity.class.getSimpleName();
     private ProgressDialog progressDialog;
@@ -228,6 +231,16 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
-
+    @Override
+    public void saveUserInfo(final UserResponse userResponse) {
+        final ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(keeper != null){
+                    keeper.saveUser(userResponse);
+                }
+            }
+        }).start();
+    }
 }

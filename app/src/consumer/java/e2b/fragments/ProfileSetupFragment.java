@@ -13,7 +13,6 @@ import com.e2b.R;
 import com.e2b.api.ApiCallback;
 import com.e2b.api.ApiClient;
 import com.e2b.api.IApiRequest;
-import com.e2b.model.request.Coordinate;
 import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
 import com.e2b.utils.DialogUtils;
@@ -76,14 +75,8 @@ public class ProfileSetupFragment extends BaseFragment {
         if (profileValidation()) {
             profileUpdateApi(profileSetup);
         }
-
-//        activity.launchActivityMain(HomeActivity.class);
-//        activity.finish();
     }
 
-    private Coordinate getLocationCoordinate() {
-        return new Coordinate();
-    }
 
     private void profileUpdateApi(ProfileSetup profileSetup) {
         activity.showProgressBar();
@@ -96,6 +89,7 @@ public class ProfileSetupFragment extends BaseFragment {
                 activity.hideProgressBar();
                 activity.launchActivity(HelpActivity.class);
                 activity.finish();
+                activity.saveUserInfo(userResponse);
             }
 
             @Override

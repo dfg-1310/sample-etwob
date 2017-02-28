@@ -9,5 +9,4 @@ import e2b.model.response.UserResponse;
 public interface ISaveUserInfo {
 
     void saveUserInfo(UserResponse userResponse);
-    void saveUserInfo();
 }
