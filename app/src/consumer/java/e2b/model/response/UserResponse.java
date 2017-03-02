@@ -24,7 +24,16 @@ public class UserResponse {
     private String name;
     private String address;
     private Coordinate coordinate;
+    private String mobile;
 
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public boolean isNewUser() {
         return isNewUser;

@@ -25,10 +25,6 @@ import e2b.model.response.UserResponse;
 import e2b.utils.ConsumerPreferenceKeeper;
 import retrofit2.Call;
 
-/**
- * Created by gaurav on 6/2/17.
- */
-
 public class ProfileFragment extends BaseFragment {
 
     private String TAG = ProfileSetupFragment.class.getSimpleName();
@@ -78,7 +74,7 @@ public class ProfileFragment extends BaseFragment {
                 activity.hideProgressBar();
                 etFullName.setText(user.getName());
                 etProfileAddress.setText(user.getAddress());
-                etProfileMobileNo.setText(user.getUsername());      }
+                etProfileMobileNo.setText(user.getMobile());      }
 
             @Override
             public void onError(Error msg) {

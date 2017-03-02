@@ -82,6 +82,6 @@ dependencies {
     //compile 'com.google.maps.android:android-maps-utils:0.4.+'
     // added for viewpagerindicator
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
-
-
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -3,8 +3,11 @@ package com.e2b.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.e2b.R;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import e2b.activity.AuthActivity;
 import e2b.activity.HomeActivity;
@@ -19,11 +22,11 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        initializeFCMToken();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // check user loggedin or not in app
+                // check profile loggedin or not in app
                 if(!TextUtils.isEmpty(ConsumerPreferenceKeeper.getInstance().getAccessToken())){
                     launchActivityMain(HomeActivity.class);
                 }else{
@@ -32,6 +35,16 @@ public class SplashActivity extends BaseActivity {
                 finish();
             }
         }, 1500);
+    }
+
+    private void initializeFCMToken() {
+
+        FirebaseApp.initializeApp(this);
+        String token = FirebaseInstanceId.getInstance().getToken();
+        if (token != null) {
+            Log.d(TAG, "FCM TOKEN "+token);
+            ConsumerPreferenceKeeper.getInstance().setFCMToken(token);
+        }
     }
 
 }

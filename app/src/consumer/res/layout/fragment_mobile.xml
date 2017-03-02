@@ -54,6 +54,8 @@
                 android:gravity="center"
                 android:inputType="phone"
                 android:hint="+XX-XXX-XXX-XXXX"
+                android:drawableLeft="@drawable/mobile_icn"
+                android:drawablePadding="@dimen/dp_4"
                 />
 
             <com.e2b.views.CustomTextView

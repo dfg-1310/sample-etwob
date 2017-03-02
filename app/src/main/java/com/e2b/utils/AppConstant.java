@@ -20,7 +20,7 @@ public class AppConstant {
     public interface PreferenceKeeperNames {
         String LOGIN = "login";
         String ACCESS_TOKEN = "access_token";
-        String USER = "user";
+        String USER = "profile";
         String FCM_TOKEN = "fcm_token";
         String USER_ID = "user_id";
     }

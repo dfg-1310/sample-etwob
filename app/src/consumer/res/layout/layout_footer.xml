@@ -15,8 +15,8 @@
 
         <CheckBox
             android:id="@+id/cb_home"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_5"
             android:button="@null"
@@ -54,8 +54,8 @@
 
         <CheckBox
             android:id="@+id/cb_orders"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_5"
             android:button="@null"
@@ -95,8 +95,8 @@
 
         <CheckBox
             android:id="@+id/cb_profile"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_5"
             android:button="@null"

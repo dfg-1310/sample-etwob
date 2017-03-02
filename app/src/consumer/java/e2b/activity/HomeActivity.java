@@ -113,9 +113,9 @@ public class HomeActivity extends BaseActivity {
     private void manageFooterOptionSelection(CheckBox cb, TextView tv, boolean isSelected) {
         cb.setChecked(isSelected);
         if (isSelected) {
-            tv.setTextColor(getColor(this, R.color.color_CC42B757));
-        } else {
             tv.setTextColor(getColor(this, R.color.color_929292));
+        } else {
+            tv.setTextColor(getColor(this, R.color.black));
         }
     }
 

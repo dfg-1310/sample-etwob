@@ -20,10 +20,10 @@ public interface IApiRequest {
     @POST("consumer")
     Call<BaseResponse<UserResponse>> consumer(@Body JsonObject mobileJsonObject);
 
-    @POST("consumer/resend/otp")
+    @POST("resend/otp")
     Call<BaseResponse<UserResponse>> resendOtp(@Body JsonObject mobileJsonObject);
 
-    @POST("consumer/verify/otp")
+    @POST("verify/otp")
     Call<BaseResponse<VerifiedOTPResponse>> verifyotp(@Body JsonObject jsonObject);
 
     @PUT("consumer/{id}")
@@ -33,10 +33,10 @@ public interface IApiRequest {
     Call<BaseResponse<UserResponse>> getProfile(@Path("id") String userId);
 
     @FormUrlEncoded
-    @POST("user/forgotPassword")
+    @POST("profile/forgotPassword")
     Call<BaseResponse<CommonApiResponse>> forgotPasswordAPI(@Field(FIELD.EMAIL) String email);
 
-    @GET("user/logout")
+    @GET("profile/logout")
     Call<BaseResponse<CommonApiResponse>> logout();
 
     @POST("users")

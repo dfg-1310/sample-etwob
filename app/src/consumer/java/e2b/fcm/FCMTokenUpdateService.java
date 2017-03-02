@@ -2,9 +2,10 @@ package e2b.fcm;
 
 import android.util.Log;
 
-import e2b.utils.ConsumerPreferenceKeeper;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+
+import e2b.utils.ConsumerPreferenceKeeper;
 
 public class FCMTokenUpdateService extends FirebaseInstanceIdService {
 
@@ -28,7 +29,7 @@ public class FCMTokenUpdateService extends FirebaseInstanceIdService {
     /**
      * Persist token to third-party servers.
      *
-     * Modify this method to associate the user's FCM InstanceID token with any server-side account
+     * Modify this method to associate the profile's FCM InstanceID token with any server-side account
      * maintained by your application.
      *
      * @param token The new token.

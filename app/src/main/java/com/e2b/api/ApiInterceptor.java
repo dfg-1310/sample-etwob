@@ -14,7 +14,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Class is used to passing user token at central level.
+ * Class is used to passing profile token at central level.
  */
 public class ApiInterceptor implements Interceptor {
 

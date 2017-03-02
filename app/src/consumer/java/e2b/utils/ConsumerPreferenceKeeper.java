@@ -13,7 +13,7 @@ import java.lang.reflect.Type;
 import e2b.model.response.UserResponse;
 
 /**
- * Class is used to save user data in preference.
+ * Class is used to save profile data in preference.
  */
 public class ConsumerPreferenceKeeper {
 

@@ -29,11 +29,8 @@ import butterknife.OnClick;
 import e2b.activity.AuthActivity;
 import e2b.enums.EScreenType;
 import e2b.model.response.UserResponse;
+import e2b.utils.ConsumerPreferenceKeeper;
 import retrofit2.Call;
-
-/**
- * Created by gaurav on 11/2/17.
- */
 
 public class MobileVerificationFragment extends BaseFragment {
 
@@ -115,7 +112,6 @@ public class MobileVerificationFragment extends BaseFragment {
                 // do nothing
             }
         });
-
     }
 
 
@@ -128,9 +124,15 @@ public class MobileVerificationFragment extends BaseFragment {
 //        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
         IApiRequest request = ApiClient.getRequest();
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("mobile",mobileNumber);
-        Call<BaseResponse<UserResponse>> call = request.consumer(jsonObject);
+        JsonObject mobileJsonObject = new JsonObject();
+        mobileJsonObject.addProperty("mobile",mobileNumber);
+
+        JsonObject deviceJsonObject = new JsonObject();
+        deviceJsonObject.addProperty("pt", 1);
+        deviceJsonObject.addProperty("id", ConsumerPreferenceKeeper.getInstance().getFCMToken());
+        mobileJsonObject.add("device", deviceJsonObject);
+
+        Call<BaseResponse<UserResponse>> call = request.consumer(mobileJsonObject);
         call.enqueue(new ApiCallback<UserResponse>(activity) {
             @Override
             public void onSucess(UserResponse userResponse) {

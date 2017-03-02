@@ -66,7 +66,7 @@
                 android:layout_marginTop="@dimen/dp_12"
                 android:background="@drawable/bg_rect_grey"
                 android:gravity="center"
-                android:hint="@string/enter_address2"
+                android:hint="@string/enter_mobile_number"
                 android:imeOptions="actionDone"
                 android:inputType="textCapSentences"
                 android:maxLength="50"
@@ -76,6 +76,7 @@
                 android:textColorHint="@color/color_B3142029"
                 android:textSize="@dimen/dp_13"
                 android:editable="false"
+                android:focusable="false"
                 />
 
             <com.e2b.views.MaterialRippleEffect
