@@ -26,9 +26,6 @@ import e2b.model.request.ProfileSetup;
 import e2b.model.response.UserResponse;
 import retrofit2.Call;
 
-/**
- * Created by gaurav on 4/2/17.
- */
 
 public class ProfileSetupFragment extends BaseFragment {
     private String TAG = ProfileSetupFragment.class.getSimpleName();

@@ -29,7 +29,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_12"
-                android:background="@drawable/bg_rect_grey"
                 android:gravity="center"
                 android:hint="@string/enter_full_name"
                 android:imeOptions="actionNext"
@@ -39,7 +38,9 @@
                 android:padding="@dimen/dp_8"
                 android:textColor="@color/black"
                 android:textColorHint="@color/color_B3142029"
-                android:textSize="@dimen/dp_13" />
+                android:textSize="@dimen/dp_13"
+                android:drawableLeft="@drawable/profile"
+                />
 
             <com.e2b.views.CustomEditText
                 android:id="@+id/et_signup_address1"
@@ -54,6 +55,7 @@
                 android:maxLength="50"
                 android:maxLines="1"
                 android:padding="@dimen/dp_8"
+                android:drawableLeft="@drawable/address"
                 android:textColor="@color/black"
                 android:textColorHint="@color/color_B3142029"
                 android:textSize="@dimen/dp_13" />
@@ -64,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_12"
-                android:background="@drawable/bg_rect_grey"
+                android:drawableLeft="@drawable/address"
                 android:gravity="center"
                 android:hint="@string/enter_address2"
                 android:imeOptions="actionDone"
