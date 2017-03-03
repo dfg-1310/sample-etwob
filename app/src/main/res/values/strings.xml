@@ -31,5 +31,6 @@
     <string name="phone_number">PHONE NUMBER</string>
     <string name="why_dialog_text">We need to confirm that you are real person.We assure you that we will not share your information and order on behalf of you.</string>
     <string name="resend_text">If you do not receive confirmation code in 2 minutes click here to resend again.</string>
+    <string name="no_merchant_text"> No merchant found within your range</string>
 
 </resources>

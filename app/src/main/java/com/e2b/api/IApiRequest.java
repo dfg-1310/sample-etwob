@@ -4,6 +4,7 @@ import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.CommonApiResponse;
 import com.google.gson.JsonObject;
 
+import e2b.model.response.MerchantResponse;
 import e2b.model.response.UserResponse;
 import e2b.model.response.VerifiedOTPResponse;
 import retrofit2.Call;
@@ -31,6 +32,9 @@ public interface IApiRequest {
 
     @GET("consumer/{id}")
     Call<BaseResponse<UserResponse>> getProfile(@Path("id") String userId);
+
+    @GET("merchant")
+    Call<BaseResponse<MerchantResponse>> getMerchants();
 
     @FormUrlEncoded
     @POST("profile/forgotPassword")
