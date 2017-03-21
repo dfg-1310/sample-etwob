@@ -4,68 +4,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
-        android:visibility="visible"
-        >
-
-        <ImageView
-            android:layout_marginTop="@dimen/dp_8"
-            android:layout_marginBottom="@dimen/dp_8"
-            android:layout_height="@dimen/dp_40"
-            android:layout_width="@dimen/dp_40"
-            android:background="@mipmap/ic_launcher" />
-
-        <com.e2b.views.CustomTextView
-            android:layout_marginRight="@dimen/dp_20"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_8"
-            android:layout_marginBottom="@dimen/dp_8"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            style="@style/wrap_content"
-            android:text="@string/verify_text"
-            app:ctypeface="@string/font_regular"
-            android:textSize="@dimen/sp_16"
-            />
+        android:layout_height="match_parent">
 
         <LinearLayout
-            style="@style/wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/dp_8"
-            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
             android:layout_gravity="center"
             android:gravity="center"
-            >
+            android:orientation="vertical"
+            android:visibility="visible">
 
-            <com.e2b.views.CustomEditText
-                android:id="@+id/et_mobile_number"
-                style="@style/wrap_content"
-                app:ctypeface="@string/font_regular"
-                android:textSize="@dimen/sp_18"
-                android:maxLength="16"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:inputType="phone"
-                android:hint="+XX-XXX-XXX-XXXX"
-                android:drawableLeft="@drawable/mobile_icn"
-                android:drawablePadding="@dimen/dp_4"
-                />
+            <ImageView
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_8"
+                android:background="@mipmap/ic_launcher" />
 
             <com.e2b.views.CustomTextView
-                android:id="@+id/tv_why"
                 style="@style/wrap_content"
-                android:text="Why?"
-                app:ctypeface="@string/font_regular"
-                android:textSize="@dimen/sp_18"
-                />
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_8"
+                android:gravity="center_horizontal"
+                android:text="@string/verify_text"
+                android:textSize="@dimen/sp_16"
+                app:ctypeface="@string/font_regular" />
 
+            <LinearLayout
+                style="@style/wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_8"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.e2b.views.CustomEditText
+                    android:id="@+id/et_mobile_number"
+                    style="@style/wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/mobile_icn"
+                    android:drawablePadding="@dimen/dp_4"
+                    android:gravity="center"
+                    android:hint="+XX-XXX XXX XXXX"
+                    android:inputType="phone"
+                    android:maxLength="16"
+                    android:textSize="@dimen/sp_18"
+                    app:ctypeface="@string/font_regular" />
+
+                <com.e2b.views.CustomTextView
+                    android:id="@+id/tv_why"
+                    style="@style/wrap_content"
+                    android:text="Why?"
+                    android:textSize="@dimen/sp_18"
+                    app:ctypeface="@string/font_regular" />
+            </LinearLayout>
+
+            <com.e2b.views.MaterialRippleEffect
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_40">
+
+                <com.e2b.views.CustomTextView
+                    android:id="@+id/tv_send_otp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/white_btn_round_corner_bg"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:paddingRight="@dimen/dp_20"
+                    android:text="@string/send_otp_text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp_17" />
+            </com.e2b.views.MaterialRippleEffect>
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

@@ -159,97 +159,10 @@ public class Merchant {
         this.closingDays = closingDays;
     }
 }
-    class DeliveryDetail {
-
-        private boolean isAvailable;
-        private String timing;
-        private int radius;
-        private int minAmount;
-
-        public String getTiming() {
-            return timing;
-        }
-
-        public void setTiming(String timing) {
-            this.timing = timing;
-        }
-
-        public int getRadius() {
-            return radius;
-        }
-
-        public void setRadius(int radius) {
-            this.radius = radius;
-        }
-
-        public int getMinAmount() {
-            return minAmount;
-        }
-
-        public void setMinAmount(int minAmount) {
-            this.minAmount = minAmount;
-        }
-
-        public boolean isAvailable() {
-            return isAvailable;
-        }
-
-        public void setAvailable(boolean available) {
-            isAvailable = available;
-        }
-    }
 
 
-    class PaytmDetail {
-        private String mobile;
-        private String _id;
-
-        public String getMobile() {
-            return mobile;
-        }
-
-        public void setMobile(String mobile) {
-            this.mobile = mobile;
-        }
-
-        public String get_id() {
-            return _id;
-        }
-
-        public void set_id(String _id) {
-            this._id = _id;
-        }
-    }
-
-    class ShopTiming {
-        private int from;
-        private int to;
-        private String _id;
 
 
-        public int getFrom() {
-            return from;
-        }
 
-        public void setFrom(int from) {
-            this.from = from;
-        }
-
-        public int getTo() {
-            return to;
-        }
-
-        public void setTo(int to) {
-            this.to = to;
-        }
-
-        public String get_id() {
-            return _id;
-        }
-
-        public void set_id(String _id) {
-            this._id = _id;
-        }
-    }
 
 

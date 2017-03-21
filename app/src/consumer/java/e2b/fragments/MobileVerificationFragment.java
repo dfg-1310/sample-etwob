@@ -42,6 +42,9 @@ public class MobileVerificationFragment extends BaseFragment {
     @Bind(R.id.tv_why)
     CustomTextView tv_why;
 
+    @Bind(R.id.tv_send_otp)
+    CustomTextView tv_send_otp;
+
     private String lastEntered;
     @Nullable
     @Override
@@ -70,8 +73,8 @@ public class MobileVerificationFragment extends BaseFragment {
                 if(etMobileNumber.getText().toString().length() == 1 && !etMobileNumber.getText().subSequence(0,1).toString().equals("+")){
                     etMobileNumber.setText("+"+etMobileNumber.getText().toString());
                     etMobileNumber.setSelection(etMobileNumber.getText().length());
-                }else if(etMobileNumber.getText().toString().length() == 3 && !getLastDiff(lastEntered, new String(s.toString())).equals(" ")){
-                    etMobileNumber.setText(etMobileNumber.getText().toString()+" ");
+                }else if(etMobileNumber.getText().toString().length() == 3 && !getLastDiff(lastEntered, new String(s.toString())).equals("-")){
+                    etMobileNumber.setText(etMobileNumber.getText().toString()+"-");
                     etMobileNumber.setSelection(etMobileNumber.getText().length());
                 }else if(etMobileNumber.getText().toString().length() == 7 && !getLastDiff(lastEntered, new String(s.toString())).equals(" ")){
                     etMobileNumber.setText(etMobileNumber.getText().toString()+" ");
@@ -100,11 +103,9 @@ public class MobileVerificationFragment extends BaseFragment {
 
     @OnClick(R.id.tv_why)
     public void showWhyPopUp() {
-        DialogUtils.showDialogDoubleButton(getActivity(), getString(R.string.why_dialog_text), "OK,PROCEED.", "Cancel", new IDialogListener() {
+        DialogUtils.showDialogSingleButton(getActivity(), getString(R.string.why_dialog_text), "OK,PROCEED.", new IDialogListener() {
             @Override
             public void positiveClick() {
-                // go to api call
-                signIn();
             }
 
             @Override
@@ -114,6 +115,11 @@ public class MobileVerificationFragment extends BaseFragment {
         });
     }
 
+    @OnClick(R.id.tv_send_otp)
+    public void callSendOtp(){
+        // go to api call
+        signIn();
+    }
 
     public void signIn() {
         activity.showProgressBar();

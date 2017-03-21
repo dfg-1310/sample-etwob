@@ -2,29 +2,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- A DrawerLayout is intended to be used as the top-level content view using match_parent for both width and height to consume the full space available. -->
-
-
     <RelativeLayout
         android:id="@+id/ll_home_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/header_layout_view"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <include layout="@layout/layout_header" />
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/container_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/tv"
-            android:background="@color/white">
-        </FrameLayout>
+            android:layout_below="@id/header_layout_view"
+            android:background="@color/white"></FrameLayout>
 
         <LinearLayout
             android:id="@+id/tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:background="@color/white"
+            android:layout_alignParentBottom="true"
             android:orientation="vertical">
 
             <View
@@ -34,9 +40,6 @@
 
             <include layout="@layout/layout_footer" />
         </LinearLayout>
-
     </RelativeLayout>
-
-
 </RelativeLayout>
 

@@ -67,18 +67,19 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
     }
 
     private void getMerchants() {
-         IApiRequest request = ApiClient.getRequest();
-         Call<BaseResponse<MerchantResponse>> call = request.getMerchants();
-         call.enqueue(new ApiCallback<MerchantResponse>(activity) {
+        IApiRequest request = ApiClient.getRequest();
+        Call<BaseResponse<MerchantResponse>> call = request.getMerchants();
+        call.enqueue(new ApiCallback<MerchantResponse>(activity) {
             @Override
             public void onSucess(MerchantResponse merchantResponse) {
-                if(merchantResponse != null && merchantResponse.getMerchants().size()>0){
+                if (merchantResponse != null && merchantResponse.getMerchants().size() > 0) {
                     GoogleMapFragment.this.merchantResponse = merchantResponse;
-                }else{
+                } else {
                     DialogUtils.showDialog(activity, getString(R.string.no_merchant_text));
                 }
-
-                setupMarker(mMap, merchantResponse.getMerchants());
+                if(mMap != null){
+                    setupMarker(mMap, merchantResponse.getMerchants());
+                }
             }
 
             @Override
@@ -90,17 +91,37 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
 
     private void setupMarker(GoogleMap googleMap, List<Merchant> merchants) {
         LatLng latLng = null;
-        for(Merchant merchant : merchants){
+        MarkerOptions options = null;
+        Marker marker = null;
+        for (Merchant merchant : merchants) {
             latLng = new LatLng(merchant.getCoordinates().getLat(), merchant.getCoordinates().getLng());
-            googleMap.addMarker(new MarkerOptions().position(latLng)
-                    .title(merchant.getShopName())).setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
+            options = new MarkerOptions();
+            options.position(latLng)
+                    .title(merchant.getShopName());
+            options.snippet(getMarkerSnippetString(merchant));
+            marker = googleMap.addMarker(options);
+            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
         }
 
-        if(latLng != null){
+        if (latLng != null) {
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_LEVEL));
         }
 
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                return false;
+            }
+        });
+    }
+
+    private String getMarkerSnippetString(Merchant merchant) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Timing : " + merchant.getShopTiming().getFrom() + " to " + merchant.getShopTiming().getTo()+
+                "\n"+ merchant.getClosingDays() + "/n" + merchant.getShopAddress());
+
+        return builder.toString();
     }
 
     private void init() {
@@ -133,7 +154,7 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
             mMap.getUiSettings().setRotateGesturesEnabled(false);
             mMap.getUiSettings().setZoomGesturesEnabled(true);
         }
-        if(merchantResponse != null){
+        if (merchantResponse != null && googleMap != null) {
             setupMarker(googleMap, merchantResponse.getMerchants());
         }
     }

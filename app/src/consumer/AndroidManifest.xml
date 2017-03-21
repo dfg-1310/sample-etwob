@@ -6,6 +6,6 @@
 
 
     <application>
-        <activity android:name="e2b.activity.AuthActivity"></activity>
+        <activity android:name="e2b.activity.AuthActivity" ></activity>
     </application>
 </manifest>

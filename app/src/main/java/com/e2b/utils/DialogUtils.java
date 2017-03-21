@@ -56,7 +56,17 @@ public class DialogUtils {
         }).show();
     }
 
+    public static void showDialogSingleButton(Context context, String message, String positive, final IDialogListener iListener) {
 
+        new MaterialDialog.Builder(context).title(context.getString(R.string.app_name)).content(message)
+                .positiveColorRes(R.color.color_CC42B757).positiveText(positive)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        iListener.positiveClick();
+                    }
+                }).show();
+    }
     public static boolean openDialogSignin(BaseActivity activity, String email, String password) {
         if (TextUtils.isEmpty(email)) {
             showDialog(activity, activity.getString(R.string.enter_email));

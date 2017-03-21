@@ -32,5 +32,9 @@
     <string name="why_dialog_text">We need to confirm that you are real person.We assure you that we will not share your information and order on behalf of you.</string>
     <string name="resend_text">If you do not receive confirmation code in 2 minutes click here to resend again.</string>
     <string name="no_merchant_text"> No merchant found within your range</string>
+    <string name="send_otp_text"> Send OTP</string>
+    <string name="place_order_text"> Place Order </string>
+    <string name="success_registered_text"> Successfully Registered! :)</string>
+
 
 </resources>

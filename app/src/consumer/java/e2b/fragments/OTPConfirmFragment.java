@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.e2b.R;
 import com.e2b.activity.BaseActivity;
@@ -49,6 +50,11 @@ public class OTPConfirmFragment extends BaseFragment {
     @Bind(R.id.tv_resend_otp)
     CustomTextView tv_resend_otp;
 
+    @Bind(R.id.otp_code_layout)
+    LinearLayout otpCodeLayout;
+
+    @Bind(R.id.success_msg_layout)
+    LinearLayout successMsgLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,7 +107,8 @@ public class OTPConfirmFragment extends BaseFragment {
                 ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
                 keeper.setAccessToken(response.getSession());
                 keeper.setUserId(response.getConsumer());
-
+                otpCodeLayout.setVisibility(View.GONE);
+                successMsgLayout.setVisibility(View.VISIBLE);
                 activity.hideProgressBar();
 
                 if (((AuthActivity) activity).userResponse.isNewUser()) {
