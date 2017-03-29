@@ -15,7 +15,7 @@ public class FragmentFactory {
     private SignInFragment signinFragment;
     private ProfileSetupFragment signUpFragment;
 
-    //fragments to be launched on HomeActivity
+    //fragments to be launched on MapActivity
     private GoogleMapFragment mapFragment;
     private OrdersFragment orderFragment;
     private ProfileFragment profileFragment;

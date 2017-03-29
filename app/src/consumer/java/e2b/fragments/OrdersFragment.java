@@ -2,10 +2,11 @@ package e2b.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.e2b.R;
 
@@ -23,8 +24,7 @@ public class OrdersFragment extends BaseFragment {
     private static final String TAG = OrdersFragment.class.getSimpleName();
 
     @Bind(R.id.order_listview)
-    ListView orderListView;
-
+    RecyclerView orderListView;
     OrderAdapter orderAdapter;
 
     @Override
@@ -37,6 +37,9 @@ public class OrdersFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_list, container, false);
         ButterKnife.bind(this, view);
+
+        orderListView.setLayoutManager(new LinearLayoutManager(activity));
+        orderListView.setHasFixedSize(true);
         return view;
     }
 
@@ -50,11 +53,7 @@ public class OrdersFragment extends BaseFragment {
 
         orderAdapter = new OrderAdapter(getActivity(), DummyData.getOrders());
         orderListView.setAdapter(orderAdapter);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
+        orderAdapter.notifyDataSetChanged();
     }
 
     @Override

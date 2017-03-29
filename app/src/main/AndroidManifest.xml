@@ -39,7 +39,7 @@
         </activity>
 
         <activity
-            android:name="e2b.activity.HomeActivity"
+            android:name="e2b.activity.MapActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
         </activity>

@@ -30,7 +30,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import e2b.activity.AuthActivity;
-import e2b.activity.HomeActivity;
+import e2b.activity.MapActivity;
 import e2b.enums.EScreenType;
 import e2b.model.response.UserResponse;
 import e2b.model.response.VerifiedOTPResponse;
@@ -114,7 +114,7 @@ public class OTPConfirmFragment extends BaseFragment {
                 if (((AuthActivity) activity).userResponse.isNewUser()) {
                     activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.PROFILE_SETUP_SCREEN));
                 } else {
-                    activity.launchActivity(HomeActivity.class);
+                    activity.launchActivity(MapActivity.class);
                     activity.finish();
                 }
                 ((AuthActivity) activity).saveUserInfo();

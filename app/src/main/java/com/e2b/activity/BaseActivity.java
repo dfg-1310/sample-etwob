@@ -43,7 +43,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Log.d(TAG, "onCreate: fcm key = " + FirebaseInstanceId.getInstance().getToken());
 
     }
 

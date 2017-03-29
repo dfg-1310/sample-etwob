@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/tv_order_title"
-        android:layout_margin="@dimen/dp_8"
+        android:layout_marginLeft="@dimen/dp_8"
         android:text="25 March"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_14"

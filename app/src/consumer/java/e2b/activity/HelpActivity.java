@@ -40,7 +40,7 @@ public class HelpActivity extends BaseActivity {
     }
 
     private void exitFromHelpScreens() {
-        launchActivityMain(HomeActivity.class);
+        launchActivityMain(MapActivity.class);
         finish();
     }
 

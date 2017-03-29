@@ -67,7 +67,7 @@ public class SignInFragment extends BaseFragment {
 ////                ConsumerPreferenceKeeper.getInstance().setAccessToken(userResponse.getUser().getAccessToken());
 ////                ConsumerPreferenceKeeper.getInstance().saveUser(userResponse.getUser());
 //                activity.hideProgressBar();
-//                activity.launchActivity(HomeActivity.class);
+//                activity.launchActivity(MapActivity.class);
 //                clearData();
 //            }
 //

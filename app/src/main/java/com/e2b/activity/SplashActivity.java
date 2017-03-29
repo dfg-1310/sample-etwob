@@ -10,7 +10,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import e2b.activity.AuthActivity;
-import e2b.activity.HomeActivity;
+import e2b.activity.MapActivity;
 import e2b.utils.ConsumerPreferenceKeeper;
 
 /**
@@ -28,7 +28,7 @@ public class SplashActivity extends BaseActivity {
             public void run() {
                 // check profile loggedin or not in app
                 if(!TextUtils.isEmpty(ConsumerPreferenceKeeper.getInstance().getAccessToken())){
-                    launchActivityMain(HomeActivity.class);
+                    launchActivityMain(MapActivity.class);
                 }else{
                     launchActivityMain(AuthActivity.class);
                 }

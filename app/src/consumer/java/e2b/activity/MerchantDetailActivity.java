@@ -4,13 +4,12 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 
 import com.e2b.R;
-import com.e2b.activity.BaseActivity;
 
 /**
  * Created by gaurav on 6/3/17.
  */
 
-public class MerchantDetailActivity extends BaseActivity {
+public class MerchantDetailActivity extends ConsumerBaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {

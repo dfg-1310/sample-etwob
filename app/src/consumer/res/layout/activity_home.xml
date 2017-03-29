@@ -2,44 +2,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/ll_home_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/header_layout_view"
-            android:layout_alignParentTop="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <include layout="@layout/layout_header" />
-        </LinearLayout>
-
         <FrameLayout
             android:id="@+id/container_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/tv"
             android:layout_below="@id/header_layout_view"
-            android:background="@color/white"></FrameLayout>
+            android:background="@color/white"/>
 
-        <LinearLayout
-            android:id="@+id/tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
-                android:background="@color/color_26929292" />
-
-            <include layout="@layout/layout_footer" />
-        </LinearLayout>
-    </RelativeLayout>
 </RelativeLayout>
 

@@ -141,8 +141,4 @@ public class ProfileFragment extends BaseFragment {
 
         return true;
     }
-
-
-
-
 }

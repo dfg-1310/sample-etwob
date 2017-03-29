@@ -1,7 +1,12 @@
 package e2b.activity;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.LayoutRes;
+import android.text.TextUtils;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -12,13 +17,15 @@ import com.e2b.utils.AppConstant;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import e2b.enums.EScreenType;
 import e2b.fragments.BaseFragment;
-import e2b.fragments.FragmentFactory;
 
-public class HomeActivity extends BaseActivity {
+/**
+ * Created by gaurav on 23/3/17.
+ */
 
-    private int previous;
+public class ConsumerBaseActivity extends BaseActivity {
+
+    private FrameLayout bodyContainerLayout;
 
     @Bind(R.id.tv_home)
     TextView tv_home;
@@ -28,6 +35,9 @@ public class HomeActivity extends BaseActivity {
 
     @Bind(R.id.tv_profile)
     TextView tv_profile;
+
+   @Bind(R.id.tv_header_title)
+    TextView tv_header_title;
 
     @Bind(R.id.cb_home)
     CheckBox cb_home;
@@ -47,26 +57,33 @@ public class HomeActivity extends BaseActivity {
     @Bind(R.id.ll_profile)
     RelativeLayout ll_profile;
 
+    @Bind(R.id.iv_notify)
+    ImageView iv_notify;
 
+    private int previous;
 
     private BaseFragment currentFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        ButterKnife.bind(this);
-        setFooterState(AppConstant.FOOTER_INDEX.HOME);
-        setCurrentFragment(EScreenType.HOME_SCREEN.ordinal());
+    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
     }
 
-   /**
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        super.setContentView(R.layout.activity_consumer_base);
+        ButterKnife.bind(this);
+        bodyContainerLayout = (FrameLayout) findViewById(R.id.base_body);
+        bodyContainerLayout.addView(getLayoutInflater().inflate(layoutResID, null), 0, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+    }
+
+    /**
      * This method changes footer selected tab to selected colour
      *
      * @param index
      */
 
-    private void setFooterState(int index) {
+    public void setFooterState(int index) {
         if (index != previous) {
             resetSelectedFooterOption(previous);
             previous = index;
@@ -107,7 +124,7 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
-    private void manageFooterOptionSelection(CheckBox cb, TextView tv, boolean isSelected) {
+    public void manageFooterOptionSelection(CheckBox cb, TextView tv, boolean isSelected) {
         cb.setChecked(isSelected);
         if (isSelected) {
             tv.setTextColor(getColor(this, R.color.color_929292));
@@ -116,27 +133,42 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
-    private void setCurrentFragment(int fragmentVal) {
-        EScreenType eScreenType = EScreenType.values()[fragmentVal];
-        this.currentFragment = FragmentFactory.getInstance().getFragment(eScreenType);
-        replaceFragment(R.id.container_home, currentFragment, false);
-    }
-
     @OnClick(R.id.ll_home)
     public void homeClick() {
-        setFooterState(AppConstant.FOOTER_INDEX.HOME);
-        setCurrentFragment(EScreenType.HOME_SCREEN.ordinal());
+        if(previous != AppConstant.FOOTER_INDEX.HOME){
+            setFooterState(AppConstant.FOOTER_INDEX.HOME);
+            launchActivityMain(MapActivity.class);
+        }
     }
 
     @OnClick(R.id.ll_order)
     public void ordersClick() {
-        setFooterState(AppConstant.FOOTER_INDEX.ORDER);
-        setCurrentFragment(EScreenType.ORDERS_SCREEN.ordinal());
+        if(previous != AppConstant.FOOTER_INDEX.ORDER){
+            setFooterState(AppConstant.FOOTER_INDEX.ORDER);
+            launchActivityMain(OrdersActivity.class);
+        }
     }
 
     @OnClick(R.id.ll_profile)
     public void profileClick() {
-        setFooterState(AppConstant.FOOTER_INDEX.PROFILE);
-        setCurrentFragment(EScreenType.PROFILE_SCREEN.ordinal());
+        if (previous != AppConstant.FOOTER_INDEX.PROFILE) {
+            setFooterState(AppConstant.FOOTER_INDEX.PROFILE);
+            launchActivityMain(ProfileActivity.class);
+        }
+    }
+
+    @OnClick(R.id.iv_notify)
+    public void notifyClick() {
+        launchActivity(null);
+    }
+
+    public void setCurrentFragment(int fragmentVal) {
+        launchActivityMain(MapActivity.class);
+    }
+
+    public void setHeaderText(String title){
+        if(!TextUtils.isEmpty(title)){
+            tv_header_title.setText(title);
+        }
     }
 }

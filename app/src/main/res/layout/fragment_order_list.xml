@@ -3,11 +3,11 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/order_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/color_080808"
-        android:cacheColorHint="@android:color/transparent"
-        />
-</LinearLayout>
+        android:background="@android:color/white" />
+
+
+    </LinearLayout>
