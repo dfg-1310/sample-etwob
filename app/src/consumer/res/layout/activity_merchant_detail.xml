@@ -8,11 +8,17 @@
         android:id="@+id/iv_store_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_200"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:background="@drawable/banner"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_8"
+
+        >
 
         <com.e2b.views.CustomTextView
             android:id="@+id/tv_store_Name"
@@ -20,8 +26,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/mre_place_order"
-            android:paddingLeft="@dimen/dp_8"
-            android:paddingRight="@dimen/dp_8"
             android:text="STORE NAME"
             android:textColor="@color/black"
             android:textSize="@dimen/dp_14" />
@@ -53,7 +57,7 @@
             android:id="@+id/ll_store_add_info"
             style="@style/width_match_parent"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/mre_place_order"
+            android:layout_below="@id/tv_store_Name"
             android:orientation="vertical">
 
             <com.e2b.views.CustomTextView
@@ -81,28 +85,39 @@
 
         <RatingBar
             android:id="@+id/rb_review"
-            style="@style/wrap_content"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/ll_store_add_info"
             android:layout_toRightOf="@id/tv_review_title"
+
             />
     </RelativeLayout>
     <com.e2b.views.CustomTextView
+        android:paddingLeft="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_8"
         android:id="@+id/tv_important_info"
         style="@style/wrap_content"
         android:text="IMPORTANT INFORMATION: Home delivery is only Available if the total amount of shopping is  more than 500 Rs." />
 
     <com.e2b.views.CustomTextView
+        android:paddingLeft="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_8"
         android:id="@+id/tv_payment_mode"
         style="@style/wrap_content"
         android:text="Payment Mode: Paytm, Cash on Delivery" />
 
     <com.e2b.views.CustomTextView
+        android:paddingLeft="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_8"
         android:id="@+id/tv_offers"
         style="@style/wrap_content"
         android:text="OFFERS: \n" />
 
     <com.e2b.views.CustomTextView
         android:id="@+id/tv_review_comment"
+        android:paddingLeft="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_8"
         style="@style/wrap_content"
         android:text="REVIEW COMMENTS: \n" />
 

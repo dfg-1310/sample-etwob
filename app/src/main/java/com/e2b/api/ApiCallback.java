@@ -50,7 +50,11 @@ public abstract class ApiCallback<T> implements Callback<BaseResponse<T>> {
         Log.i(TAG, "ERROR FAIL : " + t.getMessage());
         Error error = new Error();
         if (t != null && t.getMessage() != null) {
-            error.setMsg(t.getMessage());
+            if(t.getMessage().toLowerCase().contains("failed to connect")){
+                error.setMsg(context.getString(R.string.no_internet));
+            }else{
+                error.setMsg(t.getMessage());
+            }
         } else {
             error.setMsg(context.getString(R.string.error_msg));
         }

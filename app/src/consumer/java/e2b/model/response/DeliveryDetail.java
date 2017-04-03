@@ -1,10 +1,12 @@
 package e2b.model.response;
 
+import java.io.Serializable;
+
 /**
  * Created by gaurav on 6/3/17.
  */
 
-public class DeliveryDetail {
+public class DeliveryDetail implements Serializable {
 
     private boolean isAvailable;
     private String timing;

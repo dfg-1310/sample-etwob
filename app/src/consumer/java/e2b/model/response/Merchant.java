@@ -2,7 +2,10 @@ package e2b.model.response;
 
 import com.e2b.model.request.Coordinate;
 
-public class Merchant {
+import java.io.Serializable;
+import java.util.Arrays;
+
+public class Merchant implements Serializable {
 
     private String _id;
     private String mobile;
@@ -157,6 +160,29 @@ public class Merchant {
 
     public void setClosingDays(String[] closingDays) {
         this.closingDays = closingDays;
+    }
+
+    @Override
+    public String toString() {
+        return "Merchant{" +
+                "_id='" + _id + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", __v='" + __v + '\'' +
+                ", coordinates=" + coordinates +
+                ", deliveryDetail=" + deliveryDetail +
+                ", paytmDetail=" + paytmDetail +
+                ", shopTiming=" + shopTiming +
+                ", shopStreet='" + shopStreet + '\'' +
+                ", shopAddress='" + shopAddress + '\'' +
+                ", shopImage='" + shopImage + '\'' +
+                ", shopName='" + shopName + '\'' +
+                ", status=" + status +
+                ", updatedBy='" + updatedBy + '\'' +
+                ", updatedOn='" + updatedOn + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                ", createdOn='" + createdOn + '\'' +
+                ", closingDays=" + Arrays.toString(closingDays) +
+                '}';
     }
 }
 

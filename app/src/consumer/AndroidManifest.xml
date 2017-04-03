@@ -10,5 +10,6 @@
         <activity android:name="e2b.activity.MapActivity" android:screenOrientation="portrait"></activity>
         <activity android:name="e2b.activity.ProfileActivity" android:screenOrientation="portrait"></activity>
         <activity android:name="e2b.activity.OrdersActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name="e2b.activity.MerchantDetailActivity" android:screenOrientation="portrait"></activity>
     </application>
 </manifest>

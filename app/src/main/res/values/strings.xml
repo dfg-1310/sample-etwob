@@ -35,6 +35,7 @@
     <string name="send_otp_text"> Send OTP</string>
     <string name="place_order_text"> Place Order </string>
     <string name="success_registered_text"> Successfully Registered! :)</string>
+    <string name="enter_mobile_number_length">Make  sure you have entered 10 Digits.</string>
 
 
 </resources>

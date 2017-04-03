@@ -1,7 +1,9 @@
 package com.e2b.model.request;
 
 
-public class Coordinate {
+import java.io.Serializable;
+
+public class Coordinate implements Serializable{
 
     private double lng;
     private double lat;

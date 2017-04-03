@@ -1,10 +1,12 @@
 package e2b.model.response;
 
+import java.io.Serializable;
+
 /**
  * Created by gaurav on 6/3/17.
  */
 
-public class ShopTiming {
+public class ShopTiming implements Serializable {
     private int from;
     private int to;
     private String _id;

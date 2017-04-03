@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.HashMap;
 import java.util.List;
 
+import e2b.activity.MapActivity;
 import e2b.model.response.Merchant;
 import e2b.model.response.MerchantResponse;
 import retrofit2.Call;
@@ -92,7 +94,9 @@ public void setupMapMarkers(){
         @Override
         protected void onClickConfirmed(View v, Marker marker) {
             // Here we can perform some action triggered after clicking the button
+            Log.d(TAG, "onClickConfirmed: "+ marker.getTag().toString());
             Toast.makeText(activity, marker.getTitle() + "'s button clicked!", Toast.LENGTH_SHORT).show();
+            ((MapActivity)activity).markerClick((Merchant)marker.getTag());
         }
     };
     this.infoButton.setOnTouchListener(infoButtonListener);
@@ -162,6 +166,7 @@ public void setupMapMarkers(){
                     .title(merchant.getShopName());
             options.snippet(getMarkerSnippetString(merchant));
             marker = googleMap.addMarker(options);
+            marker.setTag(merchant);
             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
         }
 
@@ -181,8 +186,19 @@ public void setupMapMarkers(){
     private String getMarkerSnippetString(Merchant merchant) {
         StringBuilder builder = new StringBuilder();
         builder.append("Timing : " + merchant.getShopTiming().getFrom() + " to " + merchant.getShopTiming().getTo()+
-                "\n"+ merchant.getClosingDays() + "/n" + merchant.getShopAddress());
+                "\n"+"Closing Days : "+ getStringValue(merchant.getClosingDays()) + "\n" + "Address : "+merchant.getShopAddress());
 
+        return builder.toString();
+    }
+
+    private String getStringValue(String[] closingDays) {
+        StringBuilder builder = new StringBuilder();
+        for (String day: closingDays) {
+            if(builder.toString().length()>0){
+                builder.append(", ");
+            }
+            builder.append(day);
+        }
         return builder.toString();
     }
 

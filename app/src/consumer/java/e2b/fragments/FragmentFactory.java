@@ -21,7 +21,7 @@ public class FragmentFactory {
     private ProfileFragment profileFragment;
     private MobileVerificationFragment mobileVerificationFragment;
     private OTPConfirmFragment otpConfirmFragment;
-
+    private StoreInformationFragment storeInformationFragment;
 //    private NotificationFragment notificationFragment;
 //    private HotTopicsFragment hotTopicsFragment;
 //    private InboxTabFragment inboxTabFragment;
@@ -95,11 +95,11 @@ public class FragmentFactory {
                 baseFragment = otpConfirmFragment;
                 break;
 
-//            case PROFILE_SCREEN:
-//                if (profileFragment == null)
-//                    profileFragment = new ProfileFragment();
-//                baseFragment = profileFragment;
-//                break;
+            case STORE_INFO_SCREEN:
+                if (storeInformationFragment == null)
+                    storeInformationFragment = new StoreInformationFragment();
+                baseFragment = storeInformationFragment;
+                break;
 //
 //            case ORDERS_SCREEN:
 //                if (profileFragment == null)

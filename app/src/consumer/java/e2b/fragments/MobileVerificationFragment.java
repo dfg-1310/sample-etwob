@@ -122,12 +122,11 @@ public class MobileVerificationFragment extends BaseFragment {
     }
 
     public void signIn() {
-        activity.showProgressBar();
         String mobileNumber = etMobileNumber.getText().toString().trim().replace(" ","");
         if (!openDialogSignin(activity, mobileNumber)) {
             return;
         }
-//        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
+        activity.showProgressBar();
         IApiRequest request = ApiClient.getRequest();
 
         JsonObject mobileJsonObject = new JsonObject();
@@ -162,8 +161,13 @@ public class MobileVerificationFragment extends BaseFragment {
     }
 
     public boolean openDialogSignin(BaseActivity activity, String mobile) {
-        if (TextUtils.isEmpty(mobile)) {
+        if (TextUtils.isEmpty(mobile) || (mobile.contains("-") && mobile.split("-").length == 1) || !mobile.contains("-")) {
             DialogUtils.showDialog(activity, activity.getString(R.string.enter_mobile_number));
+            return false;
+        }
+
+        if(mobile.split("-").length > 1 && mobile.split("-")[1].length() < 10){
+            DialogUtils.showDialog(activity, activity.getString(R.string.enter_mobile_number_length));
             return false;
         }
         return true;
