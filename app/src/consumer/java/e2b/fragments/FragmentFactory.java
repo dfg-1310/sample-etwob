@@ -22,19 +22,7 @@ public class FragmentFactory {
     private MobileVerificationFragment mobileVerificationFragment;
     private OTPConfirmFragment otpConfirmFragment;
     private StoreInformationFragment storeInformationFragment;
-//    private NotificationFragment notificationFragment;
-//    private HotTopicsFragment hotTopicsFragment;
-//    private InboxTabFragment inboxTabFragment;
-//    private GroupDetailFragment groupDetailFragment;
-//
-//    //fragments to be launched on SubActivity
-//    private ProfileFragment profileFragment;
-//    private StatusFragment statusFragment;
-//    private EmojiFragment activityGridFragment;
-//    private PrefrenceTabFragment prefrenceTabFragment;
-//    private OtherProfileFragment otherProfileFragment;
-//    private GroupRightDrawerFragment groupRightDrawerFragment;
-//    private GroupMemberListFragment groupMemberListFragment;
+    private NotificationsFragment notificationFragment;
 
     public static FragmentFactory getInstance() {
         if (fragmentFactory == null) {
@@ -100,52 +88,12 @@ public class FragmentFactory {
                     storeInformationFragment = new StoreInformationFragment();
                 baseFragment = storeInformationFragment;
                 break;
-//
-//            case ORDERS_SCREEN:
-//                if (profileFragment == null)
-//                    profileFragment = new GroupsFragment();
-//                baseFragment = profileFragment;
-//                break;
-//
-//            case GROUP_DETAIL_SCREEN:
-//                if (groupDetailFragment == null)
-//                    groupDetailFragment = new GroupDetailFragment();
-//                baseFragment = groupDetailFragment;
-//                break;
-//            case NOTIFICATION_SCREEN:
-//                if (notificationFragment == null)
-//                    notificationFragment = new NotificationFragment();
-//                baseFragment = notificationFragment;
-//                break;
-//
-//            case Activity_SCREEN:
-//                if (activityGridFragment == null)
-//                    activityGridFragment = new EmojiFragment();
-//                baseFragment = activityGridFragment;
-//                break;
-//
-//            case PREFRENCE_SCREEN:
-//                if (prefrenceTabFragment == null)
-//                    prefrenceTabFragment = new PrefrenceTabFragment();
-//                baseFragment = prefrenceTabFragment;
-//                break;
-//
-//            case OTHER_PROFILE_SCREEN:
-//                if (otherProfileFragment == null)
-//                    otherProfileFragment = new OtherProfileFragment();
-//                baseFragment = otherProfileFragment;
-//                break;
-//
-//            case GROUP_RIGHT_DRAWER_SCREEN:
-//                if (groupRightDrawerFragment == null)
-//                    groupRightDrawerFragment = new GroupRightDrawerFragment();
-//                baseFragment = groupRightDrawerFragment;
-//                break;
-//            case MEMBER_LIST_SCREEN:
-//                if (groupMemberListFragment == null)
-//                    groupMemberListFragment = new GroupMemberListFragment();
-//                baseFragment = groupMemberListFragment;
-//                break;
+
+            case NOTIFICATION_SCREEN:
+                if (notificationFragment == null)
+                    notificationFragment = new NotificationsFragment();
+                baseFragment = notificationFragment;
+                break;
         }
 
         setCurrentFragment(baseFragment);

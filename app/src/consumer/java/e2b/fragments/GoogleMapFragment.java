@@ -8,11 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.e2b.R;
 import com.e2b.activity.BaseActivity;
@@ -41,9 +41,6 @@ import e2b.model.response.Merchant;
 import e2b.model.response.MerchantResponse;
 import retrofit2.Call;
 
-/**
- * Created by gaurav on 6/2/17.
- */
 
 public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallback {
 
@@ -61,8 +58,9 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
     private ViewGroup infoWindow;
     private TextView infoTitle;
     private TextView infoSnippet;
-    private Button infoButton;
+//    private Button infoButton;
     private OnInfoWindowElemTouchListener infoButtonListener;
+    private LinearLayout rootLayout;
 
 
     @Override
@@ -83,24 +81,17 @@ public void setupMapMarkers(){
     this.infoWindow = (ViewGroup)activity.getLayoutInflater().inflate(R.layout.info_window, null);
     this.infoTitle = (TextView)infoWindow.findViewById(R.id.title);
     this.infoSnippet = (TextView)infoWindow.findViewById(R.id.snippet);
-    this.infoButton = (Button)infoWindow.findViewById(R.id.button);
-
-    // Setting custom OnTouchListener which deals with the pressed state
-    // so it shows up
-    this.infoButtonListener = new OnInfoWindowElemTouchListener(infoButton,
-            getResources().getDrawable(R.drawable.banner), //btn_default_normal_holo_light
-            getResources().getDrawable(R.drawable.user_icn)) //btn_default_pressed_holo_light
-    {
+    this.rootLayout = (LinearLayout) infoWindow.findViewById(R.id.map_marker_rootlayout);
+    rootLayout.setOnTouchListener(new View.OnTouchListener() {
         @Override
-        protected void onClickConfirmed(View v, Marker marker) {
-            // Here we can perform some action triggered after clicking the button
-            Log.d(TAG, "onClickConfirmed: "+ marker.getTag().toString());
-            Toast.makeText(activity, marker.getTitle() + "'s button clicked!", Toast.LENGTH_SHORT).show();
-            ((MapActivity)activity).markerClick((Merchant)marker.getTag());
+        public boolean onTouch(View v, MotionEvent event) {
+            Marker marker = (Marker) rootLayout.getTag();
+            if(marker != null){
+                ((MapActivity)activity).markerClick((Merchant)marker.getTag());
+            }
+            return false;
         }
-    };
-    this.infoButton.setOnTouchListener(infoButtonListener);
-
+    });
 
     mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
         @Override
@@ -113,8 +104,7 @@ public void setupMapMarkers(){
             // Setting up the infoWindow with current's marker info
             infoTitle.setText(marker.getTitle());
             infoSnippet.setText(marker.getSnippet());
-            infoButtonListener.setMarker(marker);
-
+            rootLayout.setTag(marker);
             // We must call this to set the current marker and infoWindow references
             // to the MapWrapperLayout
             mapWrapperLayout.setMarkerWithInfoWindow(marker, infoWindow);
@@ -128,7 +118,6 @@ public void setupMapMarkers(){
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         currentLocation();
-
         getMerchants();
     }
 
@@ -178,6 +167,7 @@ public void setupMapMarkers(){
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+                Log.d(TAG, "onMarkerClick : "+marker.toString());
                 return false;
             }
         });
@@ -258,5 +248,12 @@ public void setupMapMarkers(){
         return (int)(dp * scale + 0.5f);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(mMap != null){
+            mMap.clear();
+        }
+    }
 }
 

@@ -159,7 +159,7 @@ public class ConsumerBaseActivity extends BaseActivity {
 
     @OnClick(R.id.iv_notify)
     public void notifyClick() {
-        launchActivity(null);
+        launchActivity(NotificationActivity.class);
     }
 
     public void setCurrentFragment(int fragmentVal) {

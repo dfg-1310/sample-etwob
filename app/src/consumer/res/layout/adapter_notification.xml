@@ -15,10 +15,23 @@
         android:textSize="@dimen/sp_18" />
 
     <com.e2b.views.CustomTextView
-        android:id="@+id/tv_notify_date"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_notify_shopname"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_below="@id/tv_notify_title"
+        android:layout_margin="@dimen/dp_8"
+        android:text="ShopName : "
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_14"
+        />
+
+
+    <com.e2b.views.CustomTextView
+        android:id="@+id/tv_notify_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/tv_notify_title"
         android:layout_margin="@dimen/dp_8"
         android:text="25 March"
