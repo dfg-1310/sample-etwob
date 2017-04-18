@@ -10,7 +10,7 @@ import com.e2b.utils.AppUtils;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import e2b.utils.ConsumerPreferenceKeeper;
+import e2bmerchant.utils.MerchantPreferenceKeeper;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -28,7 +28,7 @@ public class ApiClient {
     private static final String TAG = ApiClient.class.getSimpleName();
     public static void init(Class<IApiRequest> requestClass) {
 
-        final ConsumerPreferenceKeeper preference = ConsumerPreferenceKeeper.getInstance();
+        final MerchantPreferenceKeeper preference = MerchantPreferenceKeeper.getInstance();
         Interceptor interceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {

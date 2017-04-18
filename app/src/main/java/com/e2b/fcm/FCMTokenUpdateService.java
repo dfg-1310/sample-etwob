@@ -5,7 +5,8 @@ import android.util.Log;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
-import e2b.utils.ConsumerPreferenceKeeper;
+import e2bmerchant.utils.MerchantPreferenceKeeper;
+
 
 public class FCMTokenUpdateService extends FirebaseInstanceIdService {
 
@@ -36,6 +37,6 @@ public class FCMTokenUpdateService extends FirebaseInstanceIdService {
      */
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
-        ConsumerPreferenceKeeper.getInstance().setFCMToken(token);
+        MerchantPreferenceKeeper.getInstance().setFCMToken(token);
     }
 }

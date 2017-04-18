@@ -23,13 +23,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.e2b.R;
+import com.e2b.fragments.BaseFragment;
 import com.e2b.utils.AppConstant;
 import com.e2b.utils.AppUtils;
 
-import e2b.fragments.BaseFragment;
-import e2b.intrface.ISaveUserInfo;
-import e2b.model.response.UserResponse;
-import e2b.utils.ConsumerPreferenceKeeper;
+import e2bmerchant.model.response.MerchantUserResponse;
+import e2bmerchant.utils.MerchantPreferenceKeeper;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class BaseActivity extends AppCompatActivity implements View.OnClickListener, ISaveUserInfo {
@@ -231,8 +230,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
 
     @Override
-    public void saveUserInfo(final UserResponse userResponse) {
-        final ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
+    public void saveUserInfo(final MerchantUserResponse userResponse) {
+        final MerchantPreferenceKeeper keeper = MerchantPreferenceKeeper.getInstance();
         new Thread(new Runnable() {
             @Override
             public void run() {
