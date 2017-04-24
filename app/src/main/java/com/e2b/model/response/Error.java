@@ -2,23 +2,22 @@ package com.e2b.model.response;
 
 public class Error {
 
-    private String errorCode;
-    private String msg;
+    private String code;
+    private String errmsg;
 
-
-    public String getErrorCode() {
-        return errorCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getErrmsg() {
+        return errmsg;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setErrmsg(String errmsg) {
+        this.errmsg = errmsg;
     }
 }
