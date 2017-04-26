@@ -40,7 +40,7 @@ public abstract class ApiCallback<T> implements Callback<BaseResponse<T>> {
         } else {
             Log.i(TAG, "ERROR : " + "Success");
             Error error = new Error();
-            error.setErrmsg(context.getString(R.string.error_msg));
+            error.setMsg(context.getString(R.string.error_msg));
             onError(error);
         }
     }
@@ -51,12 +51,12 @@ public abstract class ApiCallback<T> implements Callback<BaseResponse<T>> {
         Error error = new Error();
         if (t != null && t.getMessage() != null) {
             if(t.getMessage().toLowerCase().contains("failed to connect")){
-                error.setErrmsg(context.getString(R.string.no_internet));
+                error.setMsg(context.getString(R.string.no_internet));
             }else{
-                error.setErrmsg(t.getMessage());
+                error.setMsg(t.getMessage());
             }
         } else {
-            error.setErrmsg(context.getString(R.string.error_msg));
+            error.setMsg(context.getString(R.string.error_msg));
         }
         onError(error);
     }

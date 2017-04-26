@@ -3,7 +3,7 @@ package com.e2b.model.response;
 public class Error {
 
     private String code;
-    private String errmsg;
+    private String msg;
 
     public String getCode() {
         return code;
@@ -13,11 +13,11 @@ public class Error {
         this.code = code;
     }
 
-    public String getErrmsg() {
-        return errmsg;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setErrmsg(String errmsg) {
-        this.errmsg = errmsg;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }
