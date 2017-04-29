@@ -10,6 +10,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import e2bmerchant.activity.AuthActivity;
+import e2bmerchant.activity.OrdersActivity;
 import e2bmerchant.utils.MerchantPreferenceKeeper;
 
 
@@ -30,7 +31,7 @@ public class SplashActivity extends BaseActivity {
                 if(!TextUtils.isEmpty(MerchantPreferenceKeeper.getInstance().getAccessToken())){
                     launchActivityMain(AuthActivity.class);
                 }else{
-                    launchActivityMain(AuthActivity.class);
+                    launchActivityMain(OrdersActivity.class);
                 }
                 finish();
             }
