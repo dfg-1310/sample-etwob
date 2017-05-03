@@ -36,9 +36,8 @@
     <string name="place_order_text"> Place Order </string>
     <string name="success_registered_text"> Successfully Registered! :)</string>
     <string name="enter_mobile_number_length">Make  sure you have entered 10 Digits.</string>
-
-
-
+    <string name="select_closing_days">Please Select Closing days</string>
+    <string name="select_image_option">Please select image option</string>
 
 
 </resources>

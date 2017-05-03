@@ -2,9 +2,15 @@ package com.e2b.utils;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.Window;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -12,6 +18,11 @@ import com.e2b.R;
 import com.e2b.activity.BaseActivity;
 import com.e2b.listener.ICustomCallbacks;
 import com.e2b.listener.IDialogListener;
+import com.e2b.listener.IDialogUploadListener;
+import com.e2b.listener.IOptionSelectListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This Class is used for showing validation and error dialog
@@ -199,4 +210,73 @@ public class DialogUtils {
 //        });
 //        videoUrlDialog.show();
 //    }
+
+public static void showPopUpWithMultipleOptions(Context context, String title, final IOptionSelectListener listener) {
+    final String[] lists = getWeeklyMonth();
+    final List<String> selectedItems = new ArrayList<>();
+    Dialog dialog;
+    final ArrayList itemsSelected = new ArrayList();
+    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    builder.setTitle(title);
+    builder.setMultiChoiceItems(lists, null, new DialogInterface.OnMultiChoiceClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int selectedItemId,
+                                    boolean isSelected) {
+                    if (isSelected) {
+                        itemsSelected.add(selectedItemId);
+                        selectedItems.add(lists[selectedItemId]);
+                    } else if (itemsSelected.contains(selectedItemId)) {
+                        itemsSelected.remove(Integer.valueOf(selectedItemId));
+                        selectedItems.remove(lists[selectedItemId]);
+                    }
+                }
+            })
+            .setPositiveButton("Done!", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    listener.selectedItems(selectedItems);
+                }
+            })
+            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            });
+    dialog = builder.create();
+    dialog.show();
 }
+
+    public static String[] getWeeklyMonth(){
+        String[] week = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday","Saturday"};
+        return week;
+    }
+
+    public static void showDialogCameraGallary(String title, final Context activity, final IDialogUploadListener listner) {
+        final Dialog privacyDialog = new Dialog(activity);
+        privacyDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        privacyDialog.setContentView(R.layout.dialog_camera_photo);
+        TextView header = (TextView) privacyDialog.findViewById(R.id.tv_header);
+        header.setText(title);
+        TextView cameraPhoto = (TextView) privacyDialog.findViewById(R.id.tv_camera);
+        TextView galleryPhoto = (TextView) privacyDialog.findViewById(R.id.tv_gallery);
+        cameraPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listner.onClick(true);
+                privacyDialog.dismiss();
+            }
+        });
+        galleryPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listner.onClick(false);
+                privacyDialog.dismiss();
+
+            }
+        });
+        privacyDialog.show();
+    }
+}
+
+

@@ -82,4 +82,10 @@ public class AppConstant {
         int CAMERA_PERMISSION = 2;
         int WRITE_EXTERNAL_PERMISSION = 3;
     }
+
+
+    public interface MEDIA_STATE {
+        int CAPTURE_IMAGE = 0;
+        int GALLARY_IMAGE = 1;
+    }
 }
