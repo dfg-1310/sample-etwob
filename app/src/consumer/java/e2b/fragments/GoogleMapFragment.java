@@ -19,6 +19,7 @@ import com.e2b.activity.BaseActivity;
 import com.e2b.api.ApiCallback;
 import com.e2b.api.ApiClient;
 import com.e2b.api.IApiRequest;
+import com.e2b.fragments.BaseFragment;
 import com.e2b.mapmarker.MapWrapperLayout;
 import com.e2b.mapmarker.OnInfoWindowElemTouchListener;
 import com.e2b.model.response.BaseResponse;
@@ -58,7 +59,7 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
     private ViewGroup infoWindow;
     private TextView infoTitle;
     private TextView infoSnippet;
-//    private Button infoButton;
+    //    private Button infoButton;
     private OnInfoWindowElemTouchListener infoButtonListener;
     private LinearLayout rootLayout;
 
@@ -72,47 +73,47 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
         return view;
     }
 
-public void setupMapMarkers(){
+    public void setupMapMarkers() {
 
-    mapWrapperLayout.init(mMap, getPixelsFromDp(activity, 39 + 20));
+        mapWrapperLayout.init(mMap, getPixelsFromDp(activity, 39 + 20));
 
-    // We want to reuse the info window for all the markers,
-    // so let's create only one class member instance
-    this.infoWindow = (ViewGroup)activity.getLayoutInflater().inflate(R.layout.info_window, null);
-    this.infoTitle = (TextView)infoWindow.findViewById(R.id.title);
-    this.infoSnippet = (TextView)infoWindow.findViewById(R.id.snippet);
-    this.rootLayout = (LinearLayout) infoWindow.findViewById(R.id.map_marker_rootlayout);
-    rootLayout.setOnTouchListener(new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            Marker marker = (Marker) rootLayout.getTag();
-            if(marker != null){
-                ((MapActivity)activity).markerClick((Merchant)marker.getTag());
+        // We want to reuse the info window for all the markers,
+        // so let's create only one class member instance
+        this.infoWindow = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.info_window, null);
+        this.infoTitle = (TextView) infoWindow.findViewById(R.id.title);
+        this.infoSnippet = (TextView) infoWindow.findViewById(R.id.snippet);
+        this.rootLayout = (LinearLayout) infoWindow.findViewById(R.id.map_marker_rootlayout);
+        rootLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Marker marker = (Marker) rootLayout.getTag();
+                if (marker != null) {
+                    ((MapActivity) activity).markerClick((Merchant) marker.getTag());
+                }
+                return false;
             }
-            return false;
-        }
-    });
+        });
 
-    mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-        @Override
-        public View getInfoWindow(Marker marker) {
-            return null;
-        }
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return null;
+            }
 
-        @Override
-        public View getInfoContents(Marker marker) {
-            // Setting up the infoWindow with current's marker info
-            infoTitle.setText(marker.getTitle());
-            infoSnippet.setText(marker.getSnippet());
-            rootLayout.setTag(marker);
-            // We must call this to set the current marker and infoWindow references
-            // to the MapWrapperLayout
-            mapWrapperLayout.setMarkerWithInfoWindow(marker, infoWindow);
-            return infoWindow;
-        }
-    });
+            @Override
+            public View getInfoContents(Marker marker) {
+                // Setting up the infoWindow with current's marker info
+                infoTitle.setText(marker.getTitle());
+                infoSnippet.setText(marker.getSnippet());
+                rootLayout.setTag(marker);
+                // We must call this to set the current marker and infoWindow references
+                // to the MapWrapperLayout
+                mapWrapperLayout.setMarkerWithInfoWindow(marker, infoWindow);
+                return infoWindow;
+            }
+        });
 
-}
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -132,7 +133,7 @@ public void setupMapMarkers(){
                 } else {
                     DialogUtils.showDialog(activity, getString(R.string.no_merchant_text));
                 }
-                if(mMap != null){
+                if (mMap != null) {
                     setupMarker(mMap, merchantResponse.getMerchants());
                 }
             }
@@ -149,14 +150,16 @@ public void setupMapMarkers(){
         MarkerOptions options = null;
         Marker marker = null;
         for (Merchant merchant : merchants) {
-            latLng = new LatLng(merchant.getCoordinates().getLat(), merchant.getCoordinates().getLng());
-            options = new MarkerOptions();
-            options.position(latLng)
-                    .title(merchant.getShopName());
-            options.snippet(getMarkerSnippetString(merchant));
-            marker = googleMap.addMarker(options);
-            marker.setTag(merchant);
-            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
+            if (merchant.getCoordinates() != null) {
+                latLng = new LatLng(merchant.getCoordinates().getLat(), merchant.getCoordinates().getLng());
+                options = new MarkerOptions();
+                options.position(latLng)
+                        .title(merchant.getShopName());
+                options.snippet(getMarkerSnippetString(merchant));
+                marker = googleMap.addMarker(options);
+                marker.setTag(merchant);
+                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
+            }
         }
 
         if (latLng != null) {
@@ -167,7 +170,7 @@ public void setupMapMarkers(){
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                Log.d(TAG, "onMarkerClick : "+marker.toString());
+                Log.d(TAG, "onMarkerClick : " + marker.toString());
                 return false;
             }
         });
@@ -175,16 +178,16 @@ public void setupMapMarkers(){
 
     private String getMarkerSnippetString(Merchant merchant) {
         StringBuilder builder = new StringBuilder();
-        builder.append("Timing : " + merchant.getShopTiming().getFrom() + " to " + merchant.getShopTiming().getTo()+
-                "\n"+"Closing Days : "+ getStringValue(merchant.getClosingDays()) + "\n" + "Address : "+merchant.getShopAddress());
+        builder.append("Timing : " + merchant.getShopTiming().getFrom() + " to " + merchant.getShopTiming().getTo() +
+                "\n" + "Closing Days : " + getStringValue(merchant.getClosingDays()) + "\n" + "Address : " + merchant.getShopAddress());
 
         return builder.toString();
     }
 
     private String getStringValue(String[] closingDays) {
         StringBuilder builder = new StringBuilder();
-        for (String day: closingDays) {
-            if(builder.toString().length()>0){
+        for (String day : closingDays) {
+            if (builder.toString().length() > 0) {
                 builder.append(", ");
             }
             builder.append(day);
@@ -245,13 +248,13 @@ public void setupMapMarkers(){
 
     public static int getPixelsFromDp(Context context, float dp) {
         final float scale = context.getResources().getDisplayMetrics().density;
-        return (int)(dp * scale + 0.5f);
+        return (int) (dp * scale + 0.5f);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(mMap != null){
+        if (mMap != null) {
             mMap.clear();
         }
     }

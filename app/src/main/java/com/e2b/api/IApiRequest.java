@@ -2,9 +2,11 @@ package com.e2b.api;
 
 import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.CommonApiResponse;
+import com.e2b.model.response.PlaceOrder;
 import com.google.gson.JsonObject;
 
 import e2b.model.response.MerchantResponse;
+import e2b.model.response.Orders;
 import e2b.model.response.UserResponse;
 import e2b.model.response.VerifiedOTPResponse;
 import retrofit2.Call;
@@ -43,10 +45,20 @@ public interface IApiRequest {
     @GET("profile/logout")
     Call<BaseResponse<CommonApiResponse>> logout();
 
+    @GET("order")
+    Call<BaseResponse<Orders>> getOrders();
+
     @POST("users")
     Call<BaseResponse<UserResponse>> updateProfileAPI(String mobileNumber, String fullName, String password, String address);
 
     Call<BaseResponse<UserResponse>> sendOTP(String email);
+
+    @POST("order")
+    Call<BaseResponse<PlaceOrder>> placeOrder(@Body JsonObject jsonObject);
+
+    @POST("order/{id}")
+    Call<BaseResponse<PlaceOrder>> getOrder(@Path("id") String userId);
+
 
     interface FIELD {
         String ACCESS_TOKEN = "accessToken";

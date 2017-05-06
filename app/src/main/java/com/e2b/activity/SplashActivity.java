@@ -46,6 +46,5 @@ public class SplashActivity extends BaseActivity {
             ConsumerPreferenceKeeper.getInstance().setFCMToken(token);
         }
     }
-
 }
 

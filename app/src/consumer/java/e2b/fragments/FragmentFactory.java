@@ -3,6 +3,8 @@ package e2b.fragments;
 
 import android.util.Log;
 
+import com.e2b.fragments.BaseFragment;
+
 import e2b.enums.EScreenType;
 
 public class FragmentFactory {
@@ -11,7 +13,6 @@ public class FragmentFactory {
     private static FragmentFactory fragmentFactory;
 
     //fragments to be launched on authActivity
-    private BaseFragment baseFragment;
     private SignInFragment signinFragment;
     private ProfileSetupFragment signUpFragment;
 
@@ -23,6 +24,7 @@ public class FragmentFactory {
     private OTPConfirmFragment otpConfirmFragment;
     private StoreInformationFragment storeInformationFragment;
     private NotificationsFragment notificationFragment;
+    private BaseFragment baseFragment;
 
     public static FragmentFactory getInstance() {
         if (fragmentFactory == null) {

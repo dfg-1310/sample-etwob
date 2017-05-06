@@ -12,12 +12,12 @@ import android.widget.TextView;
 
 import com.e2b.R;
 import com.e2b.activity.BaseActivity;
+import com.e2b.fragments.BaseFragment;
 import com.e2b.utils.AppConstant;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import e2b.fragments.BaseFragment;
 
 /**
  * Created by gaurav on 23/3/17.
@@ -36,7 +36,7 @@ public class ConsumerBaseActivity extends BaseActivity {
     @Bind(R.id.tv_profile)
     TextView tv_profile;
 
-   @Bind(R.id.tv_header_title)
+    @Bind(R.id.tv_header_title)
     TextView tv_header_title;
 
     @Bind(R.id.cb_home)

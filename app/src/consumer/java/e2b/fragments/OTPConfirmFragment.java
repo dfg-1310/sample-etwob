@@ -20,6 +20,7 @@ import com.e2b.activity.BaseActivity;
 import com.e2b.api.ApiCallback;
 import com.e2b.api.ApiClient;
 import com.e2b.api.IApiRequest;
+import com.e2b.fragments.BaseFragment;
 import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
 import com.e2b.utils.DialogUtils;

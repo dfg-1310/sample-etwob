@@ -14,6 +14,7 @@ public class MapActivity extends ConsumerBaseActivity {
 
     private BaseFragment currentFragment;
     private Merchant selectedMerchant;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

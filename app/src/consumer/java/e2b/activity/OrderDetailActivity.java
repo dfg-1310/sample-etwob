@@ -6,10 +6,7 @@ import com.e2b.R;
 import com.e2b.fragments.BaseFragment;
 import com.e2b.utils.AppConstant;
 
-import e2b.enums.EScreenType;
-import e2b.fragments.FragmentFactory;
-
-public class OrdersActivity extends ConsumerBaseActivity {
+public class OrderDetailActivity extends ConsumerBaseActivity {
 
     private BaseFragment currentFragment;
 
@@ -17,10 +14,10 @@ public class OrdersActivity extends ConsumerBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        setHeaderText("Orders");
-        EScreenType eScreenType = EScreenType.values()[EScreenType.ORDERS_SCREEN.ordinal()];
-        this.currentFragment = FragmentFactory.getInstance().getFragment(eScreenType);
-        replaceFragment(R.id.container_home, currentFragment, false);
+        setHeaderText("Order Detail");
+//        EScreenType eScreenType = EScreenType.values()[EScreenType.PROFILE_SCREEN.ordinal()];
+//        this.currentFragment = FragmentFactory.getInstance().getFragment(eScreenType);
+//        replaceFragment(R.id.container_home, currentFragment, false);
         setFooterState(AppConstant.FOOTER_INDEX.ORDER);
     }
 

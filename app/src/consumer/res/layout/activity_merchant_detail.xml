@@ -58,6 +58,7 @@
             style="@style/width_match_parent"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/tv_store_Name"
+            android:layout_toLeftOf="@+id/mre_place_order"
             android:orientation="vertical">
 
             <com.e2b.views.CustomTextView
