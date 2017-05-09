@@ -56,8 +56,8 @@ public interface IApiRequest {
     @POST("order")
     Call<BaseResponse<PlaceOrder>> placeOrder(@Body JsonObject jsonObject);
 
-    @POST("order/{id}")
-    Call<BaseResponse<PlaceOrder>> getOrder(@Path("id") String userId);
+    @GET("order/{id}")
+    Call<BaseResponse<PlaceOrder>> getOrder(@Path("id") String orderId);
 
 
     interface FIELD {

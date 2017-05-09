@@ -245,4 +245,15 @@
     <string name="vrify_text">Verify</string>
     <string name="tv_save">Save</string>
 
+    <string name="order_id">OrderID</string>
+    <string name="order_status">Order Status</string>
+    <string name="order_request">Order Request</string>
+    <string name="order_amount">Order Amount</string>
+    <string name="wait_time">Wait Time</string>
+    <string name="order_receipt">Order Receipt</string>
+    <string name="payment_option">Payment Option</string>
+    <string name="delivery_option">Delivery Option</string>
+    <string name="confirm">Confirm</string>
+
+
 </resources>

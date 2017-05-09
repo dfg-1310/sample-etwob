@@ -13,6 +13,8 @@ import e2b.model.response.Notification;
 
 public class DummyData {
 
+
+    public static String DEFAULT_URL = "http://placehold.it/400";
     public static List<Order> getOrders(){
             List<Order> orders = new ArrayList<>();
 
@@ -102,4 +104,6 @@ public class DummyData {
         return notifications;
 
     }
+
+
 }

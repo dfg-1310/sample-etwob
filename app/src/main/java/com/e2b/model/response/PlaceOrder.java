@@ -1,10 +1,12 @@
 package com.e2b.model.response;
 
+import java.io.Serializable;
+
 /**
  * Created by gaurav on 6/5/17.
  */
 
-public class PlaceOrder {
+public class PlaceOrder implements Serializable{
 
     private String __v;
     private String orderImg;
@@ -79,4 +81,18 @@ public class PlaceOrder {
         this.createdOn = createdOn;
     }
 
+
+    @Override
+    public String toString() {
+        return "PlaceOrder{" +
+                "__v='" + __v + '\'' +
+                ", orderImg='" + orderImg + '\'' +
+                ", orderAudio='" + orderAudio + '\'' +
+                ", consumer='" + consumer + '\'' +
+                ", merchant='" + merchant + '\'' +
+                ", _id='" + _id + '\'' +
+                ", status='" + status + '\'' +
+                ", createdOn='" + createdOn + '\'' +
+                '}';
+    }
 }

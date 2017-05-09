@@ -1,7 +1,6 @@
 package e2b.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,36 +17,15 @@ import com.e2b.model.response.PlaceOrder;
 import com.e2b.utils.AppConstant;
 import com.google.gson.JsonObject;
 
-import org.json.JSONObject;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import e2b.enums.EScreenType;
-import e2b.fragments.FragmentFactory;
-import e2b.model.response.UserResponse;
+import e2b.utils.DummyData;
 import retrofit2.Call;
 
 public class PlaceOrderActivity extends ConsumerBaseActivity {
 
-//    @Nullable
-//    @Bind(R.id.iv_place_order_media)
     ImageView placeOrderImageView;
-
-//    @Nullable
-//    @Bind(R.id.btn_place_order_play)
     Button playButton;
-
-//    @Nullable
-//    @Bind(R.id.btn_take_photo)
     Button takePhotoButton;
-
-//    @Nullable
-//    @Bind(R.id.btn_take_audio)
     Button takeAudioButton;
-
-//    @Nullable
-//    @Bind(R.id.btn_place_order)
     Button placeOrderButton;
 
     private BaseFragment currentFragment;
@@ -57,7 +35,7 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_order);
-        setHeaderText("Place Order");
+        setHeaderText("Place Your Order");
         setFooterState(AppConstant.FOOTER_INDEX.HOME);
         getDataFromBundle();
         initviewcontrols();
@@ -87,12 +65,12 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
         placeOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("place order");
+//                showToast("place order");
                 showProgressBar();
                 IApiRequest request = ApiClient.getRequest();
 
                 JsonObject placeOrderJsonObject = new JsonObject();
-                placeOrderJsonObject.addProperty("orderImg", "");
+                placeOrderJsonObject.addProperty("orderImg", DummyData.DEFAULT_URL);
                 placeOrderJsonObject.addProperty("orderAudio", "");
                 placeOrderJsonObject.addProperty("merchant", merchantId);
 
@@ -103,6 +81,8 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
                     public void onSucess(PlaceOrder userResponse) {
                         hideProgressBar();
                         showToast("Your order placed successfully.");
+                        launchActivity(OrdersActivity.class);
+                        finish();
                    }
 
                     @Override
@@ -119,7 +99,7 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
     private void getDataFromBundle() {
         if (getIntent().getExtras() != null) {
             merchantId = getIntent().getExtras().getString("merchantId", "");
-            showToast("merchantId : " + merchantId);
+//            showToast("merchantId : " + merchantId);
         }
     }
 
