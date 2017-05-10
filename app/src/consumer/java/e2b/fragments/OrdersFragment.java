@@ -4,16 +4,28 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.e2b.R;
+import com.e2b.api.ApiCallback;
+import com.e2b.api.ApiClient;
+import com.e2b.api.IApiRequest;
+import com.e2b.fragments.BaseFragment;
+import com.e2b.model.response.BaseResponse;
+import com.e2b.model.response.Error;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import e2b.activity.AuthActivity;
 import e2b.adapter.OrderAdapter;
+import e2b.enums.EScreenType;
+import e2b.model.response.Orders;
+import e2b.model.response.UserResponse;
 import e2b.utils.DummyData;
+import retrofit2.Call;
 
 /**
  * Created by gaurav on 6/2/17.
@@ -49,9 +61,30 @@ public class OrdersFragment extends BaseFragment {
     }
 
     private void getOrders() {
-        // TODO :: make api call and show on ui
+        activity.showProgressBar();
+        IApiRequest request = ApiClient.getRequest();
 
-        orderAdapter = new OrderAdapter(getActivity(), DummyData.getOrders());
+        Call<BaseResponse<Orders>> call = request.getOrders();
+        call.enqueue(new ApiCallback<Orders>(activity) {
+            @Override
+            public void onSucess(Orders orders) {
+                activity.hideProgressBar();
+                showData(orders);
+            }
+
+            @Override
+            public void onError(Error error) {
+                activity.hideProgressBar();
+                activity.showToast(error.getMsg());
+                Log.d(TAG, error.getMsg());
+            }
+        });
+
+
+    }
+
+    private void showData(Orders orders) {
+        orderAdapter = new OrderAdapter(getActivity(), orders.getOrders());
         orderListView.setAdapter(orderAdapter);
         orderAdapter.notifyDataSetChanged();
     }
@@ -60,7 +93,6 @@ public class OrdersFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         getOrders();
-
     }
 
 }

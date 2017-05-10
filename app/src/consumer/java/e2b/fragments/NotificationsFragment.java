@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.e2b.R;
+import com.e2b.fragments.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

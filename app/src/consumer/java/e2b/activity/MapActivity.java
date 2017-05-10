@@ -3,10 +3,10 @@ package e2b.activity;
 import android.os.Bundle;
 
 import com.e2b.R;
+import com.e2b.fragments.BaseFragment;
 import com.e2b.utils.AppConstant;
 
 import e2b.enums.EScreenType;
-import e2b.fragments.BaseFragment;
 import e2b.fragments.FragmentFactory;
 import e2b.model.response.Merchant;
 
@@ -14,6 +14,7 @@ public class MapActivity extends ConsumerBaseActivity {
 
     private BaseFragment currentFragment;
     private Merchant selectedMerchant;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

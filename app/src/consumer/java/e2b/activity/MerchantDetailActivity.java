@@ -14,7 +14,6 @@ import e2b.model.response.Merchant;
 
 public class MerchantDetailActivity extends ConsumerBaseActivity {
 
-
     private Merchant merchant;
 
     @Override

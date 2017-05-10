@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.e2b.R;
 import com.e2b.activity.BaseActivity;
+import com.e2b.fragments.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

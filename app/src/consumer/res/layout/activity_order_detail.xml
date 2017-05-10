@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/sp_12"
+        android:paddingRight="@dimen/sp_12">
+
+        <com.e2b.views.CustomTextView
+            style="@style/wrap_content"
+            android:text="@string/order_id"
+            android:textSize="@dimen/sp_14"
+            app:ctypeface="@string/font_bold" />
+
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/order_id"
+            style="@style/wrap_content"
+            android:text="@string/order_id"
+            android:textSize="@dimen/sp_14"
+            app:ctypeface="@string/font_regular" />
+
+        <com.e2b.views.CustomTextView
+            style="@style/wrap_content"
+            android:text="@string/order_status"
+            android:textSize="@dimen/sp_14"
+            app:ctypeface="@string/font_bold" />
+
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/order_status"
+            style="@style/wrap_content"
+            android:text="@string/order_id"
+            android:textSize="@dimen/sp_14"
+            app:ctypeface="@string/font_regular" />
+
+        <com.e2b.views.CustomTextView
+            style="@style/wrap_content"
+            android:text="@string/order_request"
+            android:textSize="@dimen/sp_14"
+            app:ctypeface="@string/font_bold" />
+
+
+        <RelativeLayout
+            android:id="@+id/order_request_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_300"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_place_order_media"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_300"
+                android:background="@drawable/banner" />
+
+            <Button
+                android:id="@+id/btn_place_order_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/map_marker"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/order_amount_title"
+            style="@style/wrap_content"
+            android:text="@string/order_amount"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"
+            app:ctypeface="@string/font_bold" />
+
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/order_amount"
+            style="@style/wrap_content"
+            android:text="@string/order_id"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"
+            app:ctypeface="@string/font_regular"
+
+            />
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/wait_time_title"
+            style="@style/wrap_content"
+            android:text="@string/wait_time"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"
+            app:ctypeface="@string/font_bold" />
+
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/wait_time"
+            style="@style/wrap_content"
+            android:text="@string/order_id"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"
+            app:ctypeface="@string/font_regular"
+
+            />
+
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/order_receipt_title"
+            style="@style/wrap_content"
+            android:text="@string/order_receipt"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"
+            app:ctypeface="@string/font_bold" />
+
+
+        <RelativeLayout
+            android:id="@+id/order_receipt_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_300"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:id="@+id/iv_receipt_order"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_300"
+                android:background="@drawable/banner" />
+        </RelativeLayout>
+
+        <com.e2b.views.CustomTextView
+            style="@style/wrap_content"
+            android:id="@+id/payment_option_title"
+            android:text="@string/payment_option"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"
+            app:ctypeface="@string/font_bold"
+            />
+
+
+        <Spinner
+            android:id="@+id/spinner_payment_option"
+            style="@style/wrap_content"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"
+
+            />
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/delivery_option_title"
+            style="@style/wrap_content"
+            android:text="@string/delivery_option"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"
+            app:ctypeface="@string/font_bold"
+            />
+
+        <Spinner
+            android:id="@+id/spinner_delivery_option"
+            style="@style/wrap_content"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"
+            />
+
+        <RelativeLayout
+            android:id="@+id/footer_button_layout"
+            style="@style/width_match_parent"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="@dimen/dp_12"
+                android:text="@string/cancel" />
+
+            <Button
+                android:id="@+id/btn_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/dp_12"
+                android:text="@string/confirm" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

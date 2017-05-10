@@ -1,18 +1,24 @@
 package e2b.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.e2b.R;
+import com.e2b.fragments.BaseFragment;
 import com.e2b.views.CustomTextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import e2b.activity.ConsumerBaseActivity;
 import e2b.activity.MapActivity;
+import e2b.activity.OrderDetailActivity;
+import e2b.activity.PlaceOrderActivity;
 import e2b.model.response.Merchant;
 
 /**
@@ -33,6 +39,10 @@ public class StoreInformationFragment extends BaseFragment {
     @Bind(R.id.tv_store_email)
     CustomTextView storeEmail;
 
+    @Bind(R.id.tv_place_order)
+    CustomTextView placeOrder;
+    private String TAG = StoreInformationFragment.class.getCanonicalName();
+    private Merchant merchant;
 //    @Bind(R.id.tv_store_Name)
 //    CustomTextView name;
 //
@@ -58,12 +68,22 @@ public class StoreInformationFragment extends BaseFragment {
     }
 
     private void setupData() {
-        Merchant merchant = ((MapActivity)activity).getSelectedMerchant();
+        merchant = ((MapActivity)activity).getSelectedMerchant();
         if(merchant != null) {
+            Log.d(TAG, "Merchant : "+ merchant.toString());
             name.setText(merchant.getShopName());
             storeAddress.setText("Address : "+ merchant.getShopAddress());
             storePhone.setText("Phone : "+ merchant.getMobile());
             storeEmail.setText("Email : "+merchant.getShopName());
         }
+    }
+
+    @OnClick(R.id.tv_place_order)
+    public void goToPlaceOrder(){
+        Bundle bundle = new Bundle();
+        bundle.putString("merchantId", merchant.get_id());
+        Intent intent = new Intent(getActivity(), PlaceOrderActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

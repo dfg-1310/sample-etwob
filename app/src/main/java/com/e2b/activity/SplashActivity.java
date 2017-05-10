@@ -28,7 +28,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 // check profile loggedin or not in app
-                if(!TextUtils.isEmpty(MerchantPreferenceKeeper.getInstance().getAccessToken())){
+                if(TextUtils.isEmpty(MerchantPreferenceKeeper.getInstance().getAccessToken())){
                     launchActivityMain(AuthActivity.class);
                 }else{
                     launchActivityMain(OrdersActivity.class);
@@ -47,6 +47,5 @@ public class SplashActivity extends BaseActivity {
             MerchantPreferenceKeeper.getInstance().setFCMToken(token);
         }
     }
-
 }
 

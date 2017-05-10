@@ -35,8 +35,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final String TAG = BaseActivity.class.getSimpleName();
     private ProgressDialog progressDialog;
-    private BaseFragment currentFragment;
     public String fragmentTag;
+    private BaseFragment currentFragment;
 
 
     @Override

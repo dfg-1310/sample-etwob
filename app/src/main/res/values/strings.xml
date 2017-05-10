@@ -38,6 +38,21 @@
     <string name="enter_mobile_number_length">Make  sure you have entered 10 Digits.</string>
     <string name="select_closing_days">Please Select Closing days</string>
     <string name="select_image_option">Please select image option</string>
+    <string name="order_amount_hint">Enter Order Amount</string>
+    <string name="order_wait_time_hint">Enter Order Wait Time</string>
 
+    <string name="order_id">OrderID</string>
+    <string name="order_status">Order Status</string>
+    <string name="order_request">Order Request</string>
+    <string name="order_amount">Order Amount</string>
+    <string name="wait_time">Wait Time</string>
+    <string name="order_receipt">Order Receipt</string>
+    <string name="payment_option">Payment Option</string>
+    <string name="delivery_option">Delivery Option</string>
+    <string name="confirm">Confirm</string>
+
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="take_photo">Take Photo</string>
 
 </resources>
