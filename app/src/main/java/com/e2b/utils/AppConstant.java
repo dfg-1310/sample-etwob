@@ -33,6 +33,7 @@ public class AppConstant {
 
     public interface BUNDLE_KEY {
         String PRIVACY_URL = "privacy_url";
+        String IS_FROM_CAMERA = "from_camera";
     }
 
     public interface FOOTER_INDEX {
@@ -82,4 +83,12 @@ public class AppConstant {
         int CAMERA_PERMISSION = 2;
         int WRITE_EXTERNAL_PERMISSION = 3;
     }
+
+    public interface REQ {
+        int IMAGE_CAMERA = 100;
+        int IMAGE_GALLERY = 200;
+    }
+
+    public static String FILE_PATH_IMAGE = "filePathImage";
+
 }

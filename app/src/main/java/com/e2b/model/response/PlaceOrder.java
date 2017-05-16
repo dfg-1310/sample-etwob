@@ -17,6 +17,16 @@ public class PlaceOrder implements Serializable{
     private String status;
     private String createdOn;
 
+    private MerchantOption merchantOptions;
+
+    public MerchantOption getMerchantOptions() {
+        return merchantOptions;
+    }
+
+    public void setMerchantOptions(MerchantOption merchantOptions) {
+        this.merchantOptions = merchantOptions;
+    }
+
     public String get__v() {
         return __v;
     }

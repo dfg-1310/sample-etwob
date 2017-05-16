@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_255_255_255"
+        android:orientation="vertical">
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/tv_camera"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="Photo from Camera"
+            android:textColor="@color/color_129_129_129"
+            android:textSize="@dimen/sp_14"
+            app:ctypeface="@string/font_regular" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_below="@+id/tv_title"
+            android:background="@color/color_239_239_239"/>
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/tv_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="Photo from Gallery"
+            android:textColor="@color/color_129_129_129"
+            android:textSize="@dimen/sp_14"
+            app:ctypeface="@string/font_regular" />
+    </LinearLayout>
