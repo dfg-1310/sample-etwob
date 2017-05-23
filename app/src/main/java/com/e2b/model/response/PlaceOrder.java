@@ -13,9 +13,65 @@ public class PlaceOrder implements Serializable{
     private String orderAudio;
     private String consumer;
     private String merchant;
+    private MerchantOption merchantOptions;
     private String _id;
     private String status;
     private String createdOn;
+    private float orderAmount;
+    private int waitTime;
+    private String orderReceipt;
+    private String deliveryOptions;
+    private String paymentOptions;
+
+
+    public String getDeliveryOptions() {
+        return deliveryOptions;
+    }
+
+    public void setDeliveryOptions(String deliveryOptions) {
+        this.deliveryOptions = deliveryOptions;
+    }
+
+    public String getPaymentOptions() {
+        return paymentOptions;
+    }
+
+    public void setPaymentOptions(String paymentOptions) {
+        this.paymentOptions = paymentOptions;
+    }
+
+    public String getOrderReceipt() {
+        return orderReceipt;
+    }
+
+    public void setOrderReceipt(String orderReceipt) {
+        this.orderReceipt = orderReceipt;
+    }
+
+    public float getOrderAmount() {
+        return orderAmount;
+    }
+
+    public void setOrderAmount(float orderAmount) {
+        this.orderAmount = orderAmount;
+    }
+
+    public int getWaitTime() {
+        return waitTime;
+    }
+
+    public void setWaitTime(int waitTime) {
+        this.waitTime = waitTime;
+    }
+
+
+    public MerchantOption getMerchantOptions() {
+        return merchantOptions;
+    }
+
+    public void setMerchantOptions(MerchantOption merchantOptions) {
+        this.merchantOptions = merchantOptions;
+    }
 
     public String get__v() {
         return __v;

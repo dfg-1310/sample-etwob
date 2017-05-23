@@ -5,8 +5,6 @@ import com.e2b.model.response.CommonApiResponse;
 import com.e2b.model.response.PlaceOrder;
 import com.google.gson.JsonObject;
 
-import e2bmerchant.model.response.MerchantResponse;
-import e2bmerchant.model.response.VerifiedOTPResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -53,6 +51,10 @@ public interface IApiRequest {
 //
 //    @POST("order")
 //    Call<BaseResponse<PlaceOrder>> placeOrder(@Body JsonObject jsonObject);
+//
+//    @PUT("order/{id}")
+//    Call<BaseResponse<PlaceOrder>> updateOrder(@Path("id") String orderId, @Body JsonObject jsonObject);
+//
 //
 //    @GET("order/{id}")
 //    Call<BaseResponse<PlaceOrder>> getOrder(@Path("id") String orderId);

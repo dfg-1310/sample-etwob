@@ -1,5 +1,9 @@
 package e2b.activity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -7,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.e2b.R;
+import com.e2b.activity.CameraActivity;
 import com.e2b.api.ApiCallback;
 import com.e2b.api.ApiClient;
 import com.e2b.api.IApiRequest;
@@ -15,8 +20,13 @@ import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
 import com.e2b.model.response.PlaceOrder;
 import com.e2b.utils.AppConstant;
+import com.e2b.utils.BitmapUtils;
 import com.google.gson.JsonObject;
 
+import java.io.File;
+
+import e2b.intrface.ICameraCallback;
+import e2b.utils.CameraDialog;
 import e2b.utils.DummyData;
 import retrofit2.Call;
 
@@ -30,6 +40,7 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
 
     private BaseFragment currentFragment;
     private String merchantId;
+    private File finalFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +62,8 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-           showToast("take photo");
+                showToast("take photo");
+                takeOrderPhoto();
             }
         });
 
@@ -83,7 +95,7 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
                         showToast("Your order placed successfully.");
                         launchActivity(OrdersActivity.class);
                         finish();
-                   }
+                    }
 
                     @Override
                     public void onError(Error error) {
@@ -103,5 +115,50 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
         }
     }
 
+    public void takeOrderPhoto() {
+        CameraDialog dialog = new CameraDialog(this);
+        dialog.setListner(new ICameraCallback() {
+            @Override
+            public void pickCamera() {
+                Bundle bundle = new Bundle();
+                bundle.putInt(AppConstant.BUNDLE_KEY.IS_FROM_CAMERA, 0);
+                Intent i = new Intent(PlaceOrderActivity.this, CameraActivity.class);
+                i.putExtras(bundle);
+                startActivityForResult(i, AppConstant.REQ.IMAGE_CAMERA);
+            }
+
+            @Override
+            public void pickPhoto() {
+                Bundle bundle = new Bundle();
+                bundle.putInt(AppConstant.BUNDLE_KEY.IS_FROM_CAMERA, 1);
+                Intent i = new Intent(PlaceOrderActivity.this, CameraActivity.class);
+                i.putExtras(bundle);
+                startActivityForResult(i, AppConstant.REQ.IMAGE_GALLERY);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case AppConstant.REQ.IMAGE_CAMERA:
+                case AppConstant.REQ.IMAGE_GALLERY:
+                    finalFile = (File) data.getExtras().getSerializable(AppConstant.FILE_PATH_IMAGE);
+                    if (finalFile != null) {
+// TODO upload image on s3 from here
+//                        ui.ivCameraIcon.setVisibility(View.GONE);
+//                        uploadImageAPI(finalFile);
+
+                        Bitmap myBitmap = BitmapFactory.decodeFile(finalFile.getAbsolutePath());
+                        placeOrderImageView.setImageBitmap(myBitmap);
+
+                    }
+                    break;
+
+            }
+        }
+    }
 
 }

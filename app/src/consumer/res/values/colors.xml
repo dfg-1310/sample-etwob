@@ -25,6 +25,10 @@
     <color name="color_b3919191">#B3919191</color>
     <color name="color_B342b757">#B342b757</color>
     <color name="holo_orange">#FF8800</color>
+    <color name="color_255_255_255">#FFFFFF</color>
+    <color name="color_129_129_129">#818181</color>
+    <color name="color_239_239_239">#EFEFEF</color>
+
 
     <!--text colors-->
 </resources>

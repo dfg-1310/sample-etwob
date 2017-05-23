@@ -39,7 +39,7 @@
     <string name="select_closing_days">Please Select Closing days</string>
     <string name="select_image_option">Please select image option</string>
     <string name="order_amount_hint">Enter Order Amount</string>
-    <string name="order_wait_time_hint">Enter Order Wait Time</string>
+    <string name="order_wait_time_hint">Enter Order Wait Time (In Minutes)</string>
 
     <string name="order_id">OrderID</string>
     <string name="order_status">Order Status</string>
@@ -54,5 +54,14 @@
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
     <string name="take_photo">Take Photo</string>
+    <string-array name="delivery_options">
+        <item>Pickup</item>
+        <item>Home Delivery</item>
+    </string-array>
+
+    <string-array name="payment_options">
+        <item>Cash On Delivery</item>
+    </string-array>
+
 
 </resources>

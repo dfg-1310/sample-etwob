@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,6 +23,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.target.Target;
 import com.e2b.R;
 import com.e2b.fragments.BaseFragment;
 import com.e2b.utils.AppConstant;
@@ -170,16 +175,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void loadImageGlide(String url, ImageView imageView) {
-        Glide.with(this)
-                .load(url)
-                .placeholder(R.drawable.banner)
-                .error(R.drawable.banner)
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imageView);
-    }
-
     public void loadCircleImageGlide(String url, final ImageView imageView) {
         Glide.with(this).
                 load(url)
@@ -241,4 +236,32 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             }
         }).start();
     }
+
+    public void loadImageGlide(final String url, final ImageView imageView) {
+
+        Glide.with(getApplicationContext()).load(url).asBitmap().centerCrop().placeholder(R.drawable.banner).
+                error(R.drawable.banner).diskCacheStrategy(DiskCacheStrategy.ALL)
+                .listener(new RequestListener<String, Bitmap>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
+                        return false;
+
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(new BitmapImageViewTarget(imageView) {
+                    @Override
+                    public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                        super.onResourceReady(bitmap, anim);
+                        if (imageView.getContext() != null)
+                            Glide.with(getApplicationContext()).load(url).centerCrop().into(imageView);
+                    }
+                });
+
+    }
+
 }
