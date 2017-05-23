@@ -1,5 +1,7 @@
 package com.e2b.model.response;
 
+import java.io.Serializable;
+
 import e2b.model.response.DeliveryDetail;
 import e2b.model.response.PaytmDetail;
 
@@ -7,7 +9,7 @@ import e2b.model.response.PaytmDetail;
  * Created by gaurav on 15/5/17.
  */
 
-public class MerchantOption  {
+public class MerchantOption implements Serializable {
 
     private PaytmDetail paytmDetail;
     private DeliveryDetail deliveryDetail;

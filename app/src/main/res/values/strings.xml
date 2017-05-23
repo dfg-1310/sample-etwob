@@ -37,5 +37,14 @@
     <string name="success_registered_text"> Successfully Registered! :)</string>
     <string name="enter_mobile_number_length">Make  sure you have entered 10 Digits.</string>
 
+    <string-array name="delivery_options">
+        <item>Pickup</item>
+        <item>Home Delivery</item>
+    </string-array>
+
+    <string-array name="payment_options">
+        <item>Cash On Delivery</item>
+    </string-array>
+
 
 </resources>
