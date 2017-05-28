@@ -18,6 +18,7 @@ import com.e2b.utils.BitmapUtils;
 import java.io.File;
 
 public class CameraActivity extends BaseActivity {
+
     private Uri mCapturedImageURI;
     private String imageFinalPath;
     private File galleryPathFile;

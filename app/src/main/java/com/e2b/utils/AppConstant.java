@@ -2,6 +2,8 @@ package com.e2b.utils;
 
 import android.Manifest;
 
+import com.amazonaws.services.s3.model.CreateBucketRequest;
+
 public class AppConstant {
     public static final String HOCKEY_APPID = "45dc7bbdd7654730971624bbde5b4da4";
     public static final String GPLUS_ID = "901679639956-kqhq4q7rdrcruscn71cd8pbt95psbdpt.apps.googleusercontent.com";
@@ -13,6 +15,9 @@ public class AppConstant {
     public static final String DEVICE_OS = "1";
     public static final int TAKE_PICTURE = 0;
     public static final int CHOOSE_PICTURE = 1;
+    public static final String MY_ACCESS_KEY_ID = "AKIAJPDFYMZSYSARHJWQ" ;
+    public static final String MY_SECRET_KEY = "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";
+    public static final String MY_PICTURE_BUCKET = "s3e2bapp";
 
 
     public static String FragmentVal = "fragmentVal";
@@ -87,8 +92,11 @@ public class AppConstant {
     public interface REQ {
         int IMAGE_CAMERA = 100;
         int IMAGE_GALLERY = 200;
+        int IMAGE_AUDIO = 300;
     }
 
     public static String FILE_PATH_IMAGE = "filePathImage";
+    public static String FILE_PATH_AUDIO = "filePathAudio";
+
 
 }

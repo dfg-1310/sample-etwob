@@ -5,8 +5,10 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -16,11 +18,27 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.amazonaws.ClientConfiguration;
+import com.amazonaws.Protocol;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.AbortMultipartUploadRequest;
+import com.amazonaws.services.s3.model.CompleteMultipartUploadRequest;
+import com.amazonaws.services.s3.model.CompleteMultipartUploadResult;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
+import com.amazonaws.services.s3.model.InitiateMultipartUploadRequest;
+import com.amazonaws.services.s3.model.InitiateMultipartUploadResult;
+import com.amazonaws.services.s3.model.PartETag;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.ResponseHeaderOverrides;
+import com.amazonaws.services.s3.model.UploadPartRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestListener;
@@ -29,8 +47,14 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.Target;
 import com.e2b.R;
 import com.e2b.fragments.BaseFragment;
+import com.e2b.listener.IImageUploadOnS3Listner;
 import com.e2b.utils.AppConstant;
 import com.e2b.utils.AppUtils;
+
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import e2b.intrface.ISaveUserInfo;
 import e2b.model.response.UserResponse;
@@ -86,9 +110,11 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public void replaceFragment(int containerId, BaseFragment fragment, Bundle bundle) {
         replaceFragment(containerId, fragment, false, bundle);
     }
+
     public void replaceFragment(int containerId, BaseFragment fragment, boolean isNextFragmentNeedsTobeAdded) {
         replaceFragment(containerId, fragment, isNextFragmentNeedsTobeAdded, null);
     }
+
     public void replaceFragment(int containerId, BaseFragment fragment, boolean isNextFragmentNeedsTobeAdded, Bundle bundle) {
         replaceFragment(containerId, fragment, 0, 0, 0, 0, isNextFragmentNeedsTobeAdded, bundle);
     }
@@ -231,7 +257,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if(keeper != null){
+                if (keeper != null) {
                     keeper.saveUser(userResponse);
                 }
             }
@@ -263,6 +289,164 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
 
+    }
+
+
+    public void uploadImage(String fineName, String filePath, IImageUploadOnS3Listner listner) {
+        new ImageUploadAsync(fineName, filePath, listner).execute();
+    }
+
+    public void uploadAudio(String fineName, String filePath, IImageUploadOnS3Listner listner) {
+        new FileUploadAsync(fineName, filePath, listner).execute();
+    }
+
+    class ImageUploadAsync extends AsyncTask {
+        String fileName;
+        String filePath;
+        IImageUploadOnS3Listner listner;
+
+        ImageUploadAsync(String fileName, String filePath, IImageUploadOnS3Listner listner) {
+            this.fileName = fileName;
+            this.filePath = filePath;
+            this.listner = listner;
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+
+            try {
+                AmazonS3Client s3Client = new AmazonS3Client(new BasicAWSCredentials(AppConstant.MY_ACCESS_KEY_ID, AppConstant.MY_SECRET_KEY));
+//            s3Client.createBucket(AppConstant.MY_PICTURE_BUCKET);
+                PutObjectRequest por = new PutObjectRequest(AppConstant.MY_PICTURE_BUCKET, fileName, new java.io.File(filePath));
+                s3Client.putObject(por);
+
+                ResponseHeaderOverrides override = new ResponseHeaderOverrides();
+                override.setContentType("image/jpeg");
+                GeneratePresignedUrlRequest urlRequest = new GeneratePresignedUrlRequest(AppConstant.MY_PICTURE_BUCKET, fileName);
+                urlRequest.setResponseHeaders(override);
+
+                URL url = s3Client.generatePresignedUrl(urlRequest);
+
+                Log.d("Uploaded Image Url : ", url.toString());
+                return url.toString();
+            }catch (Exception e){
+                e.getMessage();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Object imagePath) {
+
+            if(imagePath != null && imagePath instanceof String){
+                listner.uploaded((String) imagePath);
+            }else{
+                listner.uploaded(null);
+            }
+        }
+    }
+
+    class FileUploadAsync extends AsyncTask {
+        String fileName;
+        String filePath;
+        IImageUploadOnS3Listner listner;
+
+        FileUploadAsync(String fileName, String filePath, IImageUploadOnS3Listner listner) {
+            this.fileName = fileName;
+            this.filePath = filePath;
+            this.listner = listner;
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+
+            try {
+                ClientConfiguration configuration = new ClientConfiguration();
+                configuration.setMaxErrorRetry(3);
+                configuration.setConnectionTimeout(5*60*1000);
+                configuration.setSocketTimeout(5*60*1000);
+                configuration.setProtocol(Protocol.HTTP);
+
+                AmazonS3 s3Client = new AmazonS3Client(new BasicAWSCredentials(AppConstant.MY_ACCESS_KEY_ID, AppConstant.MY_SECRET_KEY), configuration);
+
+                // Create a list of UploadPartResponse objects. You get one of these for
+               // each part upload.
+                List<PartETag> partETags = new ArrayList<PartETag>();
+
+                // Step 1: Initialize.
+                InitiateMultipartUploadRequest initRequest = new InitiateMultipartUploadRequest(
+                        AppConstant.MY_PICTURE_BUCKET, fileName);
+                InitiateMultipartUploadResult initResponse =
+                        s3Client.initiateMultipartUpload(initRequest);
+
+                File file = new File(filePath);
+                long contentLength = file.length();
+                long partSize = 4 * 1024 * 1024; // Set part size to 5 MB.
+
+                try {
+                    // Step 2: Upload parts.
+                    long filePosition = 0;
+                    for (int i = 1; filePosition < contentLength; i++) {
+                        // Last part can be less than 5 MB. Adjust part size.
+                        partSize = Math.min(partSize, (contentLength - filePosition));
+
+                        // Create request to upload a part.
+                        UploadPartRequest uploadRequest = new UploadPartRequest()
+                                .withBucketName(AppConstant.MY_PICTURE_BUCKET).withKey(fileName)
+                                .withUploadId(initResponse.getUploadId()).withPartNumber(i)
+                                .withFileOffset(filePosition)
+                                .withFile(file)
+                                .withPartSize(partSize);
+
+                        // Upload part and add response to our list.
+                        partETags.add(s3Client.uploadPart(uploadRequest).getPartETag());
+
+                        filePosition += partSize;
+                    }
+
+                    // Step 3: Complete.
+                    CompleteMultipartUploadRequest compRequest = new
+                            CompleteMultipartUploadRequest(AppConstant.MY_PICTURE_BUCKET,
+                            fileName,
+                            initResponse.getUploadId(),
+                            partETags);
+
+                    CompleteMultipartUploadResult completeMultipartUploadResult =  s3Client.completeMultipartUpload(compRequest);
+
+                    ResponseHeaderOverrides override = new ResponseHeaderOverrides();
+                    override.setContentType("audio/mpeg");
+
+                    GeneratePresignedUrlRequest urlRequest = new GeneratePresignedUrlRequest(AppConstant.MY_PICTURE_BUCKET, fileName);
+                    urlRequest.setResponseHeaders(override);
+
+                    URL url = s3Client.generatePresignedUrl(urlRequest);
+                    Log.d(TAG, " CompleteMultipartUploadResult :"+ completeMultipartUploadResult.toString());
+                    Log.d(TAG, " url :"+ url.toString());
+                    return url.toString();
+
+                } catch (Exception e) {
+                    s3Client.abortMultipartUpload(new AbortMultipartUploadRequest(
+                            AppConstant.MY_PICTURE_BUCKET, fileName, initResponse.getUploadId()));
+                    Log.d(TAG, " CompleteMultipartUploadResult Exception :"+ e.getMessage());
+
+                }
+            }catch (Exception e){
+                e.getMessage();
+                return null;
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object imagePath) {
+
+            if(imagePath != null && imagePath instanceof String){
+                listner.uploaded((String) imagePath);
+            }else{
+                listner.uploaded(null);
+            }
+        }
     }
 
 }

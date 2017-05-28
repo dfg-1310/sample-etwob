@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000" >
+
+    <RelativeLayout
+        android:id="@+id/controlsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:padding="16dp" >
+
+        <Button
+            android:id="@+id/recordBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:background="@android:color/holo_blue_light"
+            android:text="@string/recordBtn"
+            android:layout_alignParentLeft="true"
+            />
+
+        <Button
+            android:id="@+id/playBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:background="@android:color/holo_blue_light"
+            android:text="@string/playBtn"
+            android:layout_centerInParent="true"
+            />
+
+        <Button
+            android:id="@+id/selectBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/holo_blue_light"
+            android:text="@string/selectBtn" />
+
+
+    </RelativeLayout>
+
+    <e2b.utils.visualizer.VisualizerView
+        android:id="@+id/visualizerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/controlsLayout"
+        android:layout_margin="16dp" >
+    </e2b.utils.visualizer.VisualizerView>
+
+</RelativeLayout>

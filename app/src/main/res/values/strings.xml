@@ -36,6 +36,7 @@
     <string name="place_order_text"> Place Order </string>
     <string name="success_registered_text"> Successfully Registered! :)</string>
     <string name="enter_mobile_number_length">Make  sure you have entered 10 Digits.</string>
+    <string name="stopRecordBtn">Stop</string>
 
     <string-array name="delivery_options">
         <item>Pickup</item>

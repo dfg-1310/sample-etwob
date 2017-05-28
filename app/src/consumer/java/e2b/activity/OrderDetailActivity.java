@@ -1,5 +1,7 @@
 package e2b.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -26,6 +28,8 @@ import com.google.gson.JsonObject;
 import e2b.utils.DummyData;
 import retrofit2.Call;
 
+import static e2b.activity.PlaceOrderActivity.FileNameArg;
+
 public class OrderDetailActivity extends ConsumerBaseActivity {
 
     private BaseFragment currentFragment;
@@ -49,8 +53,10 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
     private RelativeLayout footerButtonLayout;
     private Button confirmButton;
     private Button cancelmButton;
+    Button playAudioButton;
     private ImageView orderImg;
     private ImageView orderReceiptImg;
+
 
 
     @Override
@@ -84,7 +90,7 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
         footerButtonLayout = (RelativeLayout) findViewById(R.id.footer_button_layout);
         confirmButton = (Button) findViewById(R.id.btn_confirm);
         cancelmButton = (Button) findViewById(R.id.btn_cancel);
-
+        playAudioButton = (Button) findViewById(R.id.btn_place_order_play);
 
         orderImg = (ImageView) findViewById(R.id.iv_place_order_media);
         orderReceiptImg = (ImageView) findViewById(R.id.iv_receipt_order);
@@ -171,6 +177,18 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
 
             }
         });
+
+        playAudioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!TextUtils.isEmpty(placeOrder.getOrderAudio())){
+                    Intent i = new Intent(OrderDetailActivity.this, AudioPlaybackActivity.class);
+                    Log.d(TAG, "audio file name : "+ placeOrder.getOrderAudio());
+                    i.putExtra(FileNameArg, placeOrder.getOrderAudio());
+                    startActivityForResult(i, 0);
+                }
+            }
+        });
     }
 
     private void getPlaceOrder() {
@@ -200,7 +218,7 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
         if (!TextUtils.isEmpty(placeOrder.getOrderImg())) {
             loadImageGlide(placeOrder.getOrderImg(), orderImg);
         } else {
-            //
+            playAudioButton.setVisibility(View.VISIBLE);
         }
 
         if (!placeOrder.getStatus().equalsIgnoreCase("pending") &&
@@ -233,13 +251,13 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
                 placeOrder.getStatus().equalsIgnoreCase("delivered") ||
                 placeOrder.getStatus().equalsIgnoreCase("pickedup")
                 ) {
-            if(!TextUtils.isEmpty(placeOrder.getDeliveryOptions())){
+            if (!TextUtils.isEmpty(placeOrder.getDeliveryOptions())) {
                 deliveryOptionTitleCustomTextView.setVisibility(View.VISIBLE);
                 deliveryOptionCustomTextView.setVisibility(View.VISIBLE);
                 deliveryOptionCustomTextView.setText(placeOrder.getDeliveryOptions());
             }
 
-            if(!TextUtils.isEmpty(placeOrder.getPaymentOptions())){
+            if (!TextUtils.isEmpty(placeOrder.getPaymentOptions())) {
                 paymentOptionTitleCustomTextView.setVisibility(View.VISIBLE);
                 paymentOptionCustomTextView.setVisibility(View.VISIBLE);
                 paymentOptionCustomTextView.setText(placeOrder.getPaymentOptions());
@@ -254,5 +272,4 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
             Log.d(TAG, "place order : " + placeOrder.toString());
         }
     }
-
 }
