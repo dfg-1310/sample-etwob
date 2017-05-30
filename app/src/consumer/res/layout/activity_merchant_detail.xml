@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/iv_store_image"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_200"
+        android:layout_height="@dimen/dp_250"
         android:scaleType="centerCrop"
         android:background="@drawable/banner"
         />
@@ -99,21 +99,21 @@
         android:paddingRight="@dimen/dp_8"
         android:id="@+id/tv_important_info"
         style="@style/wrap_content"
-        android:text="IMPORTANT INFORMATION: Home delivery is only Available if the total amount of shopping is  more than 500 Rs." />
+        android:text="IMPORTANT INFORMATION: Home delivery is only Available if the total amount of shopping is more than MIN_ORDER_AMOUNT Rs." />
 
     <com.e2b.views.CustomTextView
         android:paddingLeft="@dimen/dp_8"
         android:paddingRight="@dimen/dp_8"
         android:id="@+id/tv_payment_mode"
         style="@style/wrap_content"
-        android:text="Payment Mode: Paytm, Cash on Delivery" />
+        android:text="Payment Mode: Cash on Delivery" />
 
-    <com.e2b.views.CustomTextView
+  <!--  <com.e2b.views.CustomTextView
         android:paddingLeft="@dimen/dp_8"
         android:paddingRight="@dimen/dp_8"
         android:id="@+id/tv_offers"
         style="@style/wrap_content"
-        android:text="OFFERS: \n" />
+        android:text="OFFERS: \n" />-->
 
     <com.e2b.views.CustomTextView
         android:id="@+id/tv_review_comment"

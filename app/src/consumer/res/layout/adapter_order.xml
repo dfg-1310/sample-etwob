@@ -14,7 +14,7 @@
         android:layout_marginBottom="@dimen/dp_8"
         android:layout_marginTop="@dimen/dp_8"
         android:layout_marginRight="@dimen/dp_8"
-        android:background="@mipmap/ic_launcher" />
+        android:background="@drawable/green_circle_bg" />
 
     <com.e2b.views.CustomTextView
         android:id="@+id/tv_order_title"

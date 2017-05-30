@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.e2b.R;
+import com.e2b.activity.BaseActivity;
 import com.e2b.fragments.BaseFragment;
 import com.e2b.views.CustomTextView;
 
@@ -41,13 +43,17 @@ public class StoreInformationFragment extends BaseFragment {
 
     @Bind(R.id.tv_place_order)
     CustomTextView placeOrder;
+
+
     private String TAG = StoreInformationFragment.class.getCanonicalName();
     private Merchant merchant;
-//    @Bind(R.id.tv_store_Name)
-//    CustomTextView name;
-//
-//    @Bind(R.id.tv_store_Name)
-//    CustomTextView name;
+
+    @Bind(R.id.tv_important_info)
+    CustomTextView importantInfo;
+
+    @Bind(R.id.iv_store_image)
+    ImageView storeImageView;
+
 //
 //    @Bind(R.id.tv_store_Name)
 //    CustomTextView name;
@@ -75,6 +81,8 @@ public class StoreInformationFragment extends BaseFragment {
             storeAddress.setText("Address : "+ merchant.getShopAddress());
             storePhone.setText("Phone : "+ merchant.getMobile());
             storeEmail.setText("Email : "+merchant.getShopName());
+            importantInfo.setText(importantInfo.getText().toString().replace("MIN_ORDER_AMOUNT", ""+merchant.getDeliveryDetail().getMinAmount()));
+            ((BaseActivity)getActivity()).loadImageGlide(merchant.getShopImage(), storeImageView);
         }
     }
 

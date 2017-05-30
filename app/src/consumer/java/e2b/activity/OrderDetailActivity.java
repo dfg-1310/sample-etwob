@@ -22,6 +22,7 @@ import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
 import com.e2b.model.response.PlaceOrder;
 import com.e2b.utils.AppConstant;
+import com.e2b.utils.DialogUtils;
 import com.e2b.views.CustomTextView;
 import com.google.gson.JsonObject;
 
@@ -116,6 +117,9 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
             @Override
             public void onClick(View v) {
 
+                if(!isOrderValid()){
+                    return;
+                }
 //                showToast("deliveryOptionSpinner : "+deliveryOptionSpinner.getSelectedItem().toString());
 //                showToast("paymentOptionSpinner : "+paymentOptionSpinner.getSelectedItem().toString());
 
@@ -189,6 +193,17 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
                 }
             }
         });
+    }
+
+    private boolean isOrderValid() {
+
+        String[] deliveryOptions = getResources().getStringArray(R.array.delivery_options);
+
+        if(deliveryOptionSpinner.getSelectedItem().toString().equalsIgnoreCase(deliveryOptions[1]) && placeOrder.getOrderAmount() < placeOrder.getMerchantOptions().getDeliveryDetail().getMinAmount()){
+            DialogUtils.showDialog(OrderDetailActivity.this, "Minmum order amount "+ placeOrder.getMerchantOptions().getDeliveryDetail().getMinAmount() + " Rs. should be for delivery option. Please select another option.");
+            return false;
+        }
+        return true;
     }
 
     private void getPlaceOrder() {

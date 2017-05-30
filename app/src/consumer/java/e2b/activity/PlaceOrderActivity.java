@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
 import com.e2b.model.response.PlaceOrder;
 import com.e2b.utils.AppConstant;
+import com.e2b.utils.DialogUtils;
 import com.google.gson.JsonObject;
 
 import java.io.File;
@@ -90,6 +92,10 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
             @Override
             public void onClick(View v) {
 //                showToast("place order");
+                if(finalImageFile == null && finalAudioFile == null){
+                    DialogUtils.showDialog(PlaceOrderActivity.this, "Please take photo or audio file for order.");
+                    return;
+                }
                 if(finalImageFile != null) {
                     showProgressBar();
                     uploadImage("" + (new Date().getTime()), finalImageFile.getPath(), new IImageUploadOnS3Listner() {
