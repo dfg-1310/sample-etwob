@@ -16,18 +16,18 @@ import com.e2b.api.ApiCallback;
 import com.e2b.api.ApiClient;
 import com.e2b.api.IApiRequest;
 import com.e2b.fragments.BaseFragment;
+import com.e2b.listener.IImageUploadOnS3Listner;
 import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
 import com.e2b.model.response.PlaceOrder;
 import com.e2b.utils.AppConstant;
-import com.e2b.utils.BitmapUtils;
 import com.google.gson.JsonObject;
 
 import java.io.File;
+import java.util.Date;
 
 import e2b.intrface.ICameraCallback;
 import e2b.utils.CameraDialog;
-import e2b.utils.DummyData;
 import retrofit2.Call;
 
 public class PlaceOrderActivity extends ConsumerBaseActivity {
@@ -40,7 +40,9 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
 
     private BaseFragment currentFragment;
     private String merchantId;
-    private File finalFile;
+    private File finalImageFile;
+    private File finalAudioFile;
+    public static String FileNameArg = "arg_filename";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,15 +64,25 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("take photo");
                 takeOrderPhoto();
+            }
+        });
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(PlaceOrderActivity.this, AudioPlaybackActivity.class);
+                Log.d(TAG, "audio file name : "+ finalAudioFile.getPath());
+                i.putExtra(FileNameArg, finalAudioFile.getPath());
+                startActivityForResult(i, 0);
             }
         });
 
         takeAudioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("take audio");
+                Intent intent = new Intent(PlaceOrderActivity.this, AudioRecordingActivity.class);
+                startActivityForResult(intent, AppConstant.REQ.IMAGE_AUDIO);
             }
         });
 
@@ -78,32 +90,86 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
             @Override
             public void onClick(View v) {
 //                showToast("place order");
-                showProgressBar();
-                IApiRequest request = ApiClient.getRequest();
+                if(finalImageFile != null) {
+                    showProgressBar();
+                    uploadImage("" + (new Date().getTime()), finalImageFile.getPath(), new IImageUploadOnS3Listner() {
+                        @Override
+                        public void uploaded(String imagepath) {
+                            if (imagepath != null) {
+                                IApiRequest request = ApiClient.getRequest();
 
-                JsonObject placeOrderJsonObject = new JsonObject();
-                placeOrderJsonObject.addProperty("orderImg", DummyData.DEFAULT_URL);
-                placeOrderJsonObject.addProperty("orderAudio", "");
-                placeOrderJsonObject.addProperty("merchant", merchantId);
+                                JsonObject placeOrderJsonObject = new JsonObject();
+                                placeOrderJsonObject.addProperty("orderImg", imagepath);
+                                placeOrderJsonObject.addProperty("orderAudio", "");
+                                placeOrderJsonObject.addProperty("merchant", merchantId);
 
 
-                Call<BaseResponse<PlaceOrder>> call = request.placeOrder(placeOrderJsonObject);
-                call.enqueue(new ApiCallback<PlaceOrder>(PlaceOrderActivity.this) {
-                    @Override
-                    public void onSucess(PlaceOrder userResponse) {
-                        hideProgressBar();
-                        showToast("Your order placed successfully.");
-                        launchActivity(OrdersActivity.class);
-                        finish();
-                    }
+                                Call<BaseResponse<PlaceOrder>> call = request.placeOrder(placeOrderJsonObject);
+                                call.enqueue(new ApiCallback<PlaceOrder>(PlaceOrderActivity.this) {
+                                    @Override
+                                    public void onSucess(PlaceOrder userResponse) {
+                                        hideProgressBar();
+                                        showToast("Your order placed successfully.");
+                                        launchActivity(OrdersActivity.class);
+                                        finish();
+                                    }
 
-                    @Override
-                    public void onError(Error error) {
-                        hideProgressBar();
-                        showToast(error.getMsg());
-                        Log.d(TAG, error.getMsg());
-                    }
-                });
+                                    @Override
+                                    public void onError(Error error) {
+                                        hideProgressBar();
+                                        showToast(error.getMsg());
+                                        Log.d(TAG, error.getMsg());
+                                    }
+                                });
+                            } else {
+                                hideProgressBar();
+                                showToast("Please try again");
+                            }
+                        }
+                    });
+                }else{
+                    showProgressBar();
+                    uploadAudio("" + (new Date().getTime()), finalAudioFile.getPath(), new IImageUploadOnS3Listner() {
+                        @Override
+                        public void uploaded(String audiopath) {
+                            if (audiopath != null) {
+                                IApiRequest request = ApiClient.getRequest();
+
+                                JsonObject placeOrderJsonObject = new JsonObject();
+                                placeOrderJsonObject.addProperty("orderImg", "");
+                                placeOrderJsonObject.addProperty("orderAudio", audiopath);
+                                placeOrderJsonObject.addProperty("merchant", merchantId);
+
+
+                                Call<BaseResponse<PlaceOrder>> call = request.placeOrder(placeOrderJsonObject);
+                                call.enqueue(new ApiCallback<PlaceOrder>(PlaceOrderActivity.this) {
+                                    @Override
+                                    public void onSucess(PlaceOrder userResponse) {
+                                        hideProgressBar();
+                                        showToast("Your order placed successfully.");
+                                        launchActivity(OrdersActivity.class);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onError(Error error) {
+                                        hideProgressBar();
+                                        showToast(error.getMsg());
+                                        Log.d(TAG, error.getMsg());
+                                    }
+                                });
+                            } else {
+                                hideProgressBar();
+                                showToast("Please try again");
+                            }
+                        }
+                    });
+
+
+
+
+                }
+
             }
         });
     }
@@ -145,18 +211,29 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
             switch (requestCode) {
                 case AppConstant.REQ.IMAGE_CAMERA:
                 case AppConstant.REQ.IMAGE_GALLERY:
-                    finalFile = (File) data.getExtras().getSerializable(AppConstant.FILE_PATH_IMAGE);
-                    if (finalFile != null) {
-// TODO upload image on s3 from here
-//                        ui.ivCameraIcon.setVisibility(View.GONE);
-//                        uploadImageAPI(finalFile);
-
-                        Bitmap myBitmap = BitmapFactory.decodeFile(finalFile.getAbsolutePath());
+                    finalImageFile = (File) data.getExtras().getSerializable(AppConstant.FILE_PATH_IMAGE);
+                    if (finalImageFile != null) {
+                        Log.d(TAG, "image path : " + finalImageFile);
+                            // upload image on s3 from here
+                        // ui.ivCameraIcon.setVisibility(View.GONE);
+                        Bitmap myBitmap = BitmapFactory.decodeFile(finalImageFile.getAbsolutePath());
                         placeOrderImageView.setImageBitmap(myBitmap);
+                        finalAudioFile = null;
+                        playButton.setVisibility(View.GONE);
+                    }
+                    break;
+                case AppConstant.REQ.IMAGE_AUDIO:
+                    if(data.getExtras() != null) {
+                        String audioFilePath = data.getExtras().getString(AppConstant.FILE_PATH_AUDIO);
+                        if(audioFilePath != null){
+                            Log.d(TAG, "audio file path : " + audioFilePath);
+                            finalAudioFile = new File(audioFilePath);
+                            finalImageFile = null;
+                            playButton.setVisibility(View.VISIBLE);
+                        }
 
                     }
                     break;
-
             }
         }
     }

@@ -1,4 +1,4 @@
-package e2b.utils;
+package com.e2b.utils;
 
 import android.app.Activity;
 import android.support.v7.app.AlertDialog;
@@ -6,8 +6,7 @@ import android.view.View;
 
 import com.e2b.R;
 import com.e2b.activity.BaseActivity;
-
-import e2b.intrface.ICameraCallback;
+import com.e2b.listener.ICameraCallback;
 
 
 public class CameraDialog {

@@ -40,7 +40,7 @@
     <string name="select_image_option">Please select image option</string>
     <string name="order_amount_hint">Enter Order Amount</string>
     <string name="order_wait_time_hint">Enter Order Wait Time (In Minutes)</string>
-
+    <string name="stopRecordBtn">Stop</string>
     <string name="order_id">OrderID</string>
     <string name="order_status">Order Status</string>
     <string name="order_request">Order Request</string>
