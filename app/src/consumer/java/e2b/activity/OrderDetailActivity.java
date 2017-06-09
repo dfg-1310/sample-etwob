@@ -65,6 +65,7 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
         setContentView(R.layout.activity_order_detail);
         setHeaderText("Order Detail");
         setFooterState(AppConstant.FOOTER_INDEX.ORDER);
+        managebackIconVisiblity(true);
         initViewControls();
         getDataFromItent();
 //        getPlaceOrder();
