@@ -28,6 +28,9 @@ public class AppConstant {
         String USER = "profile";
         String FCM_TOKEN = "fcm_token";
         String USER_ID = "user_id";
+
+        String LATTITUDE = "lattitde";
+        String LONGITUDE = "longitude";
     }
 
     public interface PERMISSION_REQ_CODE {

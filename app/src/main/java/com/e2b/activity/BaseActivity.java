@@ -1,21 +1,30 @@
 package com.e2b.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -50,9 +59,11 @@ import com.e2b.fragments.BaseFragment;
 import com.e2b.listener.IImageUploadOnS3Listner;
 import com.e2b.utils.AppConstant;
 import com.e2b.utils.AppUtils;
+import com.google.android.gms.location.LocationListener;
 
 import e2bmerchant.model.response.MerchantUserResponse;
 import e2bmerchant.utils.MerchantPreferenceKeeper;
+
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -60,18 +71,58 @@ import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
+import static com.e2b.R.id.view;
+
 public class BaseActivity extends AppCompatActivity implements View.OnClickListener, ISaveUserInfo {
 
     public static final String TAG = BaseActivity.class.getSimpleName();
     private ProgressDialog progressDialog;
     public String fragmentTag;
     private BaseFragment currentFragment;
-
+    protected LocationManager locationManager;
+    protected LocationListener locationListener;
+    protected Context context;
+    private static final int PERMISSION_REQUEST_CODE = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    public void enableLocation() {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, new android.location.LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                Log.d(TAG, "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+                MerchantPreferenceKeeper keeper = MerchantPreferenceKeeper.getInstance();
+                keeper.setLat(location.getLatitude());
+                keeper.setLong(location.getLongitude());
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+                Log.d(TAG, "provider:" + provider);
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+                Log.d(TAG, "provider enabled :");
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                Log.d(TAG, "provider disabled :");
+
+            }
+        });
     }
 
     public void launchActivity(Class<? extends BaseActivity> activityClass) {
@@ -328,7 +379,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
                 Log.d("Uploaded Image Url : ", url.toString());
                 return url.toString();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.getMessage();
                 return null;
             }
@@ -337,9 +388,9 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected void onPostExecute(Object imagePath) {
 
-            if(imagePath != null && imagePath instanceof String){
+            if (imagePath != null && imagePath instanceof String) {
                 listner.uploaded((String) imagePath);
-            }else{
+            } else {
                 listner.uploaded(null);
             }
         }
@@ -362,14 +413,14 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             try {
                 ClientConfiguration configuration = new ClientConfiguration();
                 configuration.setMaxErrorRetry(3);
-                configuration.setConnectionTimeout(5*60*1000);
-                configuration.setSocketTimeout(5*60*1000);
+                configuration.setConnectionTimeout(5 * 60 * 1000);
+                configuration.setSocketTimeout(5 * 60 * 1000);
                 configuration.setProtocol(Protocol.HTTP);
 
                 AmazonS3 s3Client = new AmazonS3Client(new BasicAWSCredentials(AppConstant.MY_ACCESS_KEY_ID, AppConstant.MY_SECRET_KEY), configuration);
 
                 // Create a list of UploadPartResponse objects. You get one of these for
-               // each part upload.
+                // each part upload.
                 List<PartETag> partETags = new ArrayList<PartETag>();
 
                 // Step 1: Initialize.
@@ -410,7 +461,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                             initResponse.getUploadId(),
                             partETags);
 
-                    CompleteMultipartUploadResult completeMultipartUploadResult =  s3Client.completeMultipartUpload(compRequest);
+                    CompleteMultipartUploadResult completeMultipartUploadResult = s3Client.completeMultipartUpload(compRequest);
 
                     ResponseHeaderOverrides override = new ResponseHeaderOverrides();
                     override.setContentType("audio/mpeg");
@@ -419,17 +470,17 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                     urlRequest.setResponseHeaders(override);
 
                     URL url = s3Client.generatePresignedUrl(urlRequest);
-                    Log.d(TAG, " CompleteMultipartUploadResult :"+ completeMultipartUploadResult.toString());
-                    Log.d(TAG, " url :"+ url.toString());
+                    Log.d(TAG, " CompleteMultipartUploadResult :" + completeMultipartUploadResult.toString());
+                    Log.d(TAG, " url :" + url.toString());
                     return url.toString();
 
                 } catch (Exception e) {
                     s3Client.abortMultipartUpload(new AbortMultipartUploadRequest(
                             AppConstant.MY_PICTURE_BUCKET, fileName, initResponse.getUploadId()));
-                    Log.d(TAG, " CompleteMultipartUploadResult Exception :"+ e.getMessage());
+                    Log.d(TAG, " CompleteMultipartUploadResult Exception :" + e.getMessage());
 
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.getMessage();
                 return null;
             }
@@ -440,12 +491,60 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected void onPostExecute(Object imagePath) {
 
-            if(imagePath != null && imagePath instanceof String){
+            if (imagePath != null && imagePath instanceof String) {
                 listner.uploaded((String) imagePath);
-            }else{
+            } else {
                 listner.uploaded(null);
             }
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0) {
+
+                    boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean cameraAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+                    if (locationAccepted && cameraAccepted) {
+//                        Snackbar.make(BaseActivity.this, "Permission Granted, Now you can access location data and camera.", Snackbar.LENGTH_LONG).show();
+                    } else {
+
+//                        Snackbar.make(BaseActivity.this, "Permission Denied, You cannot access location data and camera.", Snackbar.LENGTH_LONG).show();
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                                showMessageOKCancel("You need to allow access to both the permissions",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                                                            PERMISSION_REQUEST_CODE);
+                                                }
+                                            }
+                                        });
+                                return;
+                            }
+                        }
+
+                    }
+                }
+
+
+                break;
+        }
+    }
+
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(BaseActivity.this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
     }
 
 }
