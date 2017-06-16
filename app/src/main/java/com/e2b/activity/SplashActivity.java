@@ -13,6 +13,7 @@ import e2b.activity.AuthActivity;
 import e2b.activity.MapActivity;
 import e2b.utils.ConsumerPreferenceKeeper;
 
+
 /**
  * A login screen that offers login via email/password.
  */
@@ -27,10 +28,10 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 // check profile loggedin or not in app
-                if(!TextUtils.isEmpty(ConsumerPreferenceKeeper.getInstance().getAccessToken())){
-                    launchActivityMain(MapActivity.class);
-                }else{
+                if(TextUtils.isEmpty(ConsumerPreferenceKeeper.getInstance().getAccessToken())){
                     launchActivityMain(AuthActivity.class);
+                }else{
+                    launchActivityMain(MapActivity.class);
                 }
                 finish();
             }

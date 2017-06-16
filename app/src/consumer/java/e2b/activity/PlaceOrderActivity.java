@@ -17,19 +17,18 @@ import com.e2b.api.ApiCallback;
 import com.e2b.api.ApiClient;
 import com.e2b.api.IApiRequest;
 import com.e2b.fragments.BaseFragment;
+import com.e2b.listener.ICameraCallback;
 import com.e2b.listener.IImageUploadOnS3Listner;
 import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
 import com.e2b.model.response.PlaceOrder;
 import com.e2b.utils.AppConstant;
+import com.e2b.utils.CameraDialog;
 import com.e2b.utils.DialogUtils;
 import com.google.gson.JsonObject;
 
 import java.io.File;
 import java.util.Date;
-
-import e2b.intrface.ICameraCallback;
-import e2b.utils.CameraDialog;
 import retrofit2.Call;
 
 public class PlaceOrderActivity extends ConsumerBaseActivity {

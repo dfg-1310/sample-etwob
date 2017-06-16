@@ -5,6 +5,7 @@ import java.io.Serializable;
 import e2b.model.response.DeliveryDetail;
 import e2b.model.response.PaytmDetail;
 
+
 /**
  * Created by gaurav on 15/5/17.
  */

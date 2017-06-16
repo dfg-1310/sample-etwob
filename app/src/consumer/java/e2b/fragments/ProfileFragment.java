@@ -1,5 +1,6 @@
 package e2b.fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -21,9 +22,11 @@ import com.e2b.utils.DialogUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import e2b.intrface.ICustomCallback;
 import e2b.model.request.ProfileSetup;
 import e2b.model.response.UserResponse;
 import e2b.utils.ConsumerPreferenceKeeper;
+import e2b.utils.RatingDialog;
 import retrofit2.Call;
 
 public class ProfileFragment extends BaseFragment {
@@ -75,7 +78,8 @@ public class ProfileFragment extends BaseFragment {
                 activity.hideProgressBar();
                 etFullName.setText(user.getName());
                 etProfileAddress.setText(user.getAddress());
-                etProfileMobileNo.setText(user.getMobile());      }
+                etProfileMobileNo.setText(user.getMobile());
+            }
 
             @Override
             public void onError(Error msg) {

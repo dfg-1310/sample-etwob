@@ -8,7 +8,6 @@ import com.e2b.api.IApiRequest;
 
 import e2b.utils.ConsumerPreferenceKeeper;
 
-
 /**
  * This is the application class.
  */
@@ -21,7 +20,6 @@ public class E2BApplication extends Application {
         super.onCreate();
         context = this;
         ConsumerPreferenceKeeper.setContext(getApplicationContext());
-
         ApiClient.init(IApiRequest.class);
     }
 }

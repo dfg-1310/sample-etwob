@@ -38,12 +38,12 @@ public class ProfileSetupFragment extends BaseFragment {
     @Bind(R.id.et_signup_address1)
     EditText etSignUpAddress1;
 
-    @Bind(R.id.et_signup_address2)
-    EditText etSignUpAddress2;
+//    @Bind(R.id.et_signup_address2)
+//    EditText etSignUpAddress2;
 
     private String fullName;
     private String address1;
-    private String address2;
+//    private String address2;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,12 +62,12 @@ public class ProfileSetupFragment extends BaseFragment {
     public void signUpClick() {
         fullName = etFullName.getText().toString().trim();
         address1 = etSignUpAddress1.getText().toString().trim();
-        address2 = etSignUpAddress2.getText().toString().trim();
+//        address2 = etSignUpAddress2.getText().toString().trim();
 
         ProfileSetup profileSetup = new ProfileSetup();
 
         profileSetup.setName(fullName);
-        profileSetup.setAddress(address1+address2);
+        profileSetup.setAddress(address1);
         profileSetup.setCoordinate(getLocationCoordinate());
 
         if (profileValidation()) {
@@ -111,7 +111,7 @@ public class ProfileSetupFragment extends BaseFragment {
             return false;
         }
 
-        if (TextUtils.isEmpty(address1) && TextUtils.isEmpty(address2)) {
+        if (TextUtils.isEmpty(address1)) {
             DialogUtils.showDialog(activity, activity.getString(R.string.please_enter_address));
             return false;
         }

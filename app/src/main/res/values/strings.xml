@@ -18,7 +18,7 @@
     <string name="enter_mobile_number">Enter Mobile Number</string>
     <string name="enter_otp_code">Enter Otp Code</string>
     <string name="enter_full_name">Enter Full Name</string>
-    <string name="enter_address1">Please Enter Address1</string>
+    <string name="enter_address1">Please Enter Address</string>
     <string name="enter_address2">Please Enter Address2</string>
     <string name="signup_welcome_txt">Welcome To Easy To Buy, Please Signup! </string>
     <string name="enter_passcode">Please enter passcode</string>
@@ -36,8 +36,24 @@
     <string name="place_order_text"> Place Order </string>
     <string name="success_registered_text"> Successfully Registered! :)</string>
     <string name="enter_mobile_number_length">Make  sure you have entered 10 Digits.</string>
+    <string name="select_closing_days">Please Select Closing days</string>
+    <string name="select_image_option">Please select image option</string>
+    <string name="order_amount_hint">Enter Order Amount</string>
+    <string name="order_wait_time_hint">Enter Order Wait Time (In Minutes)</string>
     <string name="stopRecordBtn">Stop</string>
+    <string name="order_id">OrderID</string>
+    <string name="order_status">Order Status</string>
+    <string name="order_request">Order Request</string>
+    <string name="order_amount">Order Amount</string>
+    <string name="wait_time">Wait Time</string>
+    <string name="order_receipt">Order Receipt</string>
+    <string name="payment_option">Payment Option</string>
+    <string name="delivery_option">Delivery Option</string>
+    <string name="confirm">Confirm</string>
 
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="take_photo">Take Photo</string>
     <string-array name="delivery_options">
         <item>Pickup</item>
         <item>Home Delivery</item>

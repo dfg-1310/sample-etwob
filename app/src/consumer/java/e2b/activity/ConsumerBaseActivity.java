@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -59,6 +60,9 @@ public class ConsumerBaseActivity extends BaseActivity {
 
     @Bind(R.id.iv_notify)
     ImageView iv_notify;
+
+    @Bind(R.id.iv_back)
+    ImageView iv_back;
 
     private int previous;
 
@@ -171,4 +175,15 @@ public class ConsumerBaseActivity extends BaseActivity {
             tv_header_title.setText(title);
         }
     }
+
+    public void managebackIconVisiblity(boolean toBeVisible){
+        if(iv_back != null){
+            if(toBeVisible){
+                iv_back.setVisibility(View.VISIBLE);
+            }else{
+                iv_back.setVisibility(View.GONE);
+            }
+        }
+    }
+
 }

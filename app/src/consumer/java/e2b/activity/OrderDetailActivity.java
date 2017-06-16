@@ -66,6 +66,7 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
         setContentView(R.layout.activity_order_detail);
         setHeaderText("Order Detail");
         setFooterState(AppConstant.FOOTER_INDEX.ORDER);
+        managebackIconVisiblity(true);
         initViewControls();
         getDataFromItent();
 //        getPlaceOrder();
@@ -120,8 +121,6 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
                 if(!isOrderValid()){
                     return;
                 }
-//                showToast("deliveryOptionSpinner : "+deliveryOptionSpinner.getSelectedItem().toString());
-//                showToast("paymentOptionSpinner : "+paymentOptionSpinner.getSelectedItem().toString());
 
                 // make api call for confirm order
                 showProgressBar();

@@ -150,7 +150,10 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
         MarkerOptions options = null;
         Marker marker = null;
         for (Merchant merchant : merchants) {
+            Log.d(TAG, "*********************************************");
+
             if (merchant.getCoordinates() != null) {
+                Log.d(TAG, " Merchant Name : "+merchant.getShopName()+ " Merchant Coordinate :: "+merchant.getCoordinates().toString());
                 latLng = new LatLng(merchant.getCoordinates().getLat(), merchant.getCoordinates().getLng());
                 options = new MarkerOptions();
                 options.position(latLng)

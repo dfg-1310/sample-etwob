@@ -7,6 +7,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 
 import e2b.utils.ConsumerPreferenceKeeper;
 
+
 public class FCMTokenUpdateService extends FirebaseInstanceIdService {
 
     private static final String TAG = "FCMTokenUpdateService";

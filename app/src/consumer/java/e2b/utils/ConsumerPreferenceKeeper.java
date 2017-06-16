@@ -47,6 +47,7 @@ public class ConsumerPreferenceKeeper {
     public boolean getIsLogin() {
         return prefs.getBoolean(AppConstant.PreferenceKeeperNames.LOGIN, false);
     }
+
     public void setIsLogin(boolean isLogin) {
         prefs.edit().putBoolean(AppConstant.PreferenceKeeperNames.LOGIN, isLogin).commit();
     }
@@ -58,6 +59,7 @@ public class ConsumerPreferenceKeeper {
     public void setAccessToken(String accessToken) {
         prefs.edit().putString(AppConstant.PreferenceKeeperNames.ACCESS_TOKEN, accessToken).commit();
     }
+
     public void saveUser(UserResponse user) {
         if (user != null) {
             prefs.edit().putString(AppConstant.PreferenceKeeperNames.USER, GsonUtils.getJson(user)).commit();
@@ -80,14 +82,6 @@ public class ConsumerPreferenceKeeper {
         return prefs.getString(AppConstant.PreferenceKeeperNames.FCM_TOKEN, "");
     }
 
-    public String getLat() {
-        return null;
-    }
-
-    public String getLong() {
-        return null;
-    }
-
     public String getUserId() {
         return prefs.getString(AppConstant.PreferenceKeeperNames.USER_ID, "");
     }
@@ -96,4 +90,20 @@ public class ConsumerPreferenceKeeper {
         prefs.edit().putString(AppConstant.PreferenceKeeperNames.USER_ID, userId).commit();
     }
 
+    public double getLat() {
+        return prefs.getFloat(AppConstant.PreferenceKeeperNames.LATTITUDE, (float) 28.3456);
+    }
+
+    public double getLong() {
+        return prefs.getFloat(AppConstant.PreferenceKeeperNames.LONGITUDE, (float) 77.5342);
+    }
+
+    public void setLat(double lat) {
+        prefs.edit().putFloat(AppConstant.PreferenceKeeperNames.LATTITUDE, (float) lat).commit();
+    }
+
+    public void setLong(double lon) {
+        prefs.edit().putFloat(AppConstant.PreferenceKeeperNames.LONGITUDE, (float) lon).commit();
+
+    }
 }

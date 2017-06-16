@@ -28,6 +28,9 @@ public class AppConstant {
         String USER = "profile";
         String FCM_TOKEN = "fcm_token";
         String USER_ID = "user_id";
+
+        String LATTITUDE = "lattitde";
+        String LONGITUDE = "longitude";
     }
 
     public interface PERMISSION_REQ_CODE {
@@ -89,6 +92,10 @@ public class AppConstant {
         int WRITE_EXTERNAL_PERMISSION = 3;
     }
 
+    public interface MEDIA_STATE {
+        int CAPTURE_IMAGE = 0;
+        int GALLARY_IMAGE = 1;
+    }
     public interface REQ {
         int IMAGE_CAMERA = 100;
         int IMAGE_GALLERY = 200;

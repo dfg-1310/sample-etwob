@@ -1,5 +1,6 @@
 package e2b.fragments;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,8 +12,16 @@ import android.widget.ImageView;
 
 import com.e2b.R;
 import com.e2b.activity.BaseActivity;
+import com.e2b.api.ApiCallback;
+import com.e2b.api.ApiClient;
+import com.e2b.api.IApiRequest;
+import com.e2b.enums.EOrderStatus;
 import com.e2b.fragments.BaseFragment;
+import com.e2b.model.response.BaseResponse;
+import com.e2b.model.response.Error;
+import com.e2b.model.response.PlaceOrder;
 import com.e2b.views.CustomTextView;
+import com.google.gson.JsonObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,7 +30,10 @@ import e2b.activity.ConsumerBaseActivity;
 import e2b.activity.MapActivity;
 import e2b.activity.OrderDetailActivity;
 import e2b.activity.PlaceOrderActivity;
+import e2b.intrface.ICustomCallback;
 import e2b.model.response.Merchant;
+import e2b.utils.RatingDialog;
+import retrofit2.Call;
 
 /**
  * Created by gaurav on 30/3/17.
@@ -54,10 +66,6 @@ public class StoreInformationFragment extends BaseFragment {
     @Bind(R.id.iv_store_image)
     ImageView storeImageView;
 
-//
-//    @Bind(R.id.tv_store_Name)
-//    CustomTextView name;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,6 +79,9 @@ public class StoreInformationFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupData();
+        if(getActivity() != null){
+            ((ConsumerBaseActivity)getActivity()).managebackIconVisiblity(true);
+        }
     }
 
     private void setupData() {
@@ -84,6 +95,42 @@ public class StoreInformationFragment extends BaseFragment {
             importantInfo.setText(importantInfo.getText().toString().replace("MIN_ORDER_AMOUNT", ""+merchant.getDeliveryDetail().getMinAmount()));
             ((BaseActivity)getActivity()).loadImageGlide(merchant.getShopImage(), storeImageView);
         }
+
+        new RatingDialog(getActivity(), 0, new ICustomCallback() {
+            @Override
+            public void onOkClicked(Dialog dialog, float rating, String comment) {
+                Log.d(TAG, "rate value :: "+rating);
+                dialog.dismiss();
+                postRate(rating, comment);
+            }
+        });
+    }
+
+    private void postRate(float rating, String comment) {
+        // make api call for confirm order
+        activity.showProgressBar();
+        IApiRequest request = ApiClient.getRequest();
+
+        JsonObject rateJsoonObject = new JsonObject();
+        rateJsoonObject.addProperty("rating", rating);
+        rateJsoonObject.addProperty("review", comment);
+
+        Call<BaseResponse<PlaceOrder>> call = request.postRate(merchant.get_id(), rateJsoonObject);
+        call.enqueue(new ApiCallback<PlaceOrder>(getActivity()) {
+            @Override
+            public void onSucess(PlaceOrder userResponse) {
+                activity.hideProgressBar();
+                activity.showToast("Your review placed successfully.");
+            }
+
+            @Override
+            public void onError(Error error) {
+                activity.hideProgressBar();
+                activity.showToast(error.getMsg());
+                Log.d(TAG, error.getMsg());
+            }
+        });
+
     }
 
     @OnClick(R.id.tv_place_order)

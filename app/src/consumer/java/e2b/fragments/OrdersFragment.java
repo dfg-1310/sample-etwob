@@ -93,7 +93,6 @@ public class OrdersFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         getOrders();
-
     }
 
 }
