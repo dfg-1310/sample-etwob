@@ -32,6 +32,7 @@ import e2b.activity.OrderDetailActivity;
 import e2b.activity.PlaceOrderActivity;
 import e2b.intrface.ICustomCallback;
 import e2b.model.response.Merchant;
+import e2b.model.response.Ratings;
 import e2b.utils.RatingDialog;
 import retrofit2.Call;
 
@@ -96,6 +97,7 @@ public class StoreInformationFragment extends BaseFragment {
             ((BaseActivity)getActivity()).loadImageGlide(merchant.getShopImage(), storeImageView);
         }
 
+        getRatings();
         new RatingDialog(getActivity(), 0, new ICustomCallback() {
             @Override
             public void onOkClicked(Dialog dialog, float rating, String comment) {
@@ -141,4 +143,29 @@ public class StoreInformationFragment extends BaseFragment {
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+
+    public void getRatings(){
+        // make api call for confirm order
+        activity.showProgressBar();
+        IApiRequest request = ApiClient.getRequest();
+
+        Call<BaseResponse<Ratings>> call = request.getRatings(merchant.get_id());
+        call.enqueue(new ApiCallback<Ratings>(getActivity()) {
+            @Override
+            public void onSucess(Ratings ratings) {
+                activity.hideProgressBar();
+                activity.showToast("rating response ."+ratings.toString());
+            }
+
+            @Override
+            public void onError(Error error) {
+                activity.hideProgressBar();
+                activity.showToast(error.getMsg());
+                Log.d(TAG, error.getMsg());
+            }
+        });
+
+    }
+
 }

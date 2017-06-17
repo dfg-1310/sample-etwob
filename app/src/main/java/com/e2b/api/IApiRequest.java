@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 
 import e2b.model.response.MerchantResponse;
 import e2b.model.response.Orders;
+import e2b.model.response.Ratings;
 import e2b.model.response.UserResponse;
 import e2b.model.response.VerifiedOTPResponse;
 import retrofit2.Call;
@@ -65,6 +66,9 @@ public interface IApiRequest {
 
     @GET("order/{id}")
     Call<BaseResponse<PlaceOrder>> getOrder(@Path("id") String orderId);
+
+    @GET("merchant/{id}/rating")
+    Call<BaseResponse<Ratings>> getRatings(@Path("id") String merchantId);
 
 
     interface FIELD {
