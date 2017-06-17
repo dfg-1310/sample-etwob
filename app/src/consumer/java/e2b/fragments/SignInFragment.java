@@ -56,17 +56,17 @@ public class SignInFragment extends BaseFragment {
 //            return;
 //        }
 //
-//        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
+//        MerchantPreferenceKeeper.getInstance().setAccessToken("");
 //        activity.showProgressBar();
 //        IApiRequest request = ApiClient.getRequest();
 //
-//        Call<BaseResponse<UserResponse>> call = request.signInAPI(email, password);
-//        call.enqueue(new ApiCallback<UserResponse>(activity) {
+//        Call<BaseResponse<MerchantUserResponse>> call = request.signInAPI(email, password);
+//        call.enqueue(new ApiCallback<MerchantUserResponse>(activity) {
 //            @Override
-//            public void onSucess(UserResponse userResponse) {
-////                ConsumerPreferenceKeeper.getInstance().setIsLogin(true);
-////                ConsumerPreferenceKeeper.getInstance().setAccessToken(userResponse.getUser().getAccessToken());
-////                ConsumerPreferenceKeeper.getInstance().saveUser(userResponse.getUser());
+//            public void onSucess(MerchantUserResponse userResponse) {
+////                MerchantPreferenceKeeper.getInstance().setIsLogin(true);
+////                MerchantPreferenceKeeper.getInstance().setAccessToken(userResponse.getUser().getAccessToken());
+////                MerchantPreferenceKeeper.getInstance().saveUser(userResponse.getUser());
 //                activity.hideProgressBar();
 //                activity.launchActivity(MapActivity.class);
 //                clearData();

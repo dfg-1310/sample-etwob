@@ -55,8 +55,6 @@
             android:screenOrientation="portrait"
             >
         </activity>
-
-
         <activity
             android:name=".activity.AudioPlaybackActivity"
             android:screenOrientation="portrait"

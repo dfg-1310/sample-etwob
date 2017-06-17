@@ -59,7 +59,7 @@ public interface IApiRequest {
     @PUT("order/{id}")
     Call<BaseResponse<PlaceOrder>> updateOrder(@Path("id") String orderId, @Body JsonObject jsonObject);
 
-    @PUT("order/{id}")
+    @PUT("merchant/{id}/rating")
     Call<BaseResponse<PlaceOrder>> postRate(@Path("id") String merchantId, @Body JsonObject jsonObject);
 
 

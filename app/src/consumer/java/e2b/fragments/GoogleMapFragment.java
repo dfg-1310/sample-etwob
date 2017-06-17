@@ -205,8 +205,8 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
 
     private void currentLocation() {
 //        if (mMap != null) {
-//            double lat = Double.parseDouble(ConsumerPreferenceKeeper.getInstance().getLat());
-//            double longitute = Double.parseDouble(ConsumerPreferenceKeeper.getInstance().getLong());
+//            double lat = Double.parseDouble(MerchantPreferenceKeeper.getInstance().getLat());
+//            double longitute = Double.parseDouble(MerchantPreferenceKeeper.getInstance().getLong());
 //            LatLng selectedLatLng = new LatLng(lat, longitute);
 //            mMap.moveCamera(CameraUpdateFactory.newLatLng(selectedLatLng));
 //            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedLatLng, ZOOM_LEVEL));

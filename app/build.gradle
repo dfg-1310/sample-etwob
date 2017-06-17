@@ -33,7 +33,6 @@ android {
 
         merchant{
             applicationIdSuffix ".merchant"
-            versionNameSuffix " - Seller"
             buildConfigField 'String', 'HOST', '"http://54.70.191.111:8000/api/"'
         }
     }

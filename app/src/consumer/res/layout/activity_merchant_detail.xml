@@ -71,10 +71,10 @@
                 style="@style/wrap_content"
                 android:text="Phone : 0111,2534532" />
 
-            <com.e2b.views.CustomTextView
+           <!-- <com.e2b.views.CustomTextView
                 android:id="@+id/tv_store_email"
                 style="@style/wrap_content"
-                android:text="Email Address : indiastore@info.com" />
+                android:text="Email Address : indiastore@info.com" />-->
 
         </LinearLayout>
         <com.e2b.views.CustomTextView

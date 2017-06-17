@@ -87,7 +87,7 @@ public class OTPConfirmFragment extends BaseFragment {
             return;
         }
 
-//        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
+//        MerchantPreferenceKeeper.getInstance().setAccessToken("");
         activity.showProgressBar();
         IApiRequest request = ApiClient.getRequest();
 
@@ -191,7 +191,7 @@ public class OTPConfirmFragment extends BaseFragment {
         if (!openDialogSignin(activity, mobileNumber)) {
             return;
         }
-//        ConsumerPreferenceKeeper.getInstance().setAccessToken("");
+//        MerchantPreferenceKeeper.getInstance().setAccessToken("");
         IApiRequest request = ApiClient.getRequest();
 
         JsonObject jsonObject = new JsonObject();

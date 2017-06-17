@@ -19,7 +19,8 @@ import com.e2b.utils.AppConstant;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
+import e2b.model.response.UserResponse;
+import e2b.utils.ConsumerPreferenceKeeper;
 /**
  * Created by gaurav on 23/3/17.
  */
@@ -184,6 +185,20 @@ public class ConsumerBaseActivity extends BaseActivity {
                 iv_back.setVisibility(View.GONE);
             }
         }
+    }
+
+
+    @Override
+    public void saveUserInfo(final UserResponse userResponse) {
+        final ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(keeper != null){
+                    keeper.saveUser(userResponse);
+                }
+            }
+        }).start();
     }
 
 }

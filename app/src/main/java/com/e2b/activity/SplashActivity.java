@@ -28,11 +28,11 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 // check profile loggedin or not in app
-                if(TextUtils.isEmpty(ConsumerPreferenceKeeper.getInstance().getAccessToken())){
-                    launchActivityMain(AuthActivity.class);
-                }else{
-                    launchActivityMain(MapActivity.class);
-                }
+                    if(!TextUtils.isEmpty(ConsumerPreferenceKeeper.getInstance().getAccessToken())){
+                        launchActivityMain(MapActivity.class);
+                    }else{
+                        launchActivityMain(AuthActivity.class);
+                    }
                 finish();
             }
         }, 1500);

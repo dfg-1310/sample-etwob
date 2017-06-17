@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -59,7 +60,6 @@ import com.e2b.fragments.BaseFragment;
 import com.e2b.listener.IImageUploadOnS3Listner;
 import com.e2b.utils.AppConstant;
 import com.e2b.utils.AppUtils;
-import com.google.android.gms.location.LocationListener;
 
 import e2b.model.response.UserResponse;
 import e2b.utils.ConsumerPreferenceKeeper;
@@ -67,6 +67,7 @@ import e2b.utils.ConsumerPreferenceKeeper;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -300,7 +301,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         return mCapturedImageURI;
     }
 
-
     @Override
     public void saveUserInfo(final UserResponse userResponse) {
         final ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
@@ -369,10 +369,13 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 //            s3Client.createBucket(AppConstant.MY_PICTURE_BUCKET);
                 PutObjectRequest por = new PutObjectRequest(AppConstant.MY_PICTURE_BUCKET, fileName, new java.io.File(filePath));
                 s3Client.putObject(por);
-
                 ResponseHeaderOverrides override = new ResponseHeaderOverrides();
                 override.setContentType("image/jpeg");
                 GeneratePresignedUrlRequest urlRequest = new GeneratePresignedUrlRequest(AppConstant.MY_PICTURE_BUCKET, fileName);
+                Date date =  new Date();
+                date.setYear(date.getYear()+1);
+                Log.d(TAG, "S3 Image Upload Time : "+ date.toString());
+                urlRequest.setExpiration( date );
                 urlRequest.setResponseHeaders(override);
 
                 URL url = s3Client.generatePresignedUrl(urlRequest);
@@ -467,6 +470,10 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                     override.setContentType("audio/mpeg");
 
                     GeneratePresignedUrlRequest urlRequest = new GeneratePresignedUrlRequest(AppConstant.MY_PICTURE_BUCKET, fileName);
+                    Date date =  new Date();
+                    date.setYear(date.getYear()+1);
+                    urlRequest.setExpiration( date );
+
                     urlRequest.setResponseHeaders(override);
 
                     URL url = s3Client.generatePresignedUrl(urlRequest);
@@ -546,5 +553,4 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 .create()
                 .show();
     }
-
 }

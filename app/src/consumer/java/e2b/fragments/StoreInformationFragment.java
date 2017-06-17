@@ -50,8 +50,8 @@ public class StoreInformationFragment extends BaseFragment {
     @Bind(R.id.tv_store_phone)
     CustomTextView storePhone;
 
-    @Bind(R.id.tv_store_email)
-    CustomTextView storeEmail;
+   /* @Bind(R.id.tv_store_email)
+    CustomTextView storeEmail;*/
 
     @Bind(R.id.tv_place_order)
     CustomTextView placeOrder;
@@ -91,7 +91,7 @@ public class StoreInformationFragment extends BaseFragment {
             name.setText(merchant.getShopName());
             storeAddress.setText("Address : "+ merchant.getShopAddress());
             storePhone.setText("Phone : "+ merchant.getMobile());
-            storeEmail.setText("Email : "+merchant.getShopName());
+//            storeEmail.setText("Email : "+merchant.getShopName());
             importantInfo.setText(importantInfo.getText().toString().replace("MIN_ORDER_AMOUNT", ""+merchant.getDeliveryDetail().getMinAmount()));
             ((BaseActivity)getActivity()).loadImageGlide(merchant.getShopImage(), storeImageView);
         }

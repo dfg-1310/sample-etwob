@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,9 +12,6 @@ import android.widget.ImageView;
 
 import com.e2b.R;
 import com.e2b.activity.CameraActivity;
-import com.e2b.api.ApiCallback;
-import com.e2b.api.ApiClient;
-import com.e2b.api.IApiRequest;
 import com.e2b.fragments.BaseFragment;
 import com.e2b.listener.ICameraCallback;
 import com.e2b.listener.IImageUploadOnS3Listner;
@@ -29,6 +25,10 @@ import com.google.gson.JsonObject;
 
 import java.io.File;
 import java.util.Date;
+
+import com.e2b.api.ApiCallback;
+import com.e2b.api.ApiClient;
+import com.e2b.api.IApiRequest;
 import retrofit2.Call;
 
 public class PlaceOrderActivity extends ConsumerBaseActivity {

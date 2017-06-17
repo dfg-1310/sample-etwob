@@ -174,7 +174,7 @@ public class UserResponse {
 
     @Override
     public String toString() {
-        return "UserResponse{" +
+        return "MerchantUserResponse{" +
                 "__v='" + __v + '\'' +
                 ", username='" + username + '\'' +
                 ", role='" + role + '\'' +
