@@ -1,11 +1,11 @@
 package com.e2b.activity;
 
-import e2b.model.response.UserResponse;
+import e2bmerchant.model.response.MerchantUserResponse;
 
 /**
  * Created by gaurav on 18/4/17.
  */
 public interface ISaveUserInfo {
 
-    public void saveUserInfo(UserResponse merchantUserResponse);
+    public void saveUserInfo(MerchantUserResponse merchantUserResponse);
 }

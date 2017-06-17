@@ -3,9 +3,9 @@ package com.e2b.application;
 import android.app.Application;
 import android.content.Context;
 
-import com.e2b.api.ApiClient;
-import com.e2b.api.IApiRequest;
-import e2b.utils.ConsumerPreferenceKeeper;
+import e2bmerchant.api.ApiClient;
+import e2bmerchant.api.IApiRequest;
+import e2bmerchant.utils.MerchantPreferenceKeeper;
 
 /**
  * This is the application class.
@@ -18,7 +18,7 @@ public class E2BApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = this;
-        ConsumerPreferenceKeeper.setContext(getApplicationContext());
+        MerchantPreferenceKeeper.setContext(getApplicationContext());
         ApiClient.init(IApiRequest.class);
     }
 }

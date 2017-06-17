@@ -8,7 +8,7 @@ import com.e2b.utils.AppUtils;
 
 import java.io.IOException;
 
-import e2b.utils.ConsumerPreferenceKeeper;
+import e2bmerchant.utils.MerchantPreferenceKeeper;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -24,7 +24,7 @@ public class ApiInterceptor implements Interceptor {
         originalRequest = originalRequest.newBuilder()
                 .addHeader("deviceId", "56247")
                 .addHeader("deviceOS", AppConstant.DEVICE_OS).build();
-        String token = ConsumerPreferenceKeeper.getInstance().getAccessToken();
+        String token = MerchantPreferenceKeeper.getInstance().getAccessToken();
 
         if (TextUtils.isEmpty(token)) {
             return chain.proceed(originalRequest);

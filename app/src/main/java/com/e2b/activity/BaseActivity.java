@@ -61,15 +61,14 @@ import com.e2b.listener.IImageUploadOnS3Listner;
 import com.e2b.utils.AppConstant;
 import com.e2b.utils.AppUtils;
 
-import e2b.model.response.UserResponse;
-import e2b.utils.ConsumerPreferenceKeeper;
-
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import e2bmerchant.model.response.MerchantUserResponse;
+import e2bmerchant.utils.MerchantPreferenceKeeper;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static com.e2b.R.id.view;
@@ -102,7 +101,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onLocationChanged(Location location) {
                 Log.d(TAG, "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
-                ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
+                MerchantPreferenceKeeper keeper = MerchantPreferenceKeeper.getInstance();
                 keeper.setLat(location.getLatitude());
                 keeper.setLong(location.getLongitude());
             }
@@ -302,8 +301,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void saveUserInfo(final UserResponse userResponse) {
-        final ConsumerPreferenceKeeper keeper = ConsumerPreferenceKeeper.getInstance();
+    public void saveUserInfo(final MerchantUserResponse userResponse) {
+        final MerchantPreferenceKeeper keeper = MerchantPreferenceKeeper.getInstance();
         new Thread(new Runnable() {
             @Override
             public void run() {

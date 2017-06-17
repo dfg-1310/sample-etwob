@@ -9,9 +9,9 @@ import com.e2b.R;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import e2b.activity.AuthActivity;
-import e2b.activity.MapActivity;
-import e2b.utils.ConsumerPreferenceKeeper;
+import e2bmerchant.activity.AuthActivity;
+import e2bmerchant.activity.OrdersActivity;
+import e2bmerchant.utils.MerchantPreferenceKeeper;
 
 
 /**
@@ -28,8 +28,8 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 // check profile loggedin or not in app
-                    if(!TextUtils.isEmpty(ConsumerPreferenceKeeper.getInstance().getAccessToken())){
-                        launchActivityMain(MapActivity.class);
+                    if(!TextUtils.isEmpty(MerchantPreferenceKeeper.getInstance().getAccessToken())){
+                        launchActivityMain(OrdersActivity.class);
                     }else{
                         launchActivityMain(AuthActivity.class);
                     }
@@ -44,7 +44,7 @@ public class SplashActivity extends BaseActivity {
         String token = FirebaseInstanceId.getInstance().getToken();
         if (token != null) {
             Log.d(TAG, "FCM TOKEN "+token);
-            ConsumerPreferenceKeeper.getInstance().setFCMToken(token);
+            MerchantPreferenceKeeper.getInstance().setFCMToken(token);
         }
     }
 }
