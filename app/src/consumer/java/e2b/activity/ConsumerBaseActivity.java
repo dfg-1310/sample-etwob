@@ -140,6 +140,16 @@ public class ConsumerBaseActivity extends BaseActivity {
         }
     }
 
+    public void manageNotyIconVisiblity(boolean toBeVisible){
+        if(iv_notify != null){
+            if(toBeVisible){
+                iv_notify.setVisibility(View.VISIBLE);
+            }else{
+                iv_notify.setVisibility(View.GONE);
+            }
+        }
+    }
+
     @OnClick(R.id.ll_home)
     public void homeClick() {
         if (previous != AppConstant.FOOTER_INDEX.HOME) {

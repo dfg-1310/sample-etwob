@@ -25,6 +25,7 @@ public class NotificationActivity extends ConsumerBaseActivity{
         this.currentFragment = FragmentFactory.getInstance().getFragment(eScreenType);
         replaceFragment(R.id.container_home, currentFragment, false);
         managebackIconVisiblity(true);
+        manageNotyIconVisiblity(false);
 //        setFooterState(AppConstant.FOOTER_INDEX.ORDER);
     }
 }
