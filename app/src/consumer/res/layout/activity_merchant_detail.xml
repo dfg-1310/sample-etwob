@@ -1,125 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/iv_store_image"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_250"
-        android:scaleType="centerCrop"
-        android:background="@drawable/banner"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/dp_8"
-        android:paddingRight="@dimen/dp_8"
+        <ImageView
+            android:id="@+id/iv_store_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_250"
+            android:background="@drawable/banner"
+            android:scaleType="centerCrop" />
 
-        >
-
-        <com.e2b.views.CustomTextView
-            android:id="@+id/tv_store_Name"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/mre_place_order"
-            android:text="STORE NAME"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dp_14" />
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_8"
 
-        <com.e2b.views.MaterialRippleEffect
-            android:id="@+id/mre_place_order"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_40"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_10">
+            >
 
             <com.e2b.views.CustomTextView
-                android:id="@+id/tv_place_order"
+                android:id="@+id/tv_store_Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/mre_place_order"
+                android:text="STORE NAME"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp_14" />
+
+            <com.e2b.views.MaterialRippleEffect
+                android:id="@+id/mre_place_order"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_40"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/white_btn_round_corner_bg"
-                android:gravity="center"
-                android:paddingLeft="@dimen/dp_20"
-                android:paddingRight="@dimen/dp_20"
-                android:text="@string/place_order_text"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dp_17" />
-        </com.e2b.views.MaterialRippleEffect>
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10">
 
-        <LinearLayout
-            android:id="@+id/ll_store_add_info"
-            style="@style/width_match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/tv_store_Name"
-            android:layout_toLeftOf="@+id/mre_place_order"
-            android:orientation="vertical">
+                <com.e2b.views.CustomTextView
+                    android:id="@+id/tv_place_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/white_btn_round_corner_bg"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:paddingRight="@dimen/dp_20"
+                    android:text="@string/place_order_text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp_17" />
+            </com.e2b.views.MaterialRippleEffect>
+
+            <LinearLayout
+                android:id="@+id/ll_store_add_info"
+                style="@style/width_match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/tv_store_Name"
+                android:layout_toLeftOf="@+id/mre_place_order"
+                android:orientation="vertical">
+
+                <com.e2b.views.CustomTextView
+                    android:id="@+id/tv_store_address"
+                    style="@style/wrap_content"
+                    android:text="Address : 150 sector 49, Noida, Uttar Pradesh, 201301" />
+
+                <com.e2b.views.CustomTextView
+                    android:id="@+id/tv_store_phone"
+                    style="@style/wrap_content"
+                    android:text="Phone : 0111,2534532" />
+
+                <!-- <com.e2b.views.CustomTextView
+                     android:id="@+id/tv_store_email"
+                     style="@style/wrap_content"
+                     android:text="Email Address : indiastore@info.com" />-->
+
+            </LinearLayout>
 
             <com.e2b.views.CustomTextView
-                android:id="@+id/tv_store_address"
+                android:id="@+id/tv_review_title"
                 style="@style/wrap_content"
-                android:text="Address : 150 sector 49, Noida, Uttar Pradesh, 201301" />
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/ll_store_add_info"
+                android:text="REVIEWS :" />
 
-            <com.e2b.views.CustomTextView
-                android:id="@+id/tv_store_phone"
-                style="@style/wrap_content"
-                android:text="Phone : 0111,2534532" />
+            <RatingBar
+                android:id="@+id/rb_review"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_store_add_info"
+                android:layout_toRightOf="@id/tv_review_title"
 
-           <!-- <com.e2b.views.CustomTextView
-                android:id="@+id/tv_store_email"
-                style="@style/wrap_content"
-                android:text="Email Address : indiastore@info.com" />-->
+                />
+        </RelativeLayout>
 
-        </LinearLayout>
         <com.e2b.views.CustomTextView
-            android:id="@+id/tv_review_title"
+            android:id="@+id/tv_important_info"
             style="@style/wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/ll_store_add_info"
-            android:text="REVIEWS :" />
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_8"
+            android:text="IMPORTANT INFORMATION: Home delivery is only Available if the total amount of shopping is more than MIN_ORDER_AMOUNT Rs." />
 
-        <RatingBar
-            android:id="@+id/rb_review"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
+        <com.e2b.views.CustomTextView
+            android:id="@+id/tv_payment_mode"
+            style="@style/wrap_content"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_8"
+            android:text="Payment Mode: Cash on Delivery" />
+
+        <!--  <com.e2b.views.CustomTextView
+              android:paddingLeft="@dimen/dp_8"
+              android:paddingRight="@dimen/dp_8"
+              android:id="@+id/tv_offers"
+              style="@style/wrap_content"
+              android:text="OFFERS: \n" />-->
+
+        <com.e2b.views.CustomTextView
+            android:id="@+id/tv_review_comment"
+            style="@style/wrap_content"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_8"
+            android:text="REVIEW COMMENTS: \n" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lv_review"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_store_add_info"
-            android:layout_toRightOf="@id/tv_review_title"
+            android:background="@android:color/white" />
 
-            />
-    </RelativeLayout>
-    <com.e2b.views.CustomTextView
-        android:paddingLeft="@dimen/dp_8"
-        android:paddingRight="@dimen/dp_8"
-        android:id="@+id/tv_important_info"
-        style="@style/wrap_content"
-        android:text="IMPORTANT INFORMATION: Home delivery is only Available if the total amount of shopping is more than MIN_ORDER_AMOUNT Rs." />
-
-    <com.e2b.views.CustomTextView
-        android:paddingLeft="@dimen/dp_8"
-        android:paddingRight="@dimen/dp_8"
-        android:id="@+id/tv_payment_mode"
-        style="@style/wrap_content"
-        android:text="Payment Mode: Cash on Delivery" />
-
-  <!--  <com.e2b.views.CustomTextView
-        android:paddingLeft="@dimen/dp_8"
-        android:paddingRight="@dimen/dp_8"
-        android:id="@+id/tv_offers"
-        style="@style/wrap_content"
-        android:text="OFFERS: \n" />-->
-
-    <com.e2b.views.CustomTextView
-        android:id="@+id/tv_review_comment"
-        android:paddingLeft="@dimen/dp_8"
-        android:paddingRight="@dimen/dp_8"
-        style="@style/wrap_content"
-        android:text="REVIEW COMMENTS: \n" />
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

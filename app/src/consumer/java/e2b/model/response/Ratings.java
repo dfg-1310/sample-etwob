@@ -12,11 +12,11 @@ public class Ratings {
 
     private List<Rating> ratings;
 
-    public List<Rating> getOrders() {
+    public List<Rating> getRatings() {
         return ratings;
     }
 
-    public void setOrders(List<Rating> ratings) {
+    public void setRatings(List<Rating> ratings) {
         this.ratings = ratings;
     }
 }

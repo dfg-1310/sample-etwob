@@ -3,6 +3,7 @@ package e2b.activity;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.LayoutRes;
+import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
@@ -21,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import e2b.model.response.UserResponse;
 import e2b.utils.ConsumerPreferenceKeeper;
+
 /**
  * Created by gaurav on 23/3/17.
  */
@@ -65,7 +67,7 @@ public class ConsumerBaseActivity extends BaseActivity {
     @Bind(R.id.iv_back)
     ImageView iv_back;
 
-    private int previous;
+    private int previous = -1;
 
     private BaseFragment currentFragment;
 
@@ -140,7 +142,7 @@ public class ConsumerBaseActivity extends BaseActivity {
 
     @OnClick(R.id.ll_home)
     public void homeClick() {
-        if(previous != AppConstant.FOOTER_INDEX.HOME){
+        if (previous != AppConstant.FOOTER_INDEX.HOME) {
             setFooterState(AppConstant.FOOTER_INDEX.HOME);
             launchActivityMain(MapActivity.class);
         }
@@ -148,7 +150,7 @@ public class ConsumerBaseActivity extends BaseActivity {
 
     @OnClick(R.id.ll_order)
     public void ordersClick() {
-        if(previous != AppConstant.FOOTER_INDEX.ORDER){
+        if (previous != AppConstant.FOOTER_INDEX.ORDER) {
             setFooterState(AppConstant.FOOTER_INDEX.ORDER);
             launchActivityMain(OrdersActivity.class);
         }
@@ -171,22 +173,28 @@ public class ConsumerBaseActivity extends BaseActivity {
         launchActivityMain(MapActivity.class);
     }
 
-    public void setHeaderText(String title){
-        if(!TextUtils.isEmpty(title)){
+    public void setHeaderText(String title) {
+        if (!TextUtils.isEmpty(title)) {
             tv_header_title.setText(title);
         }
     }
 
-    public void managebackIconVisiblity(boolean toBeVisible){
-        if(iv_back != null){
-            if(toBeVisible){
+    public void managebackIconVisiblity(boolean toBeVisible) {
+        if (iv_back != null) {
+            if (toBeVisible) {
                 iv_back.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 iv_back.setVisibility(View.GONE);
             }
         }
     }
 
+    @OnClick(R.id.iv_back)
+    public void backClick() {
+        //this.finish();
+onBackPressed();
+
+    }
 
     @Override
     public void saveUserInfo(final UserResponse userResponse) {
@@ -194,7 +202,7 @@ public class ConsumerBaseActivity extends BaseActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if(keeper != null){
+                if (keeper != null) {
                     keeper.saveUser(userResponse);
                 }
             }

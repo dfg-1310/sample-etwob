@@ -6,7 +6,10 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,6 +40,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.HashMap;
 import java.util.List;
 
+import e2b.activity.ConsumerBaseActivity;
 import e2b.activity.MapActivity;
 import e2b.model.response.Merchant;
 import e2b.model.response.MerchantResponse;
@@ -66,9 +70,22 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.googlemap_fragment, container, false);
+
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            view = inflater.inflate(R.layout.googlemap_fragment, container, false);
+        } catch (InflateException e) {
+        /* map is already there, just return view as it is */
+        }
+
         init();
         mActivity = (BaseActivity) getActivity();
+        ((ConsumerBaseActivity)mActivity).managebackIconVisiblity(false);
+        ((ConsumerBaseActivity)mActivity).setHeaderText("General Store");
         mapWrapperLayout = (MapWrapperLayout) view.findViewById(R.id.map_relative_layout);
         return view;
     }
@@ -119,6 +136,9 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         currentLocation();
+        if (mMap != null) {
+            mMap.clear();
+        }
         getMerchants();
     }
 
@@ -134,6 +154,7 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
                     DialogUtils.showDialog(activity, getString(R.string.no_merchant_text));
                 }
                 if (mMap != null) {
+                    mMap.clear();
                     setupMarker(mMap, merchantResponse.getMerchants());
                 }
             }
@@ -261,5 +282,6 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
             mMap.clear();
         }
     }
+
 }
 

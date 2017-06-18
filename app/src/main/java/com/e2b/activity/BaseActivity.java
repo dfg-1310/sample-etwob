@@ -553,4 +553,21 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 .create()
                 .show();
     }
+
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            if (getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1) != null) {
+                int count = getSupportFragmentManager().getBackStackEntryCount();
+                if (count == 1) {
+                    finish();
+                } else {
+                    super.onBackPressed();
+                }
+            }
+        }else{
+            super.onBackPressed();
+        }
+    }
 }

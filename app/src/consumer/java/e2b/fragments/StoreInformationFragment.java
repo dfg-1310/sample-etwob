@@ -4,11 +4,14 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 
 import com.e2b.R;
 import com.e2b.activity.BaseActivity;
@@ -30,6 +33,7 @@ import e2b.activity.ConsumerBaseActivity;
 import e2b.activity.MapActivity;
 import e2b.activity.OrderDetailActivity;
 import e2b.activity.PlaceOrderActivity;
+import e2b.adapter.ReviewAdapter;
 import e2b.intrface.ICustomCallback;
 import e2b.model.response.Merchant;
 import e2b.model.response.Ratings;
@@ -51,12 +55,14 @@ public class StoreInformationFragment extends BaseFragment {
     @Bind(R.id.tv_store_phone)
     CustomTextView storePhone;
 
-   /* @Bind(R.id.tv_store_email)
-    CustomTextView storeEmail;*/
+    @Bind(R.id.rb_review)
+    RatingBar avgRatingBar;
 
     @Bind(R.id.tv_place_order)
     CustomTextView placeOrder;
 
+    @Bind(R.id.lv_review)
+    RecyclerView reviewListView;
 
     private String TAG = StoreInformationFragment.class.getCanonicalName();
     private Merchant merchant;
@@ -66,13 +72,17 @@ public class StoreInformationFragment extends BaseFragment {
 
     @Bind(R.id.iv_store_image)
     ImageView storeImageView;
+    private ReviewAdapter orderAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_merchant_detail, container, false);
         ButterKnife.bind(this, view);
-        ((ConsumerBaseActivity)activity).setHeaderText("Store Information");
+        ((ConsumerBaseActivity) activity).setHeaderText("Store Information");
+        reviewListView.setLayoutManager(new LinearLayoutManager(activity));
+        reviewListView.setHasFixedSize(true);
+
         return view;
     }
 
@@ -80,28 +90,28 @@ public class StoreInformationFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupData();
-        if(getActivity() != null){
-            ((ConsumerBaseActivity)getActivity()).managebackIconVisiblity(true);
+        if (getActivity() != null) {
+            ((ConsumerBaseActivity) getActivity()).managebackIconVisiblity(true);
         }
     }
 
     private void setupData() {
-        merchant = ((MapActivity)activity).getSelectedMerchant();
-        if(merchant != null) {
-            Log.d(TAG, "Merchant : "+ merchant.toString());
+        merchant = ((MapActivity) activity).getSelectedMerchant();
+        if (merchant != null) {
+            Log.d(TAG, "Merchant : " + merchant.toString());
             name.setText(merchant.getShopName());
-            storeAddress.setText("Address : "+ merchant.getShopAddress());
-            storePhone.setText("Phone : "+ merchant.getMobile());
+            storeAddress.setText("Address : " + merchant.getShopAddress());
+            storePhone.setText("Phone : " + merchant.getMobile());
 //            storeEmail.setText("Email : "+merchant.getShopName());
-            importantInfo.setText(importantInfo.getText().toString().replace("MIN_ORDER_AMOUNT", ""+merchant.getDeliveryDetail().getMinAmount()));
-            ((BaseActivity)getActivity()).loadImageGlide(merchant.getShopImage(), storeImageView);
+            importantInfo.setText(importantInfo.getText().toString().replace("MIN_ORDER_AMOUNT", "" + merchant.getDeliveryDetail().getMinAmount()));
+            ((BaseActivity) getActivity()).loadImageGlide(merchant.getShopImage(), storeImageView);
         }
 
         getRatings();
         new RatingDialog(getActivity(), 0, new ICustomCallback() {
             @Override
             public void onOkClicked(Dialog dialog, float rating, String comment) {
-                Log.d(TAG, "rate value :: "+rating);
+                Log.d(TAG, "rate value :: " + rating);
                 dialog.dismiss();
                 postRate(rating, comment);
             }
@@ -136,7 +146,7 @@ public class StoreInformationFragment extends BaseFragment {
     }
 
     @OnClick(R.id.tv_place_order)
-    public void goToPlaceOrder(){
+    public void goToPlaceOrder() {
         Bundle bundle = new Bundle();
         bundle.putString("merchantId", merchant.get_id());
         Intent intent = new Intent(getActivity(), PlaceOrderActivity.class);
@@ -145,7 +155,7 @@ public class StoreInformationFragment extends BaseFragment {
     }
 
 
-    public void getRatings(){
+    public void getRatings() {
         // make api call for confirm order
         activity.showProgressBar();
         IApiRequest request = ApiClient.getRequest();
@@ -155,7 +165,10 @@ public class StoreInformationFragment extends BaseFragment {
             @Override
             public void onSucess(Ratings ratings) {
                 activity.hideProgressBar();
-                activity.showToast("rating response ."+ratings.toString());
+                orderAdapter = new ReviewAdapter(getActivity(), ratings.getRatings());
+                reviewListView.setAdapter(orderAdapter);
+                orderAdapter.notifyDataSetChanged();
+                setAvgRating(ratings, avgRatingBar);
             }
 
             @Override
@@ -165,7 +178,18 @@ public class StoreInformationFragment extends BaseFragment {
                 Log.d(TAG, error.getMsg());
             }
         });
+    }
 
+    private void setAvgRating(Ratings ratings, RatingBar ratingBar) {
+        double avgRating = 0;
+        if(ratings != null && ratings.getRatings().size()>0){
+            for(int index =0; index < ratings.getRatings().size(); index++){
+                avgRating += ratings.getRatings().get(index).getRating();
+            }
+
+            avgRating = avgRating/ratings.getRatings().size();
+            ratingBar.setRating((float) avgRating);
+        }
     }
 
 }

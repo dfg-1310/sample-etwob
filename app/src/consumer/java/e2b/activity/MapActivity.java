@@ -19,10 +19,9 @@ public class MapActivity extends ConsumerBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        setHeaderText("General Store");
         EScreenType eScreenType = EScreenType.values()[EScreenType.HOME_SCREEN.ordinal()];
         this.currentFragment = FragmentFactory.getInstance().getFragment(eScreenType);
-        replaceFragment(R.id.container_home, currentFragment, false);
+        replaceFragment(R.id.container_home, currentFragment, true);
         setFooterState(AppConstant.FOOTER_INDEX.HOME);
     }
 
@@ -32,10 +31,9 @@ public class MapActivity extends ConsumerBaseActivity {
 
     public void markerClick(Merchant merchant) {
         this.selectedMerchant = merchant;
-        setHeaderText("Store Information");
         EScreenType eScreenType = EScreenType.values()[EScreenType.STORE_INFO_SCREEN.ordinal()];
         this.currentFragment = FragmentFactory.getInstance().getFragment(eScreenType);
-        replaceFragment(R.id.container_home, currentFragment, false);
+        replaceFragment(R.id.container_home, currentFragment, true);
         setFooterState(AppConstant.FOOTER_INDEX.HOME);
     }
 }

@@ -4,36 +4,44 @@
     android:layout_height="wrap_content"
     android:background="@color/color_161e252d">
 
-    <com.e2b.views.CustomTextView
-        android:id="@+id/tv_notify_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_margin="@dimen/dp_8"
-        android:text="This is text"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_18" />
-
-    <com.e2b.views.CustomTextView
-        android:id="@+id/tv_notify_shopname"
+    <RatingBar
+        android:id="@+id/rb_review_ratingbar"
+        style="?android:attr/ratingBarStyleIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/tv_notify_title"
-        android:layout_margin="@dimen/dp_4"
-        android:text="ShopName : "
+        android:layout_alignParentTop="true"
+        android:layout_weight="1"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:progressBackgroundTint="@color/Gray"
+        android:progressTint="@color/Gold"
+        android:secondaryProgressTint="@android:color/transparent"
+        android:stepSize=".25"
+        />
+
+
+    <com.e2b.views.CustomTextView
+        android:id="@+id/tv_review"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rb_review_ratingbar"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="@dimen/dp_8"
+        android:text="No Review"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_14"
         />
-
 
     <com.e2b.views.CustomTextView
         android:id="@+id/tv_notify_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/tv_notify_shopname"
-        android:layout_margin="@dimen/dp_4"
+        android:layout_below="@id/tv_review"
+        android:layout_margin="@dimen/dp_8"
         android:text="25 March"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_14"

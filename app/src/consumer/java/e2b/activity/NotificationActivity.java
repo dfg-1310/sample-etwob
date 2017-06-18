@@ -24,6 +24,7 @@ public class NotificationActivity extends ConsumerBaseActivity{
         EScreenType eScreenType = EScreenType.values()[EScreenType.NOTIFICATION_SCREEN.ordinal()];
         this.currentFragment = FragmentFactory.getInstance().getFragment(eScreenType);
         replaceFragment(R.id.container_home, currentFragment, false);
+        managebackIconVisiblity(true);
 //        setFooterState(AppConstant.FOOTER_INDEX.ORDER);
     }
 }
