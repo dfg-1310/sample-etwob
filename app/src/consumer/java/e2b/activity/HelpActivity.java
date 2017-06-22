@@ -13,7 +13,6 @@ import com.e2b.R;
 import com.e2b.activity.BaseActivity;
 import com.e2b.views.CirclePageIndicator;
 
-
 public class HelpActivity extends BaseActivity {
 
     LayoutInflater layoutInflater;
@@ -34,13 +33,12 @@ public class HelpActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 exitFromHelpScreens();
-
             }
         });
     }
 
     private void exitFromHelpScreens() {
-        launchActivityMain(MapActivity.class);
+        launchActivityMain(ProfileActivity.class);
         finish();
     }
 
