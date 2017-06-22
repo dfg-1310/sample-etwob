@@ -146,15 +146,6 @@ public class OTPConfirmFragment extends BaseFragment {
 
     private void setupHtmlTest() {
 
-//        String htmlText = "<body><p>This tutorial "
-//                + "explains how to display "
-//                + "<strong>HTML </strong>text in android text view.&nbsp;</p>"
-//                + "Example from <a href=\"www.ushatek.com\">"
-//                + "Ushatek<a>,<a href=\"www.google.com\">"
-//                + "Google<a>,<a href=\"Male\">"
-//                + "Male<a>,<a href=\"Female\">"
-//                + "Female<a></body>";
-
         String htmlText = "If you do not receive confirmation code in 2 minutes" +
                 " <a href=\"www.google.com\"> click here <a> to resend again.";
 
@@ -191,7 +182,6 @@ public class OTPConfirmFragment extends BaseFragment {
         if (!openDialogSignin(activity, mobileNumber)) {
             return;
         }
-//        MerchantPreferenceKeeper.getInstance().setAccessToken("");
         IApiRequest request = ApiClient.getRequest();
 
         JsonObject jsonObject = new JsonObject();
