@@ -113,7 +113,7 @@ public class OTPConfirmFragment extends BaseFragment {
                 activity.hideProgressBar();
 
                 if (((AuthActivity) activity).userResponse.isNewUser()) {
-                    activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.PROFILE_SETUP_SCREEN));
+                    activity.replaceFragment(R.id.container_auth, FragmentFactory.getInstance().getFragment(EScreenType.PROFILE_SETUP_SCREEN), true);
                 } else {
                     activity.launchActivity(MapActivity.class);
                     activity.finish();

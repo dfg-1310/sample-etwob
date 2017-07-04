@@ -83,6 +83,8 @@ public class AppConstant {
         String CAMERA = Manifest.permission.CAMERA;
         String WRITE_EXTERNAL = Manifest.permission.WRITE_EXTERNAL_STORAGE;
         String READ_EXTERNAL = Manifest.permission.READ_EXTERNAL_STORAGE;
+        String ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+        String ACCESS_COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     }
 
     public interface REQUEST_CODE {
@@ -90,6 +92,7 @@ public class AppConstant {
         int GALLARY_IMAGE = 1;
         int CAMERA_PERMISSION = 2;
         int WRITE_EXTERNAL_PERMISSION = 3;
+        int MAP_LOCATION_PERMISSION = 4;
     }
 
     public interface MEDIA_STATE {

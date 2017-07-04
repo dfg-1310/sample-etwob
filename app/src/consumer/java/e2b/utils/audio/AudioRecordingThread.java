@@ -28,7 +28,6 @@ import e2b.utils.fft.FFT;
 import simplesound.pcm.PcmAudioHelper;
 import simplesound.pcm.WavAudioFormat;
 
-
 /*
  * Takes a portion of PCM encoded audio signal (from microphone while recording),
  * transforms it using FFT, passes it to a visualizer and saves to a file.

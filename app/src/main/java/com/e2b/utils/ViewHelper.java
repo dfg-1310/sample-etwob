@@ -1,4 +1,4 @@
-//package com.e2b.utils;
+package com.e2b.utils;//package com.e2b.utils;
 //
 //import android.view.View;
 //

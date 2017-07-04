@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -15,6 +16,9 @@ import com.e2b.api.ApiCallback;
 import com.e2b.api.ApiClient;
 import com.e2b.api.IApiRequest;
 import com.e2b.fragments.BaseFragment;
+import com.e2b.fragments.LocationSearchFragment;
+import com.e2b.model.request.Coordinate;
+import com.e2b.model.request.Place;
 import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
 import com.e2b.utils.DialogUtils;
@@ -22,12 +26,15 @@ import com.e2b.utils.DialogUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import e2b.activity.ConsumerBaseActivity;
 import e2b.intrface.ICustomCallback;
 import e2b.model.request.ProfileSetup;
 import e2b.model.response.UserResponse;
 import e2b.utils.ConsumerPreferenceKeeper;
 import e2b.utils.RatingDialog;
 import retrofit2.Call;
+
+import static com.e2b.R.id.et_profile_address1;
 
 public class ProfileFragment extends BaseFragment {
 
@@ -37,7 +44,7 @@ public class ProfileFragment extends BaseFragment {
     @Bind(R.id.et_profile_full_name)
     EditText etFullName;
 
-    @Bind(R.id.et_profile_address1)
+    @Bind(et_profile_address1)
     EditText etProfileAddress;
 
     @Bind(R.id.et_profile_moileno)
@@ -45,6 +52,8 @@ public class ProfileFragment extends BaseFragment {
 
     private String fullName;
     private String address1;
+
+    private Place place;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +65,11 @@ public class ProfileFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
+        ((ConsumerBaseActivity)activity).setHeaderText("Profile");
+        ((ConsumerBaseActivity)activity).managebackIconVisiblity(false);
+
+        initListener();
+        getUserProfile();
         return view;
     }
 
@@ -63,7 +77,32 @@ public class ProfileFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getUserProfile();
+
+    }
+
+    private void initListener() {
+        etProfileAddress.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.d(TAG, "event : " + event.getAction());
+                if (event.getAction() == 0) {
+                    ProfileFragment.this.place = null;
+                    etProfileAddress.setText("");
+
+                    LocationSearchFragment locationSearchFragment = new LocationSearchFragment();
+                    locationSearchFragment.setListener(new LocationSearchFragment.ILocationSearch() {
+                        @Override
+                        public void onComplete(Place place) {
+                            ProfileFragment.this.place = place;
+                            etProfileAddress.setText(place.getDesc());
+                        }
+                    });
+                    activity.replaceFragment(R.id.container_home, locationSearchFragment, true);
+                }
+                return true;
+            }
+        });
+
     }
 
     private void getUserProfile() {
@@ -77,7 +116,11 @@ public class ProfileFragment extends BaseFragment {
             public void onSucess(UserResponse user) {
                 activity.hideProgressBar();
                 etFullName.setText(user.getName());
-                etProfileAddress.setText(user.getAddress());
+                if(place != null){
+                    etProfileAddress.setText(place.getDesc());
+                }else{
+                    etProfileAddress.setText(user.getAddress());
+                }
                 etProfileMobileNo.setText(user.getMobile());
             }
 
@@ -93,14 +136,21 @@ public class ProfileFragment extends BaseFragment {
     @OnClick(R.id.tv_save)
     public void saveProfile() {
         fullName = etFullName.getText().toString().trim();
-        address1 = etProfileAddress.getText().toString().trim();
 
         ProfileSetup profileSetup = new ProfileSetup();
 
         profileSetup.setName(fullName);
-        profileSetup.setAddress(address1);
-        profileSetup.setCoordinate(getLocationCoordinate());
-
+        if(place != null){
+            address1 = place.getDesc();
+            Coordinate coordinate = new Coordinate();
+            coordinate.setLat(place.getLat());
+            coordinate.setLng(place.getLng());
+            profileSetup.setCoordinate(coordinate);
+            profileSetup.setAddress(address1);
+        }else{
+            address1 = "";
+            profileSetup.setCoordinate(null);
+        }
 
         if (updateProfileValidation()) {
             updateProfileApi(profileSetup);
@@ -120,6 +170,7 @@ public class ProfileFragment extends BaseFragment {
                 activity.hideProgressBar();
                 activity.showToast("Profile updated successfully.");
                 activity.saveUserInfo(userResponse);
+                place = null;
             }
 
             @Override

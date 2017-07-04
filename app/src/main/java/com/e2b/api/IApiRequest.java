@@ -2,6 +2,8 @@ package com.e2b.api;
 
 import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.CommonApiResponse;
+import com.e2b.model.response.LocationLatLong;
+import com.e2b.model.response.LocationResponse;
 import com.e2b.model.response.PlaceOrder;
 import com.google.gson.JsonObject;
 
@@ -18,6 +20,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Url;
 
 public interface IApiRequest {
 
@@ -69,6 +72,12 @@ public interface IApiRequest {
 
     @GET("merchant/{id}/rating")
     Call<BaseResponse<Ratings>> getRatings(@Path("id") String merchantId);
+
+    @GET
+    Call<LocationResponse> getLocationList(@Url String url);
+
+    @GET
+    Call<LocationLatLong> getLocationLatLong(@Url String url);
 
 
     interface FIELD {

@@ -56,7 +56,7 @@ public class CameraHelper {
 	}
 	
 	@SuppressLint("NewApi")
-	public static List<Size> getCameraSupportedVideoSizes(android.hardware.Camera camera) {
+	public static List<Size> getCameraSupportedVideoSizes(Camera camera) {
 		if ((Build.VERSION.SDK_INT >= 11) && (camera != null)) {
 			return camera.getParameters().getSupportedVideoSizes();
 		}
@@ -65,8 +65,8 @@ public class CameraHelper {
 		}
 	}
 
-	public static int setCameraDisplayOrientation(int cameraId, android.hardware.Camera camera, int displayRotation) {
-		Camera.CameraInfo info = new Camera.CameraInfo();
+	public static int setCameraDisplayOrientation(int cameraId, Camera camera, int displayRotation) {
+		CameraInfo info = new CameraInfo();
 		Camera.getCameraInfo(cameraId, info);
 		int degrees = 0;
 		switch (displayRotation) {
@@ -85,7 +85,7 @@ public class CameraHelper {
 		}
 
 		int camRotationDegree = 0;
-		if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+		if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
 			camRotationDegree = (info.orientation + degrees) % 360;
 			camRotationDegree = (360 - camRotationDegree) % 360; // compensate the mirror
 		} else { 

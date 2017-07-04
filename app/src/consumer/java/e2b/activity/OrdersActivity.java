@@ -20,7 +20,7 @@ public class OrdersActivity extends ConsumerBaseActivity {
         setHeaderText("Orders");
         EScreenType eScreenType = EScreenType.values()[EScreenType.ORDERS_SCREEN.ordinal()];
         this.currentFragment = FragmentFactory.getInstance().getFragment(eScreenType);
-        replaceFragment(R.id.container_home, currentFragment, false);
+        replaceFragment(R.id.container_home, currentFragment, true);
         setFooterState(AppConstant.FOOTER_INDEX.ORDER);
     }
 

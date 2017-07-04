@@ -98,7 +98,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, new android.location.LocationListener() {
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 Log.d(TAG, "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
@@ -367,7 +367,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             try {
                 AmazonS3Client s3Client = new AmazonS3Client(new BasicAWSCredentials(AppConstant.MY_ACCESS_KEY_ID, AppConstant.MY_SECRET_KEY));
 //            s3Client.createBucket(AppConstant.MY_PICTURE_BUCKET);
-                PutObjectRequest por = new PutObjectRequest(AppConstant.MY_PICTURE_BUCKET, fileName, new java.io.File(filePath));
+                PutObjectRequest por = new PutObjectRequest(AppConstant.MY_PICTURE_BUCKET, fileName, new File(filePath));
                 s3Client.putObject(por);
                 ResponseHeaderOverrides override = new ResponseHeaderOverrides();
                 override.setContentType("image/jpeg");

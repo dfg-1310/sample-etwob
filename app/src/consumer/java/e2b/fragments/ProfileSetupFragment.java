@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -14,6 +15,9 @@ import com.e2b.api.ApiCallback;
 import com.e2b.api.ApiClient;
 import com.e2b.api.IApiRequest;
 import com.e2b.fragments.BaseFragment;
+import com.e2b.fragments.LocationSearchFragment;
+import com.e2b.model.request.Coordinate;
+import com.e2b.model.request.Place;
 import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
 import com.e2b.utils.DialogUtils;
@@ -36,14 +40,11 @@ public class ProfileSetupFragment extends BaseFragment {
     EditText etFullName;
 
     @Bind(R.id.et_signup_address1)
-    EditText etSignUpAddress1;
-
-//    @Bind(R.id.et_signup_address2)
-//    EditText etSignUpAddress2;
+    EditText etSignUpAddress;
 
     private String fullName;
     private String address1;
-//    private String address2;
+    private Place place;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,20 +56,30 @@ public class ProfileSetupFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_signup, container, false);
         ButterKnife.bind(this, view);
+        initListener();
         return view;
     }
 
     @OnClick(R.id.tv_save)
     public void signUpClick() {
         fullName = etFullName.getText().toString().trim();
-        address1 = etSignUpAddress1.getText().toString().trim();
-//        address2 = etSignUpAddress2.getText().toString().trim();
+        address1 = etSignUpAddress.getText().toString().trim();
 
         ProfileSetup profileSetup = new ProfileSetup();
 
         profileSetup.setName(fullName);
-        profileSetup.setAddress(address1);
-        profileSetup.setCoordinate(getLocationCoordinate());
+
+        if(place != null){
+            address1 = place.getDesc();
+            Coordinate coordinate = new Coordinate();
+            coordinate.setLat(place.getLat());
+            coordinate.setLng(place.getLng());
+            profileSetup.setCoordinate(coordinate);
+            profileSetup.setAddress(address1);
+        }else{
+            address1 = "";
+            profileSetup.setCoordinate(null);
+        }
 
         if (profileValidation()) {
             profileUpdateApi(profileSetup);
@@ -100,7 +111,7 @@ public class ProfileSetupFragment extends BaseFragment {
     }
 
     private void clearData() {
-        etSignUpAddress1.setText("");
+        etSignUpAddress.setText("");
         etFullName.setText("");
     }
 
@@ -118,6 +129,29 @@ public class ProfileSetupFragment extends BaseFragment {
 
         return true;
     }
+    private void initListener() {
+        etSignUpAddress.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.d(TAG, "event : " + event.getAction());
+                if (event.getAction() == 0) {
+                    ProfileSetupFragment.this.place = null;
+                    etSignUpAddress.setText("");
 
+                    LocationSearchFragment locationSearchFragment = new LocationSearchFragment();
+                    locationSearchFragment.setListener(new LocationSearchFragment.ILocationSearch() {
+                        @Override
+                        public void onComplete(Place place) {
+                            ProfileSetupFragment.this.place = place;
+                            etSignUpAddress.setText(place.getDesc());
+                        }
+                    });
+                    activity.replaceFragment(R.id.container_auth, locationSearchFragment, true);
+                }
+                return true;
+            }
+        });
+
+    }
 }
 

@@ -1,10 +1,14 @@
 package e2b.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +49,11 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
     private File finalAudioFile;
     public static String FileNameArg = "arg_filename";
 
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 500;
+    // Requesting permission to RECORD_AUDIO
+    private boolean permissionToRecordAccepted = false;
+    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,8 +91,13 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
         takeAudioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PlaceOrderActivity.this, AudioRecordingActivity.class);
-                startActivityForResult(intent, AppConstant.REQ.IMAGE_AUDIO);
+
+                if (ActivityCompat.checkSelfPermission(PlaceOrderActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(PlaceOrderActivity.this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_RECORD_AUDIO_PERMISSION);
+                }else{
+                startRecording();
+                }
+
             }
         });
 
@@ -169,14 +183,14 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
                             }
                         }
                     });
-
-
-
-
                 }
-
             }
         });
+    }
+
+    private void startRecording() {
+        Intent intent = new Intent(PlaceOrderActivity.this, AudioRecordingActivity.class);
+        startActivityForResult(intent, AppConstant.REQ.IMAGE_AUDIO);
     }
 
     private void getDataFromBundle() {
@@ -243,4 +257,18 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case REQUEST_RECORD_AUDIO_PERMISSION:
+                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                if(permissionToRecordAccepted){
+                    startRecording();
+                }else{
+                    ActivityCompat.requestPermissions(PlaceOrderActivity.this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_RECORD_AUDIO_PERMISSION);
+                }
+                break;
+        }
+    }
 }

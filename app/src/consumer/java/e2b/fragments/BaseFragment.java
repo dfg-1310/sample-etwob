@@ -1,4 +1,4 @@
-//package e2b.fragments;
+package e2b.fragments;//package e2b.fragments;
 //
 //import android.app.Activity;
 //import android.content.Context;

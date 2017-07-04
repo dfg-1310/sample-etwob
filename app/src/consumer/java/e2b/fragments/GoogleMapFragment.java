@@ -3,7 +3,9 @@ package e2b.fragments;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -27,7 +29,12 @@ import com.e2b.mapmarker.MapWrapperLayout;
 import com.e2b.mapmarker.OnInfoWindowElemTouchListener;
 import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
+import com.e2b.utils.AppConstant;
 import com.e2b.utils.DialogUtils;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.FusedLocationProviderApi;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -36,14 +43,18 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import e2b.activity.ConsumerBaseActivity;
 import e2b.activity.MapActivity;
 import e2b.model.response.Merchant;
 import e2b.model.response.MerchantResponse;
+import e2b.utils.ConsumerPreferenceKeeper;
 import retrofit2.Call;
 
 
@@ -54,8 +65,6 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
     private View view;
     private SupportMapFragment mapFragment;
     private GoogleMap mMap;
-    private HashMap<Integer, Marker> integerMarkerHashMap = new HashMap<>();
-    private boolean isFromBoostLive;
     public static float ZOOM_LEVEL = (float) 12.50;
     private BaseActivity mActivity;
     public MerchantResponse merchantResponse;
@@ -63,10 +72,10 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
     private ViewGroup infoWindow;
     private TextView infoTitle;
     private TextView infoSnippet;
-    //    private Button infoButton;
-    private OnInfoWindowElemTouchListener infoButtonListener;
     private LinearLayout rootLayout;
-
+    private FusedLocationProviderClient mFusedLocationClient;
+    String[] whatPermission = {AppConstant.PERMISSION.ACCESS_FINE_LOCATION, AppConstant.PERMISSION.ACCESS_COARSE_LOCATION};
+    private Location mLastLocation;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -84,64 +93,49 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
 
         init();
         mActivity = (BaseActivity) getActivity();
-        ((ConsumerBaseActivity)mActivity).managebackIconVisiblity(false);
-        ((ConsumerBaseActivity)mActivity).setHeaderText("General Store");
+        ((ConsumerBaseActivity) mActivity).managebackIconVisiblity(false);
+        ((ConsumerBaseActivity) mActivity).setHeaderText("General Store");
         mapWrapperLayout = (MapWrapperLayout) view.findViewById(R.id.map_relative_layout);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(mActivity);
         return view;
-    }
-
-    public void setupMapMarkers() {
-
-        mapWrapperLayout.init(mMap, getPixelsFromDp(activity, 39 + 20));
-
-        // We want to reuse the info window for all the markers,
-        // so let's create only one class member instance
-        this.infoWindow = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.info_window, null);
-        this.infoTitle = (TextView) infoWindow.findViewById(R.id.title);
-        this.infoSnippet = (TextView) infoWindow.findViewById(R.id.snippet);
-        this.rootLayout = (LinearLayout) infoWindow.findViewById(R.id.map_marker_rootlayout);
-        rootLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Marker marker = (Marker) rootLayout.getTag();
-                if (marker != null) {
-                    ((MapActivity) activity).markerClick((Merchant) marker.getTag());
-                }
-                return false;
-            }
-        });
-
-        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-            @Override
-            public View getInfoWindow(Marker marker) {
-                return null;
-            }
-
-            @Override
-            public View getInfoContents(Marker marker) {
-                // Setting up the infoWindow with current's marker info
-                infoTitle.setText(marker.getTitle());
-                infoSnippet.setText(marker.getSnippet());
-                rootLayout.setTag(marker);
-                // We must call this to set the current marker and infoWindow references
-                // to the MapWrapperLayout
-                mapWrapperLayout.setMarkerWithInfoWindow(marker, infoWindow);
-                return infoWindow;
-            }
-        });
-
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        currentLocation();
         if (mMap != null) {
             mMap.clear();
         }
+        if (!checkPermissions()) {
+            requestPermissions();
+        } else {
+            getLastLocation();
+        }
         getMerchants();
+        currentLocation();
     }
 
+
+    private void getLastLocation() {
+        if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), whatPermission, AppConstant.REQUEST_CODE.MAP_LOCATION_PERMISSION);
+                return;
+        }
+        mFusedLocationClient.getLastLocation()
+                .addOnCompleteListener(mActivity, new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            mLastLocation = task.getResult();
+//                            mActivity.showToast(" Latitude() : " + mLastLocation.getLatitude() + " Longitude() : " + mLastLocation.getLongitude());
+                        } else {
+                            Log.w(TAG, "getLastLocation:exception", task.getException());
+                            mActivity.showToast(getString(R.string.no_location_detected));
+                        }
+                    }
+                });
+    }
     private void getMerchants() {
         IApiRequest request = ApiClient.getRequest();
         Call<BaseResponse<MerchantResponse>> call = request.getMerchants();
@@ -174,7 +168,7 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
             Log.d(TAG, "*********************************************");
 
             if (merchant.getCoordinates() != null) {
-                Log.d(TAG, " Merchant Name : "+merchant.getShopName()+ " Merchant Coordinate :: "+merchant.getCoordinates().toString());
+                Log.d(TAG, " Merchant Name : " + merchant.getShopName() + " Merchant Coordinate :: " + merchant.getCoordinates().toString());
                 latLng = new LatLng(merchant.getCoordinates().getLat(), merchant.getCoordinates().getLng());
                 options = new MarkerOptions();
                 options.position(latLng)
@@ -186,7 +180,8 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
             }
         }
 
-        if (latLng != null) {
+        if(mLastLocation != null){
+            latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_LEVEL));
         }
@@ -224,21 +219,26 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
     }
 
-    private void currentLocation() {
-//        if (mMap != null) {
-//            double lat = Double.parseDouble(MerchantPreferenceKeeper.getInstance().getLat());
-//            double longitute = Double.parseDouble(MerchantPreferenceKeeper.getInstance().getLong());
-//            LatLng selectedLatLng = new LatLng(lat, longitute);
-//            mMap.moveCamera(CameraUpdateFactory.newLatLng(selectedLatLng));
-//            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedLatLng, ZOOM_LEVEL));
-//        }
+    public void currentLocation() {
+        // Do a null check to confirm that we have not already instantiated the map.
+        if (mMap != null) {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), whatPermission, AppConstant.REQUEST_CODE.MAP_LOCATION_PERMISSION);
+                return;
+            }
+            mMap.setMyLocationEnabled(true);
+            if(mLastLocation != null){
+               LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_LEVEL));
+            }
+        }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        setupMapMarkers();
-        currentLocation();
 
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION);
@@ -283,5 +283,40 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
         }
     }
 
+    /**
+     * Return the current state of the permissions needed.
+     */
+    private boolean checkPermissions() {
+        int permissionState = ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void startLocationPermissionRequest() {
+        ActivityCompat.requestPermissions(getActivity(),
+                whatPermission,
+                AppConstant.REQUEST_CODE.MAP_LOCATION_PERMISSION);
+    }
+
+    private void requestPermissions() {
+        boolean shouldProvideRationale =
+                ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                        Manifest.permission.ACCESS_FINE_LOCATION);
+
+        // Provide an additional rationale to the user. This would happen if the user denied the
+        // request previously, but didn't check the "Don't ask again" checkbox.
+        if (shouldProvideRationale) {
+            Log.i(TAG, "Displaying permission rationale to provide additional context.");
+            mActivity.showToast("Please enable permission");
+            // Request permission
+            startLocationPermissionRequest();
+        } else {
+            Log.i(TAG, "Requesting permission");
+            // Request permission. It's possible this can be auto answered if device policy
+            // sets the permission in a given state or the user denied the permission
+            // previously and checked "Never ask again".
+            startLocationPermissionRequest();
+        }
+    }
 }
 

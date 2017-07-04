@@ -17,10 +17,9 @@ public class ProfileActivity extends ConsumerBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        setHeaderText("Profile");
         EScreenType eScreenType = EScreenType.values()[EScreenType.PROFILE_SCREEN.ordinal()];
         this.currentFragment = FragmentFactory.getInstance().getFragment(eScreenType);
-        replaceFragment(R.id.container_home, currentFragment, false);
+        replaceFragment(R.id.container_home, currentFragment, true);
         setFooterState(AppConstant.FOOTER_INDEX.PROFILE);
     }
 

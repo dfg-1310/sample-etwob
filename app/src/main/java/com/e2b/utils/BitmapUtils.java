@@ -123,9 +123,9 @@ public class BitmapUtils {
             values.put(MediaStore.MediaColumns.TITLE, context.getPackageName());
             mCapturedImageURI = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
-            Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Intent pickImageIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             pickImageIntent.setType("image/*");
-            BitmapUtils.setCropImage(pickImageIntent, mCapturedImageURI);
+//            BitmapUtils.setCropImage(pickImageIntent, mCapturedImageURI);
             pickImageIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
             context.startActivityForResult(pickImageIntent, AppConstant.REQUEST_CODE.GALLARY_IMAGE);
         }

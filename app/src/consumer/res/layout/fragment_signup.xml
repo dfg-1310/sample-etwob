@@ -47,7 +47,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_12"
-                android:background="@drawable/bg_rect_grey"
                 android:gravity="left"
                 android:hint="@string/enter_address1"
                 android:imeOptions="actionDone"

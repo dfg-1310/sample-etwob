@@ -1,4 +1,4 @@
-package com.e2b.application;
+package e2b.application;
 
 import android.app.Application;
 import android.content.Context;
