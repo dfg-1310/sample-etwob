@@ -69,7 +69,11 @@ public class OrdersFragment extends BaseFragment {
             @Override
             public void onSucess(Orders orders) {
                 activity.hideProgressBar();
-                showData(orders);
+                if(orders != null && orders.getOrders().size() > 0){
+                    showData(orders);
+                }else{
+                    activity.showToast("No order data found");
+                }
             }
 
             @Override

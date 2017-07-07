@@ -20,7 +20,6 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/dp_8"
             android:paddingRight="@dimen/dp_8"
-
             >
 
             <com.e2b.views.CustomTextView

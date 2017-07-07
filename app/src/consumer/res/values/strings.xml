@@ -256,5 +256,6 @@
     <string name="no_location_detected">
         No location detected. Make sure location is enabled on the device.
     </string>
+    <string name="address">Address</string>
 
 </resources>
