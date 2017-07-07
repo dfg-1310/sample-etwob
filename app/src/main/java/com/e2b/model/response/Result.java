@@ -1,5 +1,6 @@
 package com.e2b.model.response;
 
+import com.e2b.model.Geometry;
 
 import java.util.HashMap;
 import java.util.List;
