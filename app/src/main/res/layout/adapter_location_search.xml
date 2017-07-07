@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.e2b.views.CustomTextView
+        android:id="@+id/tv_location_search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:text="fwdffsfsfsdiufh "
+        android:textColor="#000000"
+        android:textSize="@dimen/sp_12"
+     />
+</RelativeLayout>
