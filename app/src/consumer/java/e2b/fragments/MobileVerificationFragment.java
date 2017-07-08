@@ -19,6 +19,7 @@ import com.e2b.fragments.BaseFragment;
 import com.e2b.listener.IDialogListener;
 import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
+import com.e2b.utils.AppUtils;
 import com.e2b.utils.DialogUtils;
 import com.e2b.views.CustomEditText;
 import com.e2b.views.CustomTextView;
@@ -136,6 +137,7 @@ public class MobileVerificationFragment extends BaseFragment {
         JsonObject deviceJsonObject = new JsonObject();
         deviceJsonObject.addProperty("pt", 1);
         deviceJsonObject.addProperty("id", ConsumerPreferenceKeeper.getInstance().getFCMToken());
+        deviceJsonObject.addProperty("uuid", "uuid");
         mobileJsonObject.add("device", deviceJsonObject);
 
         Call<BaseResponse<UserResponse>> call = request.consumer(mobileJsonObject);

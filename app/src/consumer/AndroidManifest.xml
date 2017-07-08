@@ -18,5 +18,21 @@
         <activity android:name="e2b.activity.PlaceOrderActivity" android:screenOrientation="portrait"></activity>
         <activity android:name="e2b.activity.AudioRecordingActivity" android:screenOrientation="portrait"></activity>
         <activity android:name="e2b.activity.AudioPlaybackActivity" android:screenOrientation="portrait"></activity>
+
+        <service android:name="e2b.fcm.FCMMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="e2b.fcm.FCMTokenUpdateService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
+
+
+
+
 </manifest>
