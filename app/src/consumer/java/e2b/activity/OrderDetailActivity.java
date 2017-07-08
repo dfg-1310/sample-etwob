@@ -57,8 +57,7 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
     Button playAudioButton;
     private ImageView orderImg;
     private ImageView orderReceiptImg;
-
-
+    private String orderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,7 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
         initViewControls();
         getDataFromItent();
 //        getPlaceOrder();
-        updateUI(placeOrder);
+//        updateUI(placeOrder);
     }
 
     private void initViewControls() {
@@ -283,7 +282,13 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             placeOrder = (PlaceOrder) bundle.getSerializable("order");
-            Log.d(TAG, "place order : " + placeOrder.toString());
+            orderId = bundle.getString("orderId");
+            if(placeOrder != null){
+                Log.d(TAG, "place order : " + placeOrder.toString());
+                updateUI(placeOrder);
+            }else{
+                Log.d(TAG, "orderId : " + orderId);
+            }
         }
     }
 }

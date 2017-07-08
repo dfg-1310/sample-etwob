@@ -6,7 +6,7 @@ public class ProfileSetup extends BaseRequest{
 
     private String name;
     private String address;
-    private Coordinate coordinate;
+    private Coordinate coordinates;
 
     public String getName() {
         return name;
@@ -24,12 +24,12 @@ public class ProfileSetup extends BaseRequest{
         this.address = address;
     }
 
-    public Coordinate getCoordinate() {
-        return coordinate;
+    public Coordinate getCoordinates() {
+        return coordinates;
     }
 
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public void setCoordinates(Coordinate coordinates) {
+        this.coordinates = coordinates;
     }
 
 

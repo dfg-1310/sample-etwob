@@ -74,11 +74,11 @@ public class ProfileSetupFragment extends BaseFragment {
             Coordinate coordinate = new Coordinate();
             coordinate.setLat(place.getLat());
             coordinate.setLng(place.getLng());
-            profileSetup.setCoordinate(coordinate);
+            profileSetup.setCoordinates(coordinate);
             profileSetup.setAddress(address1);
         }else{
             address1 = "";
-            profileSetup.setCoordinate(null);
+            profileSetup.setCoordinates(null);
         }
 
         if (profileValidation()) {

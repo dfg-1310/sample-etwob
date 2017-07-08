@@ -1,6 +1,5 @@
 package e2b.fragments;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -27,11 +26,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import e2b.activity.ConsumerBaseActivity;
-import e2b.intrface.ICustomCallback;
 import e2b.model.request.ProfileSetup;
 import e2b.model.response.UserResponse;
 import e2b.utils.ConsumerPreferenceKeeper;
-import e2b.utils.RatingDialog;
 import retrofit2.Call;
 
 import static com.e2b.R.id.et_profile_address1;
@@ -145,11 +142,11 @@ public class ProfileFragment extends BaseFragment {
             Coordinate coordinate = new Coordinate();
             coordinate.setLat(place.getLat());
             coordinate.setLng(place.getLng());
-            profileSetup.setCoordinate(coordinate);
+            profileSetup.setCoordinates(coordinate);
             profileSetup.setAddress(address1);
         }else{
             address1 = "";
-            profileSetup.setCoordinate(null);
+            profileSetup.setCoordinates(null);
         }
 
         if (updateProfileValidation()) {

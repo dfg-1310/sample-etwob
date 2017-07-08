@@ -197,10 +197,14 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
 
     private String getMarkerSnippetString(Merchant merchant) {
         StringBuilder builder = new StringBuilder();
-        builder.append("Timing : " + merchant.getShopTiming().getFrom() + " to " + merchant.getShopTiming().getTo() +
+        builder.append("Timing : " + getTime(merchant.getShopTiming().getFrom()) + " to " + getTime(merchant.getShopTiming().getTo()) +
                 "\n" + "Closing Days : " + getStringValue(merchant.getClosingDays()) + "\n" + "Address : " + merchant.getShopAddress());
 
         return builder.toString();
+    }
+
+    private String getTime(int time){
+        return time/60+ ":"+time%60;
     }
 
     private String getStringValue(String[] closingDays) {
@@ -239,7 +243,7 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        setupMapMarkers();
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION);
         } else {
@@ -317,6 +321,48 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
             // previously and checked "Never ask again".
             startLocationPermissionRequest();
         }
+    }
+
+    public void setupMapMarkers() {
+
+        mapWrapperLayout.init(mMap, getPixelsFromDp(activity, 39 + 20));
+
+        // We want to reuse the info window for all the markers,
+        // so let's create only one class member instance
+        this.infoWindow = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.info_window, null);
+        this.infoTitle = (TextView) infoWindow.findViewById(R.id.title);
+        this.infoSnippet = (TextView) infoWindow.findViewById(R.id.snippet);
+        this.rootLayout = (LinearLayout) infoWindow.findViewById(R.id.map_marker_rootlayout);
+        rootLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Marker marker = (Marker) rootLayout.getTag();
+                if (marker != null) {
+                    ((MapActivity) activity).markerClick((Merchant) marker.getTag());
+                }
+                return false;
+            }
+        });
+
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                // Setting up the infoWindow with current's marker info
+                infoTitle.setText(marker.getTitle());
+                infoSnippet.setText(marker.getSnippet());
+                rootLayout.setTag(marker);
+                // We must call this to set the current marker and infoWindow references
+                // to the MapWrapperLayout
+                mapWrapperLayout.setMarkerWithInfoWindow(marker, infoWindow);
+                return infoWindow;
+            }
+        });
+
     }
 }
 

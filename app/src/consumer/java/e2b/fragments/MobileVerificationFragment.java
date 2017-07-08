@@ -137,7 +137,7 @@ public class MobileVerificationFragment extends BaseFragment {
         JsonObject deviceJsonObject = new JsonObject();
         deviceJsonObject.addProperty("pt", 1);
         deviceJsonObject.addProperty("id", ConsumerPreferenceKeeper.getInstance().getFCMToken());
-        deviceJsonObject.addProperty("uuid", "uuid");
+        deviceJsonObject.addProperty("uuid", AppUtils.getUniqueDeviceId(activity));
         mobileJsonObject.add("device", deviceJsonObject);
 
         Call<BaseResponse<UserResponse>> call = request.consumer(mobileJsonObject);

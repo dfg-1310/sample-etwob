@@ -18,6 +18,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
@@ -209,5 +211,20 @@ public class AppUtils {
             e.printStackTrace();
         }
         return  text;
+    }
+
+    public static String getUniqueDeviceId(Activity activity){
+        String deviceId;
+        final TelephonyManager mTelephony = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
+        if (mTelephony.getDeviceId() != null) {
+            deviceId = mTelephony.getDeviceId();
+        }
+        else {
+            deviceId = Settings.Secure.getString(
+                    activity.getApplicationContext().getContentResolver(),
+                    Settings.Secure.ANDROID_ID);
+        }
+
+        return deviceId;
     }
 }
