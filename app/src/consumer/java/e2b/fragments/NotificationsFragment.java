@@ -49,8 +49,29 @@ public class NotificationsFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void getOrders() {
+    private void getNotifications() {
         // TODO :: make api call and show on ui
+
+        activity.showProgressBar();
+        IApiRequest request = ApiClient.getRequest();
+
+        Call<BaseResponse<Orders>> call = request.getOrders();
+        call.enqueue(new ApiCallback<Orders>(activity) {
+            @Override
+            public void onSucess(Orders orders) {
+                activity.hideProgressBar();
+                showData(orders);
+            }
+
+            @Override
+            public void onError(Error error) {
+                activity.hideProgressBar();
+                activity.showToast(error.getMsg());
+                Log.d(TAG, error.getMsg());
+            }
+        });
+
+
 
         notificationAdapter = new NotificationAdapter(getActivity(), DummyData.getNotifications());
         orderListView.setAdapter(notificationAdapter);

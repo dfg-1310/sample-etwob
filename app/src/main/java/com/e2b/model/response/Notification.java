@@ -5,47 +5,40 @@ package com.e2b.model.response;
  */
 
 public class Notification {
-      private String msg;
-      private Payload payload;
+      private String _id;
+      private Data data;
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
 
     /**
-     * {msg: "new mssage", payload:{"s":"New", id:"order id"}}
+     * {
+     "_id": "5960a13fd7ad9c0e8d0abe8c",
+     "data": {
+     "payload": {
+     "s": "New",
+     "id": "5960a13dd7ad9c0e8d0abe8b"
+     },
+     "msg": "A new order has been placed against you.",
+     "consumer": "596093a4c3004606ef4ecf70",
+     "merchant": "59609918d7ad9c0e8d0abe85"
+     }
+     }
      */
 
-    public String getMsg() {
-        return msg;
-    }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Payload getPayload() {
-        return payload;
-    }
-
-    public void setPayload(Payload payload) {
-        this.payload = payload;
-    }
 }
 
-class Payload{
-    private String s;
-    private String id;
-
-    public String getS() {
-        return s;
-    }
-
-    public void setS(String s) {
-        this.s = s;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-}
