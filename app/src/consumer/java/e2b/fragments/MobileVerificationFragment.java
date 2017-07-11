@@ -1,5 +1,6 @@
 package e2b.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -15,6 +16,7 @@ import com.e2b.activity.BaseActivity;
 import com.e2b.api.ApiCallback;
 import com.e2b.api.ApiClient;
 import com.e2b.api.IApiRequest;
+import com.e2b.fcm.FCMTokenUpdateService;
 import com.e2b.fragments.BaseFragment;
 import com.e2b.listener.IDialogListener;
 import com.e2b.model.response.BaseResponse;
@@ -23,6 +25,7 @@ import com.e2b.utils.AppUtils;
 import com.e2b.utils.DialogUtils;
 import com.e2b.views.CustomEditText;
 import com.e2b.views.CustomTextView;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.JsonObject;
 
 import butterknife.Bind;
@@ -124,6 +127,16 @@ public class MobileVerificationFragment extends BaseFragment {
     }
 
     public void signIn() {
+        if(TextUtils.isEmpty(ConsumerPreferenceKeeper.getInstance().getFCMToken())){
+            String regId = FirebaseInstanceId.getInstance().getToken();
+            if(TextUtils.isEmpty(regId)){
+                Intent intent = new Intent(getActivity(), FCMTokenUpdateService.class);
+                getActivity().startService(intent);
+                ((BaseActivity)getActivity()).showToast("Some required data missing! Please try again");
+                return;
+            }
+            ConsumerPreferenceKeeper.getInstance().setFCMToken(regId);
+        }
         String mobileNumber = etMobileNumber.getText().toString().trim().replace(" ","");
         if (!openDialogSignin(activity, mobileNumber)) {
             return;

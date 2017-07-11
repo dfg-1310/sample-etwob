@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -35,6 +36,7 @@ import e2b.activity.OrderDetailActivity;
 import e2b.activity.PlaceOrderActivity;
 import e2b.adapter.ReviewAdapter;
 import e2b.intrface.ICustomCallback;
+import e2b.model.response.DeliveryDetail;
 import e2b.model.response.Merchant;
 import e2b.model.response.Ratings;
 import e2b.utils.RatingDialog;
@@ -61,14 +63,23 @@ public class StoreInformationFragment extends BaseFragment {
     @Bind(R.id.tv_place_order)
     CustomTextView placeOrder;
 
+    @Bind(R.id.tv_shop_closing_day)
+    CustomTextView closingdays;
+
+    @Bind(R.id.tv_offers)
+    CustomTextView offers;
+
+    @Bind(R.id.tv_home_delivery)
+    CustomTextView homeDelivery;
+
     @Bind(R.id.lv_review)
     RecyclerView reviewListView;
 
     private String TAG = StoreInformationFragment.class.getCanonicalName();
     private Merchant merchant;
 
-    @Bind(R.id.tv_important_info)
-    CustomTextView importantInfo;
+//    @Bind(R.id.tv_important_info)
+//    CustomTextView importantInfo;
 
     @Bind(R.id.iv_store_image)
     ImageView storeImageView;
@@ -82,7 +93,6 @@ public class StoreInformationFragment extends BaseFragment {
         ((ConsumerBaseActivity) activity).setHeaderText("Store Information");
         reviewListView.setLayoutManager(new LinearLayoutManager(activity));
         reviewListView.setHasFixedSize(true);
-
         return view;
     }
 
@@ -102,8 +112,11 @@ public class StoreInformationFragment extends BaseFragment {
             name.setText(merchant.getShopName());
             storeAddress.setText("Address : " + merchant.getShopAddress());
             storePhone.setText("Phone : " + merchant.getMobile());
+            closingdays.setText("Shop Remain Close On : "+ getArrayString(merchant.getClosingDays()));
+            offers.setText("Offers : ");
+            homeDelivery.setText(getHomeDeliveryText(merchant));
 //            storeEmail.setText("Email : "+merchant.getShopName());
-            importantInfo.setText(importantInfo.getText().toString().replace("MIN_ORDER_AMOUNT", "" + merchant.getDeliveryDetail().getMinAmount()));
+//            importantInfo.setText(importantInfo.getText().toString().replace("MIN_ORDER_AMOUNT", "" + merchant.getDeliveryDetail().getMinAmount()));
             ((BaseActivity) getActivity()).loadImageGlide(merchant.getShopImage(), storeImageView);
         }
 
@@ -116,6 +129,32 @@ public class StoreInformationFragment extends BaseFragment {
                 postRate(rating, comment);
             }
         });
+    }
+
+    private String getHomeDeliveryText(Merchant merchant) {
+        String deliverynfo = "Home Delivery : ";
+        DeliveryDetail deliveryDetail = merchant.getDeliveryDetail();
+        if(deliveryDetail != null){
+            deliverynfo += "Available"+"\n";
+            deliverynfo += "Minimum Amount For Home Delivery : "+deliveryDetail.getMinAmount()+"\n";
+            deliverynfo += "Home Delivery Radius : "+deliveryDetail.getRadius()+"Kms"+"\n";
+            deliverynfo += "Home Delivery Timimg : "+deliveryDetail.getTiming();
+
+        }else{
+            deliverynfo += "Not Available";
+        }
+        return deliverynfo;
+    }
+
+    private String getArrayString(String[] closingDays) {
+        String value = "";
+        for(String day: closingDays){
+            if(!value.equalsIgnoreCase("")){
+                value+= ", ";
+            }
+            value+= day;
+        }
+        return value;
     }
 
     private void postRate(float rating, String comment) {

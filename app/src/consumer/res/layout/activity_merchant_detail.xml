@@ -61,7 +61,9 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/tv_store_Name"
                 android:layout_toLeftOf="@+id/mre_place_order"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/color_42B757"
+                >
 
                 <com.e2b.views.CustomTextView
                     android:id="@+id/tv_store_address"
@@ -73,10 +75,37 @@
                     style="@style/wrap_content"
                     android:text="Phone : 0111,2534532" />
 
-                <!-- <com.e2b.views.CustomTextView
-                     android:id="@+id/tv_store_email"
+                <com.e2b.views.CustomTextView
+                     android:id="@+id/tv_shop_closing_day"
                      style="@style/wrap_content"
-                     android:text="Email Address : indiastore@info.com" />-->
+                     android:text="Email Address : indiastore@info.com" />
+
+                <com.e2b.views.CustomTextView
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:id="@+id/tv_home_delivery"
+                    style="@style/wrap_content"
+                     />
+
+        <!--        <com.e2b.views.CustomTextView
+                    android:id="@+id/tv_important_info"
+                    style="@style/wrap_content"
+                    android:paddingLeft="@dimen/dp_8"
+                    android:paddingRight="@dimen/dp_8"
+                    android:text="IMPORTANT INFORMATION: Home delivery is only Available if the total amount of shopping is more than MIN_ORDER_AMOUNT Rs." />
+-->
+                <com.e2b.views.CustomTextView
+                    android:id="@+id/tv_payment_mode"
+                    style="@style/wrap_content"
+                    android:paddingLeft="@dimen/dp_8"
+                    android:paddingRight="@dimen/dp_8"
+                    android:text="Payment Mode: Cash on Delivery" />
+
+                <com.e2b.views.CustomTextView
+                    android:paddingLeft="@dimen/dp_8"
+                    android:paddingRight="@dimen/dp_8"
+                    android:id="@+id/tv_offers"
+                    style="@style/wrap_content"
+                    android:text="OFFERS: \n" />
 
             </LinearLayout>
 
@@ -85,7 +114,7 @@
                 style="@style/wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/ll_store_add_info"
-                android:text="REVIEWS :" />
+                android:text="REVIEW COMMENTS :" />
 
             <RatingBar
                 android:id="@+id/rb_review"
@@ -94,37 +123,18 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ll_store_add_info"
                 android:layout_toRightOf="@id/tv_review_title"
-
                 />
         </RelativeLayout>
 
-        <com.e2b.views.CustomTextView
-            android:id="@+id/tv_important_info"
-            style="@style/wrap_content"
-            android:paddingLeft="@dimen/dp_8"
-            android:paddingRight="@dimen/dp_8"
-            android:text="IMPORTANT INFORMATION: Home delivery is only Available if the total amount of shopping is more than MIN_ORDER_AMOUNT Rs." />
 
-        <com.e2b.views.CustomTextView
-            android:id="@+id/tv_payment_mode"
-            style="@style/wrap_content"
-            android:paddingLeft="@dimen/dp_8"
-            android:paddingRight="@dimen/dp_8"
-            android:text="Payment Mode: Cash on Delivery" />
-
-        <!--  <com.e2b.views.CustomTextView
-              android:paddingLeft="@dimen/dp_8"
-              android:paddingRight="@dimen/dp_8"
-              android:id="@+id/tv_offers"
-              style="@style/wrap_content"
-              android:text="OFFERS: \n" />-->
-
+<!--
         <com.e2b.views.CustomTextView
             android:id="@+id/tv_review_comment"
             style="@style/wrap_content"
             android:paddingLeft="@dimen/dp_8"
             android:paddingRight="@dimen/dp_8"
             android:text="REVIEW COMMENTS: \n" />
+-->
 
 
         <android.support.v7.widget.RecyclerView
