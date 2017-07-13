@@ -1,8 +1,14 @@
 package e2b.activity;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,27 +19,34 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.e2b.R;
+import com.e2b.activity.CameraActivity;
 import com.e2b.api.ApiCallback;
 import com.e2b.api.ApiClient;
 import com.e2b.api.IApiRequest;
 import com.e2b.enums.EOrderStatus;
 import com.e2b.fragments.BaseFragment;
+import com.e2b.listener.ICameraCallback;
+import com.e2b.listener.IImageUploadOnS3Listner;
 import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
 import com.e2b.model.response.PlaceOrder;
 import com.e2b.utils.AppConstant;
+import com.e2b.utils.CameraDialog;
 import com.e2b.utils.DialogUtils;
 import com.e2b.views.CustomTextView;
 import com.google.gson.JsonObject;
 
+import java.io.File;
+import java.util.Date;
+
 import e2b.utils.DummyData;
 import retrofit2.Call;
 
+import static com.e2b.R.id.view;
 import static e2b.activity.PlaceOrderActivity.FileNameArg;
 
 public class OrderDetailActivity extends ConsumerBaseActivity {
 
-    private BaseFragment currentFragment;
     private PlaceOrder placeOrder;
     private CustomTextView orderIdCustomTextView;
     private CustomTextView orderStatusCustomTextView;
@@ -52,12 +65,20 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
     private CustomTextView deliveryOptionTitleCustomTextView;
     private Spinner deliveryOptionSpinner;
     private RelativeLayout footerButtonLayout;
+    private RelativeLayout orderUpdateLayout;
     private Button confirmButton;
     private Button cancelmButton;
     Button playAudioButton;
     private ImageView orderImg;
     private ImageView orderReceiptImg;
     private String orderId;
+    private Button takePhotoButton;
+    private Button takeAudioButton;
+    private Button updateOrderButton;
+    private File finalImageFile;
+    private File finalAudioFile;
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 500;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +104,7 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
         deliveryOptionCustomTextView = (CustomTextView) findViewById(R.id.delivery_options_selected);
         paymentOptionCustomTextView = (CustomTextView) findViewById(R.id.payment_options_selected);
 
+        orderUpdateLayout = (RelativeLayout) findViewById(R.id.order_update_layout);
         orderReceiptLayout = (RelativeLayout) findViewById(R.id.order_receipt_layout);
         paymentOptionTitleCustomTextView = (CustomTextView) findViewById(R.id.payment_option_title);
         paymentOptionSpinner = (Spinner) findViewById(R.id.spinner_payment_option);
@@ -92,6 +114,12 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
         confirmButton = (Button) findViewById(R.id.btn_confirm);
         cancelmButton = (Button) findViewById(R.id.btn_cancel);
         playAudioButton = (Button) findViewById(R.id.btn_place_order_play);
+
+
+        takePhotoButton = (Button) findViewById(R.id.btn_take_photo);
+        takeAudioButton = (Button) findViewById(R.id.btn_take_audio);
+        updateOrderButton = (Button) findViewById(R.id.btn_update_order);
+
 
         orderImg = (ImageView) findViewById(R.id.iv_place_order_media);
         orderReceiptImg = (ImageView) findViewById(R.id.iv_receipt_order);
@@ -191,7 +219,177 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
                 }
             }
         });
+
+
+        takePhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhotoFromCamera();
+            }
+        });
+        takeAudioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(OrderDetailActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(OrderDetailActivity.this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_RECORD_AUDIO_PERMISSION);
+                }else{
+                    startRecording();
+                }
+            }
+        });
+        updateOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateOrder();
+            }
+        });
+
     }
+
+    private void updateOrder() {
+        if(finalImageFile == null && finalAudioFile == null){
+            DialogUtils.showDialog(OrderDetailActivity.this, "Please take photo or audio file for order.");
+            return;
+        }
+        if(finalImageFile != null) {
+            showProgressBar();
+            uploadImage("" + (new Date().getTime()), finalImageFile.getPath(), new IImageUploadOnS3Listner() {
+                @Override
+                public void uploaded(String imagepath) {
+                    if (imagepath != null) {
+                        IApiRequest request = ApiClient.getRequest();
+
+                        JsonObject placeOrderJsonObject = new JsonObject();
+                        placeOrderJsonObject.addProperty("orderImg", imagepath);
+                        placeOrderJsonObject.addProperty("orderAudio", "");
+                        placeOrderJsonObject.addProperty("merchant", placeOrder.get_id());
+
+
+                        Call<BaseResponse<PlaceOrder>> call = request.placeOrder(placeOrderJsonObject);
+                        call.enqueue(new ApiCallback<PlaceOrder>(OrderDetailActivity.this) {
+                            @Override
+                            public void onSucess(PlaceOrder userResponse) {
+                                hideProgressBar();
+                                showToast("Your order placed successfully.");
+                                launchActivity(OrdersActivity.class);
+                                finish();
+                            }
+
+                            @Override
+                            public void onError(Error error) {
+                                hideProgressBar();
+                                showToast(error.getMsg());
+                                Log.d(TAG, error.getMsg());
+                            }
+                        });
+                    } else {
+                        hideProgressBar();
+                        showToast("Please try again");
+                    }
+                }
+            });
+        }else{
+            showProgressBar();
+            uploadAudio("" + (new Date().getTime()), finalAudioFile.getPath(), new IImageUploadOnS3Listner() {
+                @Override
+                public void uploaded(String audiopath) {
+                    if (audiopath != null) {
+                        IApiRequest request = ApiClient.getRequest();
+
+                        JsonObject placeOrderJsonObject = new JsonObject();
+                        placeOrderJsonObject.addProperty("orderImg", "");
+                        placeOrderJsonObject.addProperty("orderAudio", audiopath);
+                        placeOrderJsonObject.addProperty("merchant", placeOrder.get_id());
+
+
+                        Call<BaseResponse<PlaceOrder>> call = request.placeOrder(placeOrderJsonObject);
+                        call.enqueue(new ApiCallback<PlaceOrder>(OrderDetailActivity.this) {
+                            @Override
+                            public void onSucess(PlaceOrder userResponse) {
+                                hideProgressBar();
+                                showToast("Your order placed successfully.");
+                                launchActivity(OrdersActivity.class);
+                                finish();
+                            }
+
+                            @Override
+                            public void onError(Error error) {
+                                hideProgressBar();
+                                showToast(error.getMsg());
+                                Log.d(TAG, error.getMsg());
+                            }
+                        });
+                    } else {
+                        hideProgressBar();
+                        showToast("Please try again");
+                    }
+                }
+            });
+        }
+    }
+
+    private void startRecording() {
+        Intent intent = new Intent(OrderDetailActivity.this, AudioRecordingActivity.class);
+        startActivityForResult(intent, AppConstant.REQ.IMAGE_AUDIO);
+    }
+
+    private void takePhotoFromCamera() {
+        CameraDialog dialog = new CameraDialog(this);
+        dialog.setListner(new ICameraCallback() {
+            @Override
+            public void pickCamera() {
+                Bundle bundle = new Bundle();
+                bundle.putInt(AppConstant.BUNDLE_KEY.IS_FROM_CAMERA, 0);
+                Intent i = new Intent(OrderDetailActivity.this, CameraActivity.class);
+                i.putExtras(bundle);
+                startActivityForResult(i, AppConstant.REQ.IMAGE_CAMERA);
+            }
+
+            @Override
+            public void pickPhoto() {
+                Bundle bundle = new Bundle();
+                bundle.putInt(AppConstant.BUNDLE_KEY.IS_FROM_CAMERA, 1);
+                Intent i = new Intent(OrderDetailActivity.this, CameraActivity.class);
+                i.putExtras(bundle);
+                startActivityForResult(i, AppConstant.REQ.IMAGE_GALLERY);
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case AppConstant.REQ.IMAGE_CAMERA:
+                case AppConstant.REQ.IMAGE_GALLERY:
+                    finalImageFile = (File) data.getExtras().getSerializable(AppConstant.FILE_PATH_IMAGE);
+                    if (finalImageFile != null) {
+                        Log.d(TAG, "image path : " + finalImageFile);
+                        // upload image on s3 from here
+                        // ui.ivCameraIcon.setVisibility(View.GONE);
+                        Bitmap myBitmap = BitmapFactory.decodeFile(finalImageFile.getAbsolutePath());
+                        orderImg.setImageBitmap(myBitmap);
+                        finalAudioFile = null;
+                        playAudioButton.setVisibility(View.GONE);
+                    }
+                    break;
+                case AppConstant.REQ.IMAGE_AUDIO:
+                    if(data.getExtras() != null) {
+                        String audioFilePath = data.getExtras().getString(AppConstant.FILE_PATH_AUDIO);
+                        if(audioFilePath != null){
+                            Log.d(TAG, "audio file path : " + audioFilePath);
+                            finalAudioFile = new File(audioFilePath);
+                            finalImageFile = null;
+                            playAudioButton.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
 
     private boolean isOrderValid() {
 
@@ -232,6 +430,12 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
             loadImageGlide(placeOrder.getOrderImg(), orderImg);
         } else {
             playAudioButton.setVisibility(View.VISIBLE);
+        }
+
+        if(placeOrder.getStatus().equalsIgnoreCase("pending")){
+            orderUpdateLayout.setVisibility(View.VISIBLE);
+        }else{
+            orderUpdateLayout.setVisibility(View.GONE);
         }
 
         if (!placeOrder.getStatus().equalsIgnoreCase("pending") &&

@@ -24,7 +24,16 @@ public class Merchant implements Serializable {
     private String createdBy;
     private String createdOn;
     private String[] closingDays;
+    private String discount;
 
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
 
     public String get_id() {
         return _id;
