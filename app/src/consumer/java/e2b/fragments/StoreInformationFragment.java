@@ -72,6 +72,9 @@ public class StoreInformationFragment extends BaseFragment {
     @Bind(R.id.tv_home_delivery)
     CustomTextView homeDelivery;
 
+    @Bind(R.id.tv_home_delivery_title)
+    CustomTextView homeDeliveryTitle;
+
     @Bind(R.id.lv_review)
     RecyclerView reviewListView;
 
@@ -114,9 +117,7 @@ public class StoreInformationFragment extends BaseFragment {
             storePhone.setText("Phone : " + merchant.getMobile());
             closingdays.setText("Shop Remain Close On : "+ getArrayString(merchant.getClosingDays()));
             offers.setText("Offers : ");
-            homeDelivery.setText(getHomeDeliveryText(merchant));
-//            storeEmail.setText("Email : "+merchant.getShopName());
-//            importantInfo.setText(importantInfo.getText().toString().replace("MIN_ORDER_AMOUNT", "" + merchant.getDeliveryDetail().getMinAmount()));
+            setHomeDeliveryText(merchant);
             ((BaseActivity) getActivity()).loadImageGlide(merchant.getShopImage(), storeImageView);
         }
 
@@ -131,18 +132,22 @@ public class StoreInformationFragment extends BaseFragment {
         });
     }
 
-    private String getHomeDeliveryText(Merchant merchant) {
+    private String setHomeDeliveryText(Merchant merchant) {
         String deliverynfo = "Home Delivery : ";
         DeliveryDetail deliveryDetail = merchant.getDeliveryDetail();
         if(deliveryDetail != null){
-            deliverynfo += "Available"+"\n";
-            deliverynfo += "Minimum Amount For Home Delivery : "+deliveryDetail.getMinAmount()+"\n";
-            deliverynfo += "Home Delivery Radius : "+deliveryDetail.getRadius()+"Kms"+"\n";
-            deliverynfo += "Home Delivery Timimg : "+deliveryDetail.getTiming();
+            String deliveryDetailInfo = "";
+            deliverynfo += "Available";
+            deliveryDetailInfo += "Minimum Amount For Home Delivery : "+deliveryDetail.getMinAmount()+"\n";
+            deliveryDetailInfo += "Home Delivery Radius : "+deliveryDetail.getRadius()+"Kms"+"\n";
+            deliveryDetailInfo += "Home Delivery Timimg : "+deliveryDetail.getTiming();
 
+            homeDelivery.setText(deliveryDetailInfo);
         }else{
             deliverynfo += "Not Available";
+            homeDelivery.setVisibility(View.GONE);
         }
+        homeDeliveryTitle.setText(deliverynfo);
         return deliverynfo;
     }
 
