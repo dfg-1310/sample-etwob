@@ -85,8 +85,10 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
         setHeaderText("Order Detail");
+
         setFooterState(AppConstant.FOOTER_INDEX.ORDER);
         managebackIconVisiblity(true);
+        manageNotyIconVisiblity(false);
         initViewControls();
         getDataFromItent();
 //        getPlaceOrder();
@@ -406,7 +408,7 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
         showProgressBar();
         IApiRequest request = ApiClient.getRequest();
 
-        Call<BaseResponse<PlaceOrder>> call = request.getOrder(placeOrder.get_id());
+        Call<BaseResponse<PlaceOrder>> call = request.getOrder(orderId);
         call.enqueue(new ApiCallback<PlaceOrder>(OrderDetailActivity.this) {
             @Override
             public void onSucess(PlaceOrder userResponse) {
@@ -492,6 +494,7 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
                 updateUI(placeOrder);
             }else{
                 Log.d(TAG, "orderId : " + orderId);
+                getPlaceOrder();
             }
         }
     }

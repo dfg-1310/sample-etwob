@@ -1,10 +1,10 @@
-package com.e2b.model.response;
+package e2b.model.response;
 
 /**
  * Created by gaurav on 8/7/17.
  */
 
-public class Payload {
+public  class Payload{
     private String s;
     private String id;
 

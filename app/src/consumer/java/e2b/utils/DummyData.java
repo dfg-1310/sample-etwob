@@ -5,8 +5,6 @@ import com.e2b.model.response.Order;
 import java.util.ArrayList;
 import java.util.List;
 
-import e2b.model.response.Notification;
-
 /**
  * Created by gaurav on 17/2/17.
  */
@@ -61,49 +59,49 @@ public class DummyData {
     }
 
 
-    public static List<Notification> getNotifications() {
-        List<Notification> notifications = new ArrayList<>();
-        Notification notification = new Notification();
-        notification.setDate("11:30 AM");
-        notification.setShopName("# We have received your request for 5 items, we will notify you when your order gets ready ");
-        notification.setTitle("Store Home 99");
-
-        notifications.add(notification);
-
-        notification = new Notification();
-        notification.setDate("11:30 AM");
-        notification.setShopName("# We have received your request for 5 items, we will notify you when your order gets ready ");
-        notification.setTitle("Store Home 99");
-
-        notifications.add(notification);
-
-
-        notification = new Notification();
-        notification.setDate("11:30 AM");
-        notification.setShopName("# We have received your request for 5 items, we will notify you when your order gets ready ");
-        notification.setTitle("Store Home 99");
-
-        notifications.add(notification);
-
-
-        notification = new Notification();
-        notification.setDate("11:30 AM");
-        notification.setShopName("# We have received your request for 5 items, we will notify you when your order gets ready ");
-        notification.setTitle("Store Home 99");
-
-        notifications.add(notification);
-
-        notification = new Notification();
-        notification.setDate("11:30 AM");
-        notification.setShopName("# We have received your request for 5 items, we will notify you when your order gets ready ");
-        notification.setTitle("Store Home 99");
-
-        notifications.add(notification);
-
-
-        return notifications;
-
-    }
+//    public static List<Notification> getNotifications() {
+//        List<Notification> notifications = new ArrayList<>();
+//        Notification notification = new Notification();
+//        notification.setDate("11:30 AM");
+//        notification.setShopName("# We have received your request for 5 items, we will notify you when your order gets ready ");
+//        notification.setTitle("Store Home 99");
+//
+//        notifications.add(notification);
+//
+//        notification = new Notification();
+//        notification.setDate("11:30 AM");
+//        notification.setShopName("# We have received your request for 5 items, we will notify you when your order gets ready ");
+//        notification.setTitle("Store Home 99");
+//
+//        notifications.add(notification);
+//
+//
+//        notification = new Notification();
+//        notification.setDate("11:30 AM");
+//        notification.setShopName("# We have received your request for 5 items, we will notify you when your order gets ready ");
+//        notification.setTitle("Store Home 99");
+//
+//        notifications.add(notification);
+//
+//
+//        notification = new Notification();
+//        notification.setDate("11:30 AM");
+//        notification.setShopName("# We have received your request for 5 items, we will notify you when your order gets ready ");
+//        notification.setTitle("Store Home 99");
+//
+//        notifications.add(notification);
+//
+//        notification = new Notification();
+//        notification.setDate("11:30 AM");
+//        notification.setShopName("# We have received your request for 5 items, we will notify you when your order gets ready ");
+//        notification.setTitle("Store Home 99");
+//
+//        notifications.add(notification);
+//
+//
+//        return notifications;
+//
+//    }
 
 
 }

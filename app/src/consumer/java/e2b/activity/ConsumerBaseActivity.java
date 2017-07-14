@@ -199,6 +199,16 @@ public class ConsumerBaseActivity extends BaseActivity {
         }
     }
 
+    public void managenotyIconVisiblity(boolean toBeVisible) {
+        if (iv_back != null) {
+            if (toBeVisible) {
+                iv_back.setVisibility(View.VISIBLE);
+            } else {
+                iv_back.setVisibility(View.GONE);
+            }
+        }
+    }
+
     @OnClick(R.id.iv_back)
     public void backClick() {
         //this.finish();

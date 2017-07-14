@@ -8,6 +8,7 @@ import com.e2b.model.response.PlaceOrder;
 import com.google.gson.JsonObject;
 
 import e2b.model.response.MerchantResponse;
+import e2b.model.response.Notifications;
 import e2b.model.response.Orders;
 import e2b.model.response.Ratings;
 import e2b.model.response.UserResponse;
@@ -78,6 +79,9 @@ public interface IApiRequest {
 
     @GET
     Call<LocationLatLong> getLocationLatLong(@Url String url);
+
+    @GET("notification")
+    Call<BaseResponse<Notifications>> getNotifications();
 
 
     interface FIELD {
