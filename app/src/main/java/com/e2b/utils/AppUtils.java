@@ -17,6 +17,7 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -27,7 +28,6 @@ import android.util.TypedValue;
 import com.e2b.activity.BaseActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,6 +38,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 /**
@@ -213,19 +215,36 @@ public class AppUtils {
         return  text;
     }
 
-
     public static String getUniqueDeviceId(Activity activity){
-        String deviceId;
-        final TelephonyManager mTelephony = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
-        if (mTelephony.getDeviceId() != null) {
-            deviceId = mTelephony.getDeviceId();
-        }
-        else {
-            deviceId = Settings.Secure.getString(
-                    activity.getApplicationContext().getContentResolver(),
-                    Settings.Secure.ANDROID_ID);
-        }
-
-        return deviceId;
+        String m_szDevIDShort = "35" + //we make this look like a valid IMEI
+                Build.BOARD.length()%10+ Build.BRAND.length()%10 +
+                Build.DEVICE.length()%10 + Build.DISPLAY.length()%10 +
+                Build.HOST.length()%10 + Build.ID.length()%10 +
+                Build.MANUFACTURER.length()%10 + Build.MODEL.length()%10 +
+                Build.PRODUCT.length()%10 + Build.TAGS.length()%10 +
+                Build.TYPE.length()%10 + Build.USER.length()%10 ; //12 digits
+        return m_szDevIDShort;
     }
+
+    public static String getTimeMsg(Long then) {
+        String msg;
+        Calendar cal = Calendar.getInstance(Locale.getDefault());
+        cal.setTimeInMillis(then);
+        Calendar cal1 = Calendar.getInstance(Locale.getDefault());
+        long diff = cal1.getTimeInMillis() - cal.getTimeInMillis();
+        if (diff < 60000) {
+            msg = "Just now";
+        } else if (diff <= 5 * 60 * 1000) {
+            int mint = (int) (diff / 60000);
+            if (mint == 1)
+                msg = mint + " minute ago";
+            else
+                msg = mint + " minutes ago";
+        } else {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss a");
+            msg = format.format(new Date(then));
+        }
+        return msg;
+    }
+
 }

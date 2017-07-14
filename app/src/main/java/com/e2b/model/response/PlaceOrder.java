@@ -2,6 +2,8 @@ package com.e2b.model.response;
 
 import java.io.Serializable;
 
+import e2bmerchant.model.response.ConsumerDetail;
+
 /**
  * Created by gaurav on 6/5/17.
  */
@@ -14,6 +16,7 @@ public class PlaceOrder implements Serializable{
     private String consumer;
     private String merchant;
     private MerchantOption merchantOptions;
+    private ConsumerDetail cDetail;
     private String _id;
     private String status;
     private String createdOn;
@@ -137,6 +140,13 @@ public class PlaceOrder implements Serializable{
         this.createdOn = createdOn;
     }
 
+    public ConsumerDetail getcDetail() {
+        return cDetail;
+    }
+
+    public void setcDetail(ConsumerDetail cDetail) {
+        this.cDetail = cDetail;
+    }
 
     @Override
     public String toString() {

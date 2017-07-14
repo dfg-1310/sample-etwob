@@ -69,7 +69,6 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
         managebackIconVisiblity(true);
         initViewControls();
         getDataFromItent();
-//        getPlaceOrder();
         updateUI(placeOrder);
     }
 
