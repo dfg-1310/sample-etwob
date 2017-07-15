@@ -58,6 +58,7 @@ import com.bumptech.glide.request.target.Target;
 import com.e2b.R;
 import com.e2b.fragments.BaseFragment;
 import com.e2b.listener.IImageUploadOnS3Listner;
+import com.e2b.model.Media;
 import com.e2b.utils.AppConstant;
 import com.e2b.utils.AppUtils;
 
@@ -65,6 +66,7 @@ import e2b.model.response.UserResponse;
 import e2b.utils.ConsumerPreferenceKeeper;
 
 import java.io.File;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -570,4 +572,16 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             super.onBackPressed();
         }
     }
+
+
+    protected void openEnlargeActivity(int position, List<Media> medias) {
+        Intent intent = new Intent(this, EnlargeImageActivity.class);
+        intent.putExtra("position", position);
+        intent.putExtra("medias", (Serializable) medias);
+        startActivity(intent);
+    }
+
+
+
+
 }

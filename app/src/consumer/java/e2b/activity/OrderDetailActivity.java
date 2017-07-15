@@ -27,6 +27,7 @@ import com.e2b.enums.EOrderStatus;
 import com.e2b.fragments.BaseFragment;
 import com.e2b.listener.ICameraCallback;
 import com.e2b.listener.IImageUploadOnS3Listner;
+import com.e2b.model.Media;
 import com.e2b.model.response.BaseResponse;
 import com.e2b.model.response.Error;
 import com.e2b.model.response.PlaceOrder;
@@ -37,7 +38,9 @@ import com.e2b.views.CustomTextView;
 import com.google.gson.JsonObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import e2b.utils.DummyData;
 import retrofit2.Call;
@@ -246,36 +249,36 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
             }
         });
 
-//        orderImg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(!TextUtils.isEmpty(placeOrder.getOrderImg())) {
-//                    List<Media> medias = new ArrayList<Media>();
-//                    Media media = new Media();
-//                    media.setImgUrl(placeOrder.getOrderImg());
-//                    media.setVideoUrl("");
-//                    media.setMediaType(0);
-//
-//                    medias.add(media);
-//                    openEnlargeActivity(0, medias);
-//                }
-//            }
-//        });
-//
-//        orderReceiptImg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                List<Media> medias = new ArrayList<Media>();
-//                Media media = new Media();
-//                media.setImgUrl(placeOrder.getOrderReceipt());
-//                media.setVideoUrl("");
-//                media.setMediaType(0);
-//
-//                medias.add(media);
-//                openEnlargeActivity(0, medias);
-//
-//            }
-//        });
+        orderImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!TextUtils.isEmpty(placeOrder.getOrderImg())) {
+                    List<Media> medias = new ArrayList<Media>();
+                    Media media = new Media();
+                    media.setImgUrl(placeOrder.getOrderImg());
+                    media.setVideoUrl("");
+                    media.setMediaType(0);
+
+                    medias.add(media);
+                    openEnlargeActivity(0, medias);
+                }
+            }
+        });
+
+        orderReceiptImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Media> medias = new ArrayList<Media>();
+                Media media = new Media();
+                media.setImgUrl(placeOrder.getOrderReceipt());
+                media.setVideoUrl("");
+                media.setMediaType(0);
+
+                medias.add(media);
+                openEnlargeActivity(0, medias);
+
+            }
+        });
     }
 
     private void updateOrder() {
