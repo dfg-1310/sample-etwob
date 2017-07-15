@@ -246,6 +246,36 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
             }
         });
 
+//        orderImg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(!TextUtils.isEmpty(placeOrder.getOrderImg())) {
+//                    List<Media> medias = new ArrayList<Media>();
+//                    Media media = new Media();
+//                    media.setImgUrl(placeOrder.getOrderImg());
+//                    media.setVideoUrl("");
+//                    media.setMediaType(0);
+//
+//                    medias.add(media);
+//                    openEnlargeActivity(0, medias);
+//                }
+//            }
+//        });
+//
+//        orderReceiptImg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                List<Media> medias = new ArrayList<Media>();
+//                Media media = new Media();
+//                media.setImgUrl(placeOrder.getOrderReceipt());
+//                media.setVideoUrl("");
+//                media.setMediaType(0);
+//
+//                medias.add(media);
+//                openEnlargeActivity(0, medias);
+//
+//            }
+//        });
     }
 
     private void updateOrder() {
