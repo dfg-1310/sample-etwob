@@ -6,8 +6,8 @@ package com.e2b.enums;
 
 public enum EOrderStatus {
 
-    ACCEPTED("Accepted"),
     PENDING("Pending"),
+    ACCEPTED("Accepted"),
     REJECT("Rejected"),
     CANCEL("Cancelled"),
     CONFIRM("Confirmed"),
