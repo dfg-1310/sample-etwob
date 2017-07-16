@@ -12,7 +12,7 @@
             android:id="@+id/iv_store_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_250"
-            android:background="@drawable/banner"
+            android:background="@drawable/default_image_shop"
             android:scaleType="centerCrop" />
 
         <RelativeLayout
