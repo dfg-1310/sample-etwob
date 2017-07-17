@@ -9,6 +9,9 @@ import com.e2b.R;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.UpdateManager;
+
 import e2b.activity.AuthActivity;
 import e2b.activity.MapActivity;
 import e2b.utils.ConsumerPreferenceKeeper;
@@ -24,6 +27,7 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         initializeFCMToken();
+        checkForUpdates();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -46,6 +50,38 @@ public class SplashActivity extends BaseActivity {
             Log.d(TAG, "FCM TOKEN "+token);
             ConsumerPreferenceKeeper.getInstance().setFCMToken(token);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // ... your own onResume implementation
+        checkForCrashes();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterManagers();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterManagers();
+    }
+
+    private void checkForCrashes() {
+        CrashManager.register(this);
+    }
+
+    private void checkForUpdates() {
+        // Remove this for store builds!
+        UpdateManager.register(this);
+    }
+
+    private void unregisterManagers() {
+        UpdateManager.unregister();
     }
 }
 
