@@ -54,6 +54,12 @@
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
     <string name="take_photo">Take Photo</string>
+    <string name="service_not_available">Location service is not available</string>
+    <string name="invalid_lat_long_used">Invalid location points</string>
+    <string name="no_address_found">Address not found</string>
+    <string name="address_found">Address found</string>
+    <string name="no_location_data_provided">No location data provided</string>
+    <string name="no_geocoder_available">No geocoder available</string>
     <string-array name="delivery_options">
         <item>Pickup</item>
         <item>Home Delivery</item>

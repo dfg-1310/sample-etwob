@@ -45,8 +45,8 @@ public class AppConstant {
     }
 
     public interface FOOTER_INDEX {
-        int HOME = 0;
-        int ORDER = 1;
+        int ORDER = 0;
+        int ORDER_HISTORY = 1;
         int PROFILE = 2;
     }
 
