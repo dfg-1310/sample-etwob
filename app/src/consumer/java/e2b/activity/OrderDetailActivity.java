@@ -446,6 +446,7 @@ public class OrderDetailActivity extends ConsumerBaseActivity {
             @Override
             public void onSucess(PlaceOrder userResponse) {
                 hideProgressBar();
+                placeOrder = userResponse;
                 updateUI(userResponse);
             }
 
