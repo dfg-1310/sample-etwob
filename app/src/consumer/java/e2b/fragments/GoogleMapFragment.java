@@ -365,4 +365,3 @@ public class GoogleMapFragment extends BaseFragment implements OnMapReadyCallbac
 
     }
 }
-

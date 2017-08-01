@@ -15,7 +15,6 @@ import com.e2b.api.ApiCallback;
 import com.e2b.api.ApiClient;
 import com.e2b.api.IApiRequest;
 import com.e2b.fragments.BaseFragment;
-import com.e2b.fragments.LocationSearchFragment;
 import com.e2b.model.request.Coordinate;
 import com.e2b.model.request.Place;
 import com.e2b.model.response.BaseResponse;
@@ -138,15 +137,15 @@ public class ProfileSetupFragment extends BaseFragment {
                     ProfileSetupFragment.this.place = null;
                     etSignUpAddress.setText("");
 
-                    LocationSearchFragment locationSearchFragment = new LocationSearchFragment();
-                    locationSearchFragment.setListener(new LocationSearchFragment.ILocationSearch() {
-                        @Override
-                        public void onComplete(Place place) {
-                            ProfileSetupFragment.this.place = place;
-                            etSignUpAddress.setText(place.getDesc());
-                        }
-                    });
-                    activity.replaceFragment(R.id.container_auth, locationSearchFragment, true);
+//                    LocationSearchFragment locationSearchFragment = new LocationSearchFragment();
+//                    locationSearchFragment.setListener(new LocationSearchFragment.ILocationSearch() {
+//                        @Override
+//                        public void onComplete(Place place) {
+//                            ProfileSetupFragment.this.place = place;
+//                            etSignUpAddress.setText(place.getDesc());
+//                        }
+//                    });
+//                    activity.replaceFragment(R.id.container_auth, locationSearchFragment, true);
                 }
                 return true;
             }
