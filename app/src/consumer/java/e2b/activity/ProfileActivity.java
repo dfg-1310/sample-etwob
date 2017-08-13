@@ -1,5 +1,6 @@
 package e2b.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.e2b.R;
@@ -23,4 +24,10 @@ public class ProfileActivity extends ConsumerBaseActivity {
         setFooterState(AppConstant.FOOTER_INDEX.PROFILE);
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        currentFragment.onActivityResult(requestCode, resultCode, data);
+    }
 }

@@ -17,55 +17,6 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
-    <style name="MyProfileUpperTextViewStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/color_42B757</item>
-        <item name="android:textSize">@dimen/sp_14</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:layout_marginTop">@dimen/dp_5</item>
-        <item name="android:layout_marginBottom">@dimen/dp_5</item>
-    </style>
-
-    <style name="MyProfileLowerTextViewStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/color_080808</item>
-        <item name="android:textSize">@dimen/sp_14</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:layout_marginBottom">@dimen/dp_5</item>
-    </style>
-
-    <style name="MyProfileDividerStyle">
-        <item name="android:layout_marginBottom">@dimen/dp_8</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0.5dp</item>
-        <item name="android:background">@color/color_B3142029</item>
-    </style>
-
-    <style name="EditProfileEditTextStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:textColor">@color/color_142029</item>
-        <item name="android:textSize">@dimen/sp_13</item>
-        <item name="android:padding">@dimen/dp_10</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:gravity">left</item>
-        <item name="android:singleLine">true</item>
-    </style>
-
-    <style name="EditProfileEditTextBgStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/bg_rect_grey</item>
-        <item name="android:layout_marginTop">@dimen/dp_5</item>
-        <item name="android:layout_marginBottom">@dimen/dp_5</item>
-        <item name="android:layout_marginLeft">@dimen/dp_20</item>
-        <item name="android:layout_marginRight">@dimen/dp_20</item>
-        <item name="android:maxLines">1</item>
-    </style>
-
     <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/color_6e6e6e</item>
@@ -76,46 +27,6 @@
         <item name="android:windowNoTitle">false</item>
     </style>
 
-    <style name="EditSettingEditTextBgStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/bg_rect_cccccc_border</item>
-        <item name="android:layout_marginTop">@dimen/dp_5</item>
-        <item name="android:layout_marginBottom">@dimen/dp_5</item>
-        <item name="android:layout_marginLeft">@dimen/dp_20</item>
-        <item name="android:layout_marginRight">@dimen/dp_20</item>
-        <item name="android:maxLines">1</item>
-    </style>
-
-
-    <style name="EditPrivacySettingEditTextStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:textColor">@color/color_B3142029</item>
-        <item name="android:textSize">@dimen/sp_12</item>
-        <item name="android:padding">@dimen/dp_10</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:gravity">center</item>
-        <item name="android:singleLine">true</item>
-    </style>
-
-    <style name="PrivacySettingBtnStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:layout_marginBottom">@dimen/dp_20</item>
-        <item name="android:layout_marginLeft">@dimen/dp_20</item>
-        <item name="android:layout_marginRight">@dimen/dp_20</item>
-        <item name="android:layout_marginTop">@dimen/dp_20</item>
-        <item name="android:background">@drawable/bg_rect_fill_green</item>
-        <item name="android:gravity">center</item>
-        <item name="android:padding">@dimen/dp_10</item>
-        <item name="android:text">@string/save_change</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/sp_17</item>
-    </style>
 
     <style name="wrap_content">
         <item name="android:layout_width">wrap_content</item>
@@ -124,11 +35,6 @@
 
     <style name="match_parent">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-
-    <style name="height_match_parent">
-        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
     </style>
 

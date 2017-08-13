@@ -61,10 +61,10 @@
 
             <Button
                 android:id="@+id/btn_place_order_play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
                 android:layout_centerInParent="true"
-                android:background="@drawable/map_marker"
+                android:background="@drawable/audio"
                 android:visibility="gone" />
 
         </RelativeLayout>
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_margin="@dimen/dp_12"
+                android:layout_margin="@dimen/dp_10"
                 android:text="Take Photo" />
 
             <Button
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_margin="@dimen/dp_12"
+                android:layout_margin="@dimen/dp_10"
                 android:text="Take Audio" />
 
         </RelativeLayout>

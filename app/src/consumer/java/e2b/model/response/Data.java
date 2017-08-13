@@ -12,6 +12,16 @@ public class Data {
     private String consumer;
     private String merchant;
 
+    private String shopName;
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
     /**
      *  "msg": "A new order has been placed against you.",
      "consumer": "596093a4c3004606ef4ecf70",

@@ -4,15 +4,14 @@
     android:layout_height="match_parent"
     android:background="@color/color_161e252d"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
     >
 
     <ImageView
-        android:layout_width="@dimen/dp_80"
-        android:layout_height="@dimen/dp_80"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginBottom="@dimen/dp_8"
         android:layout_marginTop="@dimen/dp_8"
-        android:background="@mipmap/ic_launcher" />
+        android:background="@drawable/consuer_logo_splash" />
 
 </RelativeLayout>

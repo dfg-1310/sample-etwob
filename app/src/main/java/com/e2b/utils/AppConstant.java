@@ -93,6 +93,7 @@ public class AppConstant {
         int CAMERA_PERMISSION = 2;
         int WRITE_EXTERNAL_PERMISSION = 3;
         int MAP_LOCATION_PERMISSION = 4;
+        int LOCATION_PERMISSION = 5;
     }
 
     public interface MEDIA_STATE {
@@ -103,6 +104,7 @@ public class AppConstant {
         int IMAGE_CAMERA = 100;
         int IMAGE_GALLERY = 200;
         int IMAGE_AUDIO = 300;
+        int LOCATION_REQUEST_CODE = 400;
     }
 
     public static String FILE_PATH_IMAGE = "filePathImage";

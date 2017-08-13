@@ -13,10 +13,7 @@ public enum EOrderStatus {
     CONFIRM("Confirmed"),
     READY_FOR_DELIVERY("Ready For Delivery"),
     READY_FOR_PICKUP("Ready For Pickup"),
-    DELIVERED("Delivered"),
-    PICKEDUP("PickedUp")
-
-    ;
+    COMPLETED("Completed");
 
     private final String name;
 

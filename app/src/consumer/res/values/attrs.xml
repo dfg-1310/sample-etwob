@@ -49,9 +49,6 @@
     <declare-styleable name="SeekArcTheme">
         <attr name="seekArcStyle" format="reference" />
     </declare-styleable>
-    <style name="Color1SwitchStyle">
-        <item name="colorControlActivated">@color/color_007aff</item>
-    </style>
 
     <style name="TransaparantDialog">
         <item name="android:windowBackground">@android:color/transparent</item>

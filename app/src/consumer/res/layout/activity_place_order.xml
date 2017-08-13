@@ -1,14 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:id="@+id/option_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:visibility="visible"
+        android:layout_gravity="center"
+        android:gravity="center"
+        >
+
+<ImageView
+    android:id="@+id/iv_take_picture"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/camera"
+    />
+
+        <com.e2b.views.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/take_pic_txt"
+            android:textColor="@color/black"
+            app:ctypeface="@string/nunito_font_semibold"
+            android:textSize="@dimen/sp_14"
+            />
+
+        <com.e2b.views.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OR"
+            android:textColor="@color/black"
+            app:ctypeface="@string/nunito_font_semibold"
+            android:textSize="@dimen/sp_18"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            />
+
+        <ImageView
+            android:id="@+id/iv_record_audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/audio"
+            />
+
+        <com.e2b.views.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/record_audio_text"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_14"
+            app:ctypeface="@string/nunito_font_semibold"
+            />
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/photo_view_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+        android:visibility="gone"
+        >
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_above="@+id/bottom_option_layout">
 
         <ImageView
             android:id="@+id/iv_place_order_media"
@@ -21,44 +86,59 @@
 
         <Button
             android:id="@+id/btn_place_order_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
             android:layout_centerInParent="true"
-            android:background="@drawable/map_marker"
+            android:background="@drawable/audio"
             android:visibility="gone" />
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/bottom_option_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <Button
+        <!--<Button
             android:id="@+id/btn_take_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_margin="@dimen/dp_12"
             android:text="Take Photo" />
-
+-->
 
         <Button
             android:id="@+id/btn_place_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Place Order" />
+            android:layout_alignParentLeft="true"
+            android:layout_margin="@dimen/dp_12"
+            android:text="Confirm Order" />
 
         <Button
+            android:id="@+id/btn_cancel_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/dp_12"
+            android:text="Cancel Order" />
+
+<!--
+<Button
             android:id="@+id/btn_take_audio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/dp_12"
             android:text="Take Audio" />
+-->
 
     </RelativeLayout>
 
 
 </RelativeLayout>
+
+</LinearLayout>
+

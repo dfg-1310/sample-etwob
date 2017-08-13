@@ -57,6 +57,7 @@
 
             <com.e2b.views.CustomTextView
                 android:id="@+id/tv_store_address"
+                android:layout_alignParentLeft="true"
                 android:layout_below="@id/tv_store_Name"
                 android:layout_toLeftOf="@id/mre_place_order"
                 style="@style/wrap_content"
@@ -130,12 +131,17 @@
 
             <RatingBar
                 android:id="@+id/rb_review"
-                style="?android:attr/ratingBarStyleSmall"
+                style="?android:attr/ratingBarStyleIndicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_below="@id/ll_store_add_info"
                 android:layout_toRightOf="@id/tv_review_title"
+                android:numStars="5"
+                android:progressBackgroundTint="@color/Gray"
+                android:progressTint="@color/Gold"
+                android:secondaryProgressTint="@android:color/transparent"
+                android:stepSize=".25"
                 />
         </RelativeLayout>
 

@@ -118,7 +118,7 @@ public class StoreInformationFragment extends BaseFragment {
             closingdays.setText("Shop Remain Close On : "+ getArrayString(merchant.getClosingDays()));
             offers.setText("Offers : "+ merchant.getDiscount()+"%");
             setHomeDeliveryText(merchant);
-            ((BaseActivity) getActivity()).loadImageGlide(merchant.getShopImage(), storeImageView);
+            ((BaseActivity) getActivity()).loadMerchantImageGlide(merchant.getShopImage(), storeImageView);
         }
 
         getRatings();

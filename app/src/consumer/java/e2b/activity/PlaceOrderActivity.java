@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -13,6 +14,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.e2b.R;
 import com.e2b.activity.CameraActivity;
@@ -38,10 +41,16 @@ import retrofit2.Call;
 public class PlaceOrderActivity extends ConsumerBaseActivity {
 
     ImageView placeOrderImageView;
+    ImageView takePhotoImageView;
+    ImageView recordAudioImageView;
     Button playButton;
-    Button takePhotoButton;
-    Button takeAudioButton;
+//    Button takePhotoButton;
+//    Button takeAudioButton;
     Button placeOrderButton;
+    Button cancelOrderButton;
+
+    LinearLayout optionLinearLayout;
+    RelativeLayout imageRelativeLayout;
 
     private BaseFragment currentFragment;
     private String merchantId;
@@ -58,7 +67,7 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_order);
-        setHeaderText("Place Your Order");
+        setHeaderText("Place Order");
         setFooterState(AppConstant.FOOTER_INDEX.HOME);
         getDataFromBundle();
         initviewcontrols();
@@ -66,17 +75,39 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
 
     private void initviewcontrols() {
         placeOrderImageView = (ImageView) findViewById(R.id.iv_place_order_media);
-        playButton = (Button) findViewById(R.id.btn_place_order_play);
-        takePhotoButton = (Button) findViewById(R.id.btn_take_photo);
-        takeAudioButton = (Button) findViewById(R.id.btn_take_audio);
-        placeOrderButton = (Button) findViewById(R.id.btn_place_order);
+        takePhotoImageView = (ImageView) findViewById(R.id.iv_take_picture);
+        recordAudioImageView = (ImageView) findViewById(R.id.iv_record_audio);
 
-        takePhotoButton.setOnClickListener(new View.OnClickListener() {
+        playButton = (Button) findViewById(R.id.btn_place_order_play);
+//        takePhotoButton = (Button) findViewById(R.id.btn_take_photo);
+//        takeAudioButton = (Button) findViewById(R.id.btn_take_audio);
+        placeOrderButton = (Button) findViewById(R.id.btn_place_order);
+        cancelOrderButton = (Button) findViewById(R.id.btn_cancel_order);
+        optionLinearLayout = (LinearLayout) findViewById(R.id.option_layout);
+        imageRelativeLayout = (RelativeLayout) findViewById(R.id.photo_view_layout);
+
+        cancelOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                manageView(false);
+            }
+        });
+
+
+//        takePhotoButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                takeOrderPhoto();
+//            }
+//        });
+
+        takePhotoImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takeOrderPhoto();
             }
         });
+
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,16 +119,35 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
             }
         });
 
-        takeAudioButton.setOnClickListener(new View.OnClickListener() {
+//        takeAudioButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (ActivityCompat.checkSelfPermission(PlaceOrderActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+//                    ActivityCompat.requestPermissions(PlaceOrderActivity.this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_RECORD_AUDIO_PERMISSION);
+//                }else{
+//                startRecording();
+//                }
+//
+//            }
+//        });
+
+        recordAudioImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (ActivityCompat.checkSelfPermission(PlaceOrderActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(PlaceOrderActivity.this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_RECORD_AUDIO_PERMISSION);
                 }else{
-                startRecording();
+                    startRecording();
                 }
+            }
+        });
 
+        takePhotoImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takeOrderPhoto();
             }
         });
 
@@ -227,6 +277,8 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
+            manageView(true);
+
             switch (requestCode) {
                 case AppConstant.REQ.IMAGE_CAMERA:
                 case AppConstant.REQ.IMAGE_GALLERY:
@@ -254,6 +306,16 @@ public class PlaceOrderActivity extends ConsumerBaseActivity {
                     }
                     break;
             }
+        }
+    }
+
+    private void manageView(boolean isOptionViewDisable) {
+        if(isOptionViewDisable){
+            optionLinearLayout.setVisibility(View.GONE);
+            imageRelativeLayout.setVisibility(View.VISIBLE);
+        }else{
+            optionLinearLayout.setVisibility(View.VISIBLE);
+            imageRelativeLayout.setVisibility(View.GONE);
         }
     }
 

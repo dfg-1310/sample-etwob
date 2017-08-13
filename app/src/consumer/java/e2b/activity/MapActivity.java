@@ -44,11 +44,6 @@ public class MapActivity extends ConsumerBaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case AppConstant.REQUEST_CODE.MAP_LOCATION_PERMISSION:
-                if(currentFragment instanceof GoogleMapFragment){
-                    ((GoogleMapFragment)currentFragment).currentLocation();
-                }
-        }
+        currentFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

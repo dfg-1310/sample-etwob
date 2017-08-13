@@ -23,7 +23,7 @@ public class UserResponse {
     private boolean isNewUser;
     private String name;
     private String address;
-    private Coordinate coordinate;
+    private Coordinate coordinates;
     private String mobile;
 
 
@@ -164,12 +164,12 @@ public class UserResponse {
         this.address = address;
     }
 
-    public Coordinate getCoordinate() {
-        return coordinate;
+    public Coordinate getCoordinates() {
+        return coordinates;
     }
 
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public void setCoordinates(Coordinate coordinates) {
+        this.coordinates = coordinates;
     }
 
     @Override

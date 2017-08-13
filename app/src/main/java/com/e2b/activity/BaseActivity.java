@@ -352,6 +352,32 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         new FileUploadAsync(fineName, filePath, listner).execute();
     }
 
+    public void loadMerchantImageGlide(final String url, final ImageView imageView) {
+        Glide.with(getApplicationContext()).load(url).asBitmap().centerCrop().placeholder(R.drawable.default_image_shop).
+                error(R.drawable.default_image_shop).diskCacheStrategy(DiskCacheStrategy.ALL)
+                .listener(new RequestListener<String, Bitmap>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
+                        return false;
+
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(new BitmapImageViewTarget(imageView) {
+                    @Override
+                    public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                        super.onResourceReady(bitmap, anim);
+                        if (imageView.getContext() != null)
+                            Glide.with(getApplicationContext()).load(url).centerCrop().into(imageView);
+                    }
+                });
+
+    }
+
     class ImageUploadAsync extends AsyncTask {
         String fileName;
         String filePath;
